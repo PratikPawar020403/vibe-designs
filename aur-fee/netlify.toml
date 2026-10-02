@@ -1,4 +1,4 @@
-# Netlify configuration for aur-fee (Aura Espresso Machine)
+# Netlify configuration for aur-fee (Aurfee Espresso Machine)
 
 [build]
   publish = "dist"

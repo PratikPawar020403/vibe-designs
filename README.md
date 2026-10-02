@@ -33,15 +33,15 @@ npm install
 npm run dev
 ```
 
-### 3. [Aura — Precision Espresso Engineering](./aur-fee)
+### 3. [Aurfee — Precision Espresso Engineering](./aur-fee)
 An Awwwards-caliber interactive luxury espresso machine showcase and Veloce OS digital experience built with:
-- **Aura Boot Sequence Preloader** with dynamic telemetry warming, brewing, and extraction transitions
+- **Aurfee Boot Sequence Preloader** with dynamic telemetry warming, brewing, and extraction transitions
 - **Interactive Scrollytelling Hero** with scroll-linked camera zoom and live tactile hotspot telemetry tooltips
 - **Veloce OS Scrollytelling Suite** cycling PID brew temp (93.5°C), 24.2s extraction timer, 9 BAR rotary pump, and live yield curves
 - **Pinned Horizontal Engineering Gallery** showcasing brass portafilter, tactile dials, and steam wand
 - **Technical Architecture Monograph** with split-screen sticky hardware blueprints
 
-#### Running Aura Locally:
+#### Running Aurfee Locally:
 ```bash
 cd aur-fee
 npm install
@@ -66,7 +66,7 @@ This repository contains multiple high-craft web experiences configured for Netl
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
 
-### Deploying Aura (`aur-fee`)
+### Deploying Aurfee (`aur-fee`)
 1. In Netlify Build Settings:
    - **Base directory**: `aur-fee`
    - **Build command**: `npm run build`

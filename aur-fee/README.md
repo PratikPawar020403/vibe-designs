@@ -1,9 +1,9 @@
-# Aura — Precision Espresso Engineering (`aur-fee`)
+# Aurfee — Precision Espresso Engineering (`aur-fee`)
 
-A high-craft, Awwwards-style interactive digital showcase for the Aura espresso machine and Veloce OS thermodynamic architecture.
+A high-craft, Awwwards-style interactive digital showcase for the Aurfee espresso machine and Veloce OS thermodynamic architecture.
 
 ## Highlights
-- **Aura Boot Sequence:** Dynamic preloader with real-time percentage ramp and status transition (`WARMING` -> `BREWING` -> `EXTRACTING` -> `READY`).
+- **Aurfee Boot Sequence:** Dynamic preloader with real-time percentage ramp and status transition (`WARMING` -> `BREWING` -> `EXTRACTING` -> `READY`).
 - **Interactive Scrollytelling Hero:** Scroll-driven camera push-in with dynamic headline fade and interactive tactile hotspot overlays with real-time telemetry tooltips.
 - **Veloce OS Interactive Feature Cycler:** 4-stage sticky scrollytelling exploring Temperature (Dual PID 93.5°C), Shot Time (24.2s), Rotary Pump Pressure (9.0 BAR), and Yield Curves.
 - **Horizontal Engineering Detail Gallery:** Pinned scroll scrub showcasing the 58mm solid brass portafilter, machined aluminum dials, and commercial steam wand.

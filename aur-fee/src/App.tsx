@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 
-// --- Preloader (Aura Boot Sequence) ---
+// --- Preloader (Aurfee Boot Sequence) ---
 const Preloader = ({ onComplete }: { onComplete: () => void }) => {
   const [step, setStep] = useState(0);
 
@@ -33,9 +33,9 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
       transition={{ duration: 1, ease: "easeInOut" }}
       className="fixed inset-0 z-[100] bg-[#0a0a0a] flex flex-col items-center justify-center text-[#F9F8F6]"
     >
-      {/* Top AURA logo */}
+      {/* Top AURFEE logo */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 heading text-sm md:text-base tracking-[0.3em] uppercase opacity-50">
-        Aura
+        Aurfee
       </div>
 
       {/* Main Content */}
@@ -118,7 +118,7 @@ const HorizontalGallery = () => {
 
           {/* Detail 1 */}
           <div className="w-[85vw] md:w-[60vw] h-[55vh] md:h-[65vh] shrink-0 relative overflow-hidden rounded-xl hover-target group shadow-2xl">
-            <img src="/aura-portafilter.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Portafilter" />
+            <img src="/aurfee-portafilter.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Portafilter" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12 pointer-events-none">
               <h3 className="heading text-5xl md:text-6xl uppercase tracking-tighter mb-4">Portafilter</h3>
               <p className="body-text text-lg opacity-80 max-w-md">Solid brass 58mm commercial-grade portafilter for optimal heat retention.</p>
@@ -127,7 +127,7 @@ const HorizontalGallery = () => {
 
           {/* Detail 2 */}
           <div className="w-[85vw] md:w-[60vw] h-[55vh] md:h-[65vh] shrink-0 relative overflow-hidden rounded-xl hover-target group shadow-2xl">
-            <img src="/aura-dials.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Machine Controls" />
+            <img src="/aurfee-dials.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Machine Controls" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12 pointer-events-none">
               <h3 className="heading text-5xl md:text-6xl uppercase tracking-tighter mb-4">Tactile</h3>
               <p className="body-text text-lg opacity-80 max-w-md">Machined aluminum dials provide satisfying, granular control over steam pressure.</p>
@@ -136,7 +136,7 @@ const HorizontalGallery = () => {
 
           {/* Detail 3 */}
           <div className="w-[85vw] md:w-[60vw] h-[55vh] md:h-[65vh] shrink-0 relative overflow-hidden rounded-xl hover-target group shadow-2xl">
-            <img src="/aura-steam.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Steam Wand" />
+            <img src="/aurfee-steam.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" alt="Steam Wand" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12 pointer-events-none">
               <h3 className="heading text-5xl md:text-6xl uppercase tracking-tighter mb-4">Power</h3>
               <p className="body-text text-lg opacity-80 max-w-md">Commercial-grade steam wand delivers microfoam perfection in seconds.</p>
@@ -188,9 +188,9 @@ const HeroInteractive = () => {
         <div className="absolute right-0 top-0 w-[100vw] md:w-[75vw] h-full overflow-hidden">
           <motion.img 
             style={{ scale }}
-            src="/aura-hero.jpg"
+            src="/aurfee-hero.jpg"
             className="w-full h-full object-cover object-center origin-center"
-            alt="Aura Espresso Machine"
+            alt="Aurfee Espresso Machine"
           />
           {/* Seamless fade into the black left void */}
           <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none" />
@@ -287,7 +287,7 @@ const VeloceOSInteractive = () => {
         
         {/* Full Bleed Background Panel */}
         <div className="absolute inset-0 z-0 flex items-center justify-center">
-           <img src="/aura-panel.jpg" className="w-full h-full object-cover object-center" alt="Veloce Panel" />
+           <img src="/aurfee-panel.jpg" className="w-full h-full object-cover object-center" alt="Veloce Panel" />
            {/* Darken slightly to make UI pop, plus vignette */}
            <div className="absolute inset-0 bg-black/40" />
            <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80 pointer-events-none" />
@@ -367,7 +367,7 @@ export default function App() {
 
       {/* Navigation */}
       <nav className={`fixed top-0 w-full p-8 md:p-12 flex justify-between items-center z-50 pointer-events-none transition-colors duration-700 ${isFooterInView ? 'text-[#0a0a0a]' : 'mix-blend-difference text-white'}`}>
-        <div className="text-xl md:text-2xl font-bold tracking-tighter uppercase heading">Aura</div>
+        <div className="text-xl md:text-2xl font-bold tracking-tighter uppercase heading">Aurfee</div>
         <div className="uppercase tracking-widest text-[10px] md:text-xs font-bold hover:text-[#0a0a0a] transition-colors cursor-pointer border-b border-current pb-1 pointer-events-auto">
           Reserve Machine
         </div>
@@ -381,7 +381,7 @@ export default function App() {
         <ScrollFillText 
           className="body-text text-3xl md:text-5xl leading-tight font-medium tracking-tight"
           content={[
-            { text: "Aura is not just a coffee machine. It is a" },
+            { text: "Aurfee is not just a coffee machine. It is a" },
             { text: "masterpiece of thermodynamic engineering.", highlight: true },
             { text: "We stripped away the superfluous to leave only pure performance." }
           ]} 
@@ -402,14 +402,14 @@ export default function App() {
           <div className="md:col-span-5 h-[50vh] md:h-[80vh] rounded-2xl overflow-hidden shadow-2xl relative md:sticky md:top-24">
             <motion.img 
               initial={{ scale: 1.1 }} whileInView={{ scale: 1 }} transition={{ duration: 1.5 }} viewport={{ once: true }}
-              src="/aura-architecture.jpg" 
+              src="/aurfee-architecture.jpg" 
               className="w-full h-full object-cover" 
               alt="Engineering" 
             />
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />
             <div className="absolute bottom-8 left-8 z-10">
                <div className="w-2 h-2 rounded-full bg-[#E54D24] animate-pulse mb-3" />
-               <p className="text-white text-xs uppercase tracking-widest font-bold">Aura Core Architecture</p>
+               <p className="text-white text-xs uppercase tracking-widest font-bold">Aurfee Core Architecture</p>
             </div>
           </div>
           
@@ -473,7 +473,7 @@ export default function App() {
       <section ref={footerRef} className="h-screen flex justify-center items-center overflow-hidden bg-[#E54D24] text-[#F9F8F6]">
         <div className="text-center group cursor-pointer hover-target p-20 hover:scale-105 transition-transform duration-700 ease-out">
           <h1 className="heading text-[12vw] leading-[0.75] tracking-tighter uppercase transition-colors duration-500 group-hover:text-[#0a0a0a]">
-            Own <br/> <span className="italic font-light">The</span> <br/> Aura.
+            Own <br/> <span className="italic font-light">The</span> <br/> Aurfee.
           </h1>
           <p className="mt-16 text-sm uppercase tracking-widest font-bold mix-blend-overlay">Reserve Now ↗</p>
         </div>
