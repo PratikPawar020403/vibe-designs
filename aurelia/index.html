@@ -1,0 +1,983 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aurelia — A place to return to</title>
+<meta name="description" content="Aurelia Private Residences — A place to return to. Handcrafted architectural monolithic villas carved from stone, timber, and light on the Mediterranean coast.">
+<meta name="theme-color" content="#fbf9f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15110d" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://aurelia.villas/">
+<link rel="describedby" href="/llms.txt">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aurelia.villas/">
+<meta property="og:title" content="Aurelia — A place to return to">
+<meta property="og:description" content="Handcrafted architectural monolithic villas carved from stone, timber, and light.">
+<meta property="og:image" content="/amenity-01-pool.jpg">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aurelia — A place to return to">
+<meta name="twitter:description" content="Handcrafted architectural monolithic villas carved from stone, timber, and light.">
+<meta name="twitter:image" content="/amenity-01-pool.jpg">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=aurelia4">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=aurelia4">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=aurelia4">
+<link rel="shortcut icon" href="/favicon.ico?v=aurelia4">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=aurelia4">
+
+<!-- Performance Preconnects & Assets Preload -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="preload" as="image" href="frames/frame_0001.webp" type="image/webp">
+
+<!-- Production Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+<style>
+:root{--bg:#fbf9f6;--paper:#fbf9f6;--card:#f4f1eb;--ink:#1b1712;--muted:#5d554a;--gold-branch:#d8c4a0;--champagne:#dfcfb3;--brass:#b08d57;--bronze:#9e7944;--pink:#c2467a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* --- AURELIA BLOSSOM LOADER SYSTEM --- */
+html.al-loading, body.al-loading{overflow:hidden!important;touch-action:none;height:100%!important}
+.al-loading #intro{opacity:0!important;pointer-events:none!important}
+.al-loading #hh{opacity:0!important;pointer-events:none!important}
+.al-loading #heroViewport{opacity:0!important}
+.al-loading #heroAperture{opacity:0!important}
+#al-intro{position:fixed;inset:0;z-index:99999;background:var(--paper,#fbf9f6);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:auto;user-select:none;-webkit-user-select:none}
+#al-sun{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at 84% -10%,rgba(223,207,179,.5),rgba(223,207,179,0) 52%)}
+.al-container{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.al-plant{height:min(38vh,300px);width:auto;overflow:visible;transform-origin:50% 100%}
+.al-plant path{fill:none;stroke:var(--brass,#b08d57);stroke-linecap:round;stroke-linejoin:round}
+.al-plant .stem,.al-plant .twig{stroke-width:1}
+.al-plant .leaf{stroke-width:.85;fill:rgba(216,196,160,.16)}
+.al-plant .rib{stroke-width:.5;opacity:.75}
+.al-plant .petal{stroke-width:.7;fill:rgba(223,207,179,.32)}
+.al-plant .stamen{stroke-width:.5}
+.al-plant circle{fill:var(--brass,#b08d57);stroke:none}
+#al-word{margin-top:2.6vh;font:400 clamp(20px,2.6vw,34px)/1 Cinzel,Georgia,serif;letter-spacing:.34em;padding-left:.34em;opacity:0;color:var(--ink,#1b1712);text-align:center}
+@media(max-width:700px){#al-word{font-size:clamp(18px,6vw,26px)}}
+.al-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15110d;--ink:#fbf9f6;--card:#211b15}}
+:root[data-theme="dark"]{--bg:#15110d;--ink:#fbf9f6;--card:#211b15}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:300 16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;line-height:1.05}
+h2{font-size:clamp(34px,6vw,76px)}
+em{color:var(--pink)}
+.tag{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass)}
+
+/* hero */
+#hero{height:180vh;position:relative;z-index:10}
+#stage{position:sticky;top:0;width:100%;height:100vh;overflow:hidden;background:var(--paper);display:flex;align-items:center;justify-content:center}
+#heroViewport{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none;z-index:2;background:#0d0b09;transform:none!important;clip-path:inset(calc((100vh - 34.875vw)/2) 19vw calc((100vh - 34.875vw)/2) 19vw round 8px);will-change:clip-path}
+#heroAperture{position:absolute;top:calc((100vh - 34.875vw)/2);left:19vw;right:19vw;bottom:calc((100vh - 34.875vw)/2);pointer-events:none;z-index:4;border-radius:8px;border:1px solid rgba(255,255,255,0.12);box-shadow:0 16px 45px rgba(0,0,0,0.20);will-change:top,left,right,bottom,opacity;transition:opacity .25s ease}
+@media(max-width:760px){
+  #heroViewport{clip-path:inset(calc((100vh - 49.5vw)/2) 6vw calc((100vh - 49.5vw)/2) 6vw round 6px)}
+  #heroAperture{top:calc((100vh - 49.5vw)/2);left:6vw;right:6vw;bottom:calc((100vh - 49.5vw)/2);border-radius:6px}
+}
+.hero-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;display:block;z-index:2;opacity:0;transition:opacity .75s cubic-bezier(.25,1,.5,1);will-change:opacity}
+.hero-canvas.is-active{opacity:1}
+.hero-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;display:block;opacity:0;transition:opacity .75s cubic-bezier(.25,1,.5,1);z-index:3;transform:none!important;filter:none!important;image-rendering:-webkit-optimize-contrast}.hero-still.is-active{opacity:1}
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;display:none;opacity:0;transition:opacity .75s cubic-bezier(.25,1,.5,1);z-index:2;transform:none!important;filter:none!important}
+.hero-vid.is-active{opacity:1;display:block}
+@media(prefers-reduced-motion:reduce){.hero-canvas{display:none!important}.hero-vid{display:block!important;opacity:1!important;z-index:2!important}.hero-still.is-active{opacity:1!important;z-index:1!important}}
+#room{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(21,17,13,0.25) 0%,rgba(21,17,13,0.65) 75%,rgba(21,17,13,0.88) 100%);opacity:0;display:grid;place-items:center;color:#fff;text-align:center;padding:24px;pointer-events:none;z-index:5;transition:opacity .4s}
+#cap{display:none!important}
+/* ========================================================
+   EDITORIAL ARCHITECTURAL HEADER & 4TH CONCEPT CTA
+   ======================================================== */
+#intro{position:fixed;top:0;left:0;right:0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:26px 48px;background:linear-gradient(180deg,rgba(8,7,6,0.72) 0%,rgba(8,7,6,0.28) 60%,transparent 100%);color:#f3eee7;transition:background .45s ease,padding .45s ease,border-color .45s ease,color .45s ease;pointer-events:auto}
+#intro.scrolled{background:rgba(251,249,246,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(27,23,18,0.08);color:var(--ink);padding:18px 48px}
+.header-left{display:inline-flex;align-items:center;justify-self:start;position:relative;z-index:2;transition:opacity .35s ease,transform .35s ease,visibility .35s ease}
+.header-brand{font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:inherit;text-decoration:none;line-height:1;display:inline-flex;align-items:center;justify-self:center;text-align:center;transition:opacity .3s ease;border:none!important;position:relative;z-index:2}
+.header-brand:hover{opacity:.75}
+.header-right{display:inline-flex;align-items:center;justify-self:end;position:relative;z-index:2;transition:opacity .35s ease,transform .35s ease,visibility .35s ease}
+#dn{background:none;border:none;font-family:inherit;font-size:9.5px;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:inherit;cursor:pointer;padding:6px 0;line-height:1;display:inline-flex;align-items:center;gap:9px;opacity:.88;transition:opacity .35s ease,transform .35s ease,visibility .35s ease;border-bottom:none!important}
+#dn:hover{opacity:1}
+#dn .dn-moon{font-size:13px;line-height:1;color:#dce7f5;opacity:.85;display:inline-block;transition:all .35s ease}
+#dn .dn-sun{font-size:11.5px;line-height:1;color:rgba(255,226,168,0.55);display:inline-block;transition:all .35s ease}
+#dn.is-day .dn-sun{color:#ffe2a8;text-shadow:0 0 9px rgba(255,226,168,0.75);opacity:1}
+#dn.is-day .dn-moon{color:#dce7f5;opacity:.82;text-shadow:0 0 6px rgba(220,231,245,0.45)}
+#dn.is-night .dn-moon{color:#ffffff;text-shadow:0 0 10px rgba(214,228,247,0.95),0 0 18px rgba(180,210,255,0.6);opacity:1;transform:scale(1.08)}
+#dn.is-night .dn-sun{opacity:0.45}
+#dn:hover .dn-moon{opacity:1;color:#ffffff;text-shadow:0 0 8px rgba(220,231,245,0.7)}
+#intro.scrolled .header-left,#intro.scrolled .header-right,#intro.scrolled #dn,#intro.scrolled .enter-cta{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px)}
+.enter-cta{position:relative;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:12px 28px 12px 26px;color:#f3eee7;cursor:pointer;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .35s ease;box-sizing:border-box;width:194px;height:46px}
+.enter-cta:hover{transform:translateY(-1px) scale(1.018)}
+.cta-contour-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.cta-border-path{fill:url(#cta-glow);stroke:rgba(226,203,176,0.46);stroke-width:1px;vector-effect:non-scaling-stroke;transition:stroke .4s cubic-bezier(.16,1,.3,1),fill .4s cubic-bezier(.16,1,.3,1),filter .4s ease}
+.enter-cta:hover .cta-border-path{stroke:rgba(226,203,176,0.88);fill:url(#cta-glow-hover);filter:drop-shadow(0 0 12px rgba(226,185,140,0.30))}
+.cta-content{position:relative;z-index:2;display:inline-flex;align-items:center;font-size:9.5px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:#f3eee7;line-height:1;pointer-events:none}
+.cta-arrow{margin-left:14px;font-size:13px;line-height:1;transition:transform .38s cubic-bezier(.16,1,.3,1)}
+.enter-cta:hover .cta-arrow{transform:translateX(4px)}
+#hint{position:absolute;top:calc(26vh - 40px);width:100%;text-align:center;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass)}
+/* ========================================================
+   EDITORIAL ARCHITECTURAL MATERIALS ("HOW WE BUILD IT")
+   ======================================================== */
+#mats{height:800vh;position:relative}
+#ms{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--paper);display:flex;align-items:center}
+#mt{display:flex;height:100%;width:800vw;will-change:transform}
+.mp{width:100vw;height:100%;flex-shrink:0;position:relative;box-sizing:border-box}
+
+/* Panel 0: Editorial Cover / Overview */
+.mp-intro{display:grid;grid-template-columns:1.2fr 0.8fr;gap:6vw;align-items:center;padding:0 7vw 7vh}
+.m-intro-content{max-width:540px}
+.m-intro-tag{margin-bottom:12px}
+.m-intro-title{font-size:clamp(36px,4.8vw,78px);font-weight:300;letter-spacing:-.01em;line-height:1;margin:10px 0 14px;color:var(--ink)}
+.m-intro-subtitle{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(20px,2.1vw,30px);font-style:italic;font-weight:300;color:var(--pink);margin-bottom:20px;line-height:1.2}
+.m-intro-divider{width:44px;height:1px;background:var(--brass);margin-bottom:20px}
+.m-intro-text{font-size:clamp(14px,1.05vw,16px);line-height:1.75;color:var(--ink);opacity:.85;margin-bottom:28px}
+.m-intro-meta{display:flex;gap:32px;margin-bottom:26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0}
+.m-intro-meta-item{display:flex;flex-direction:column;gap:2px}
+.m-meta-num{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(24px,2.6vw,38px);color:var(--brass);line-height:1}
+.m-meta-lbl{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);opacity:.7}
+.m-intro-scroll-hint{display:inline-flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--brass)}
+.m-hint-arrow{display:inline-block;transition:transform .3s ease}
+.mp-intro:hover .m-hint-arrow{transform:translateX(6px)}
+
+/* Intro Index Card */
+.m-intro-index{display:flex;justify-content:center}
+.m-index-card{width:100%;max-width:440px;background:rgba(255,255,255,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:3px;padding:30px 28px;box-shadow:0 24px 50px -15px rgba(27,23,18,.07)}
+:root[data-theme="dark"] .m-index-card,body.dark-theme .m-index-card{background:rgba(33,27,21,.65)}
+.m-index-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.m-index-count{font-size:10px;letter-spacing:.22em;color:var(--ink-soft,#776f64)}
+.m-index-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px}
+.m-index-list li{display:grid;grid-template-columns:22px 1.25fr 1fr;align-items:baseline;gap:8px;font-size:11.5px;letter-spacing:.03em}
+.m-index-list li span{color:var(--brass);font-size:10px;font-weight:500}
+.m-index-list li b{color:var(--ink);font-weight:400}
+.m-index-list li em{font-style:italic;font-family:"Cormorant Garamond",Georgia,serif;font-size:13.5px;color:var(--pink);text-align:right}
+
+/* Panels 1-7: Editorial Material Spreads */
+.mp-material{display:grid;grid-template-columns:1.24fr 1fr;gap:5.5vw;align-items:center;padding:0 7vw 7vh}
+.m-visual{position:relative;width:100%;height:68vh;max-height:640px;display:flex;align-items:center;filter:drop-shadow(0 30px 60px rgba(27,23,18,.16));transition:filter .4s ease}
+:root[data-theme="dark"] .m-visual,body.dark-theme .m-visual{filter:drop-shadow(0 30px 60px rgba(0,0,0,.48))}
+.m-frame{position:relative;width:100%;height:100%;overflow:hidden;background:rgba(27,23,18,.08);will-change:transform;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.mp-material[data-index="1"] .m-frame,.shape-mat-01{clip-path:url(#clip-mat-01);-webkit-clip-path:url(#clip-mat-01)}
+.mp-material[data-index="2"] .m-frame,.shape-mat-02{clip-path:url(#clip-mat-02);-webkit-clip-path:url(#clip-mat-02)}
+.mp-material[data-index="3"] .m-frame,.shape-mat-03{clip-path:url(#clip-mat-03);-webkit-clip-path:url(#clip-mat-03)}
+.mp-material[data-index="4"] .m-frame,.shape-mat-04{clip-path:url(#clip-mat-04);-webkit-clip-path:url(#clip-mat-04)}
+.mp-material[data-index="5"] .m-frame,.shape-mat-05{clip-path:url(#clip-mat-05);-webkit-clip-path:url(#clip-mat-05)}
+.mp-material[data-index="6"] .m-frame,.shape-mat-06{clip-path:url(#clip-mat-06);-webkit-clip-path:url(#clip-mat-06)}
+.mp-material[data-index="7"] .m-frame,.shape-mat-07{clip-path:url(#clip-mat-07);-webkit-clip-path:url(#clip-mat-07)}
+.m-frame::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 68%,rgba(18,15,11,.12) 100%);z-index:1}
+.m-photo{position:absolute;inset:-6% -8%;width:116%;height:112%;object-fit:cover;object-position:center;will-change:transform;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.m-frame:hover .m-photo{transform:scale(1.035)}
+.m-photo-meta{position:absolute;left:30px;bottom:26px;z-index:2;display:flex;gap:12px;padding:7px 14px;background:rgba(18,15,11,.68);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:20px;color:#fff;font-size:9px;letter-spacing:.22em;text-transform:uppercase;pointer-events:none;border:1px solid rgba(255,255,255,.18);box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.mp-material[data-index="2"] .m-photo-meta{left:72px;bottom:40px}
+.mp-material[data-index="5"] .m-photo-meta{left:50%;transform:translateX(-50%);bottom:34px}
+.mp-material[data-index="6"] .m-photo-meta{left:36px;bottom:28px}
+.mp-material[data-index="7"] .m-photo-meta{left:54px;bottom:36px}
+.m-photo-plate{color:var(--brass)}
+
+.m-info{display:flex;flex-direction:column;justify-content:center;max-width:470px;will-change:transform,opacity}
+.m-spec-tag-wrap{margin-bottom:8px}
+.m-title{font-size:clamp(32px,3.8vw,56px);font-weight:300;line-height:1.08;color:var(--ink);margin:6px 0 8px}
+.m-subtitle{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(20px,2vw,28px);font-style:italic;font-weight:300;color:var(--pink);margin-bottom:20px;line-height:1.2}
+.m-desc{font-size:clamp(14px,1.05vw,16px);line-height:1.75;color:var(--ink);opacity:.85;margin-bottom:26px}
+.m-specs{border-top:1px solid var(--line);padding-top:18px;display:grid;grid-template-columns:1fr;gap:9px}
+.m-spec-item{display:flex;justify-content:space-between;align-items:baseline;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.m-spec-label{color:var(--brass);font-weight:400}
+.m-spec-val{color:var(--ink);opacity:.75;text-align:right}
+
+/* Bottom Persistent Architectural Indicator */
+#m-indicator{position:absolute;left:7vw;right:7vw;bottom:3vh;height:32px;display:flex;align-items:center;justify-content:space-between;z-index:10;pointer-events:none;border-top:1px solid var(--line);padding-top:10px}
+.m-ind-left{display:flex;align-items:center;gap:12px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink)}
+#m-cur-num{color:var(--brass);font-weight:500;min-width:44px}
+.m-ind-div{color:var(--line);font-size:14px}
+#m-cur-name{letter-spacing:.2em;opacity:.85;transition:opacity .25s ease}
+.m-ind-right{display:flex;align-items:center;gap:18px}
+.m-ind-bar-wrap{width:130px;height:1.5px;background:var(--line);position:relative;overflow:hidden}
+#m-cur-bar{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--pink);will-change:width}
+.m-ind-note{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);opacity:.5}
+
+section.pad{padding:18vh 6vw}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:start}
+.mats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mat{aspect-ratio:1;border-radius:4px;display:flex;align-items:flex-end;padding:12px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#fff;text-shadow:0 1px 6px #0006}
+.steps{margin-top:12vh;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.steps div{border-top:1px solid var(--brass);padding-top:14px}
+.steps b{font:300 44px "Cormorant Garamond",Georgia,serif;color:var(--brass)}
+.rv{opacity:0;transform:translateY(30px);transition:1s}.rv.in{opacity:1;transform:none}
+/* ========================================================
+   EDITORIAL ARCHITECTURAL AMENITIES ("WHAT WE HAVE")
+   ======================================================== */
+#have{height:420vh;position:relative;background:var(--card);box-sizing:border-box}
+#have-stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:3vh 0}
+.have-head{padding:0 7vw;margin-bottom:2vh;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;flex-shrink:0}
+.have-head h2{font-size:clamp(30px,4.5vw,64px);margin-top:8px}
+.have-hint{font-size:10.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--brass);opacity:.85}
+
+/* Flowing curved container */
+.am{position:relative;display:flex;align-items:center;gap:clamp(28px,3.8vw,56px);overflow-x:hidden;padding:2vh 18vw 4vh;margin:0;scrollbar-width:none;cursor:grab;user-select:none;will-change:scroll-position;flex-shrink:0}
+.am::-webkit-scrollbar{display:none}
+.am:active{cursor:grabbing}
+
+/* Sculptural Amenity Architectural Silhouettes */
+.am-col{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;will-change:transform,opacity;cursor:pointer;outline:none}
+.am-col:focus-visible .am-item{outline:2px solid var(--brass);outline-offset:4px}
+.am-col-foot{display:flex;align-items:center;justify-content:center;pointer-events:none}
+.am-scroll-hint{margin:0;font-family:Inter,system-ui,sans-serif;font-size:9.5px;font-weight:400;letter-spacing:.30em;text-transform:uppercase;color:rgba(27,23,18,0.52);line-height:1;pointer-events:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:color .35s ease,opacity .35s ease}
+.am-scroll-hint::after{content:"↓";font-size:11px;opacity:.85;animation:hintBounce 2s infinite ease-in-out}
+.am-col:hover .am-scroll-hint{color:var(--brass);opacity:1}
+.am-col:hover .am-item{box-shadow:0 45px 90px -15px rgba(27,23,18,.45),inset 0 0 0 1px rgba(255,255,255,.28)}
+.am-col:hover .am-img{transform:scale(1.05)}
+.am-col:hover .am-explore{transform:translateX(3px);color:#fff}
+:root[data-theme="dark"] .am-scroll-hint,body.dark-theme .am-scroll-hint,#stage.is-night ~ #have .am-scroll-hint,#stage.night ~ #have .am-scroll-hint{color:rgba(245,240,232,0.65)}
+
+.am-item{width:100%;position:relative;overflow:hidden;cursor:pointer;transition:box-shadow .45s ease,opacity .4s ease,filter .4s ease;box-shadow:0 35px 75px -15px rgba(27,23,18,.32),inset 0 0 0 1px rgba(255,255,255,.18);background:#15110d;max-height:55vh}
+.am-item:hover{box-shadow:0 45px 90px -15px rgba(27,23,18,.45),inset 0 0 0 1px rgba(255,255,255,.28)}
+.am-item.is-dimmed{opacity:.18!important;filter:blur(3px)!important;pointer-events:none}
+.am-col:nth-child(1),.am-item:nth-child(1){width:clamp(300px,26vw,400px)}
+.am-col:nth-child(1) .am-item,.am-item:nth-child(1){aspect-ratio:.74;border-radius:48% 38% 18% 28%/42% 34% 14% 20%}.am-col:nth-child(1) .am-top,.am-item:nth-child(1) .am-top{top:44px;left:40px;right:44px}.am-col:nth-child(1) .am-meta,.am-item:nth-child(1) .am-meta{bottom:44px;left:42px;right:34px}
+.am-col:nth-child(2),.am-item:nth-child(2){width:clamp(280px,24vw,370px)}
+.am-col:nth-child(2) .am-item,.am-item:nth-child(2){aspect-ratio:.78;border-radius:36% 52% 24% 16%/32% 46% 18% 14%}.am-col:nth-child(2) .am-top,.am-item:nth-child(2) .am-top{top:44px;left:44px;right:36px}.am-col:nth-child(2) .am-meta,.am-item:nth-child(2) .am-meta{bottom:44px;left:40px;right:38px}
+.am-col:nth-child(3),.am-item:nth-child(3){width:clamp(330px,29vw,440px)}
+.am-col:nth-child(3) .am-item,.am-item:nth-child(3){aspect-ratio:.74;border-radius:50% 50% 18% 18%/44% 44% 16% 16%}.am-col:nth-child(3) .am-top,.am-item:nth-child(3) .am-top{top:52px;left:50px;right:50px}.am-col:nth-child(3) .am-meta,.am-item:nth-child(3) .am-meta{bottom:44px;left:44px;right:44px}
+.am-col:nth-child(4),.am-item:nth-child(4){width:clamp(290px,25vw,390px)}
+.am-col:nth-child(4) .am-item,.am-item:nth-child(4){aspect-ratio:.77;border-radius:42% 34% 16% 32%/36% 30% 14% 26%}.am-col:nth-child(4) .am-top,.am-item:nth-child(4) .am-top{top:40px;left:40px;right:40px}.am-col:nth-child(4) .am-meta,.am-item:nth-child(4) .am-meta{bottom:44px;left:44px;right:36px}
+.am-col:nth-child(5),.am-item:nth-child(5){width:clamp(310px,27vw,410px)}
+.am-col:nth-child(5) .am-item,.am-item:nth-child(5){aspect-ratio:.75;border-radius:48% 40% 26% 18%/44% 36% 22% 14%}.am-col:nth-child(5) .am-top,.am-item:nth-child(5) .am-top{top:46px;left:44px;right:42px}.am-col:nth-child(5) .am-meta,.am-item:nth-child(5) .am-meta{bottom:44px;left:42px;right:38px}
+
+/* Photographic Framing */
+.am-img-wrap{position:absolute;inset:0;overflow:hidden}
+.am-img{position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;object-position:center;transition:transform .9s cubic-bezier(.16,1,.3,1);will-change:transform}
+.am-item:hover .am-img{transform:scale(1.05)}
+
+/* Vignette gradient */
+.am-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,11,8,.45) 0%,rgba(14,11,8,.05) 30%,rgba(14,11,8,.45) 60%,rgba(14,11,8,.94) 100%);pointer-events:none}
+
+/* Micro-typography */
+.am-top{position:absolute;top:20px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:baseline;z-index:2;pointer-events:none}
+.am-num{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass);font-weight:500}
+.am-explore{font-size:9.5px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:6px;transition:transform .3s ease}
+.am-item:hover .am-explore{transform:translateX(3px);color:#fff}
+
+.am-meta{position:absolute;bottom:22px;left:24px;right:24px;z-index:2;pointer-events:none}
+.am-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(26px,2.6vw,40px);font-weight:300;line-height:1.08;color:#fff;margin-bottom:6px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.am-phrase{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(14.5px,1.2vw,17px);font-style:italic;color:#e2cbb0;margin-bottom:12px;opacity:.95}
+.am-detail{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);border-top:1px solid rgba(255,255,255,.14);padding-top:10px;display:flex;justify-content:space-between}
+
+/* ========================================================
+   CINEMATIC AMENITY SCROLL-SCRUBBED FRAME SEQUENCES
+   ======================================================== */
+.tour { position: fixed; inset: 0; z-index: 100; background: #000; }
+.tour[hidden] { display: none !important; }
+.tour__scroller { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.tour__scroller::-webkit-scrollbar { display: none; }
+.tour .track { position: relative; }
+.tour .sticky { position: sticky; top: 0; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; background: #000; }
+#tourCanvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.sticky::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+.tour__back {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 24px);
+  left: 28px;
+  z-index: 105;
+  background: rgba(18, 15, 11, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  padding: 10px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: Inter, system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  font-size: 10px;
+  text-transform: uppercase;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
+  outline: none;
+}
+.tour__back:hover {
+  background: rgba(18, 15, 11, 0.88);
+  transform: translateY(-2px);
+  border-color: var(--brass);
+}
+.tour__back:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+#tourCaptions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.caption {
+  position: absolute;
+  left: 6vw;
+  right: 6vw;
+  bottom: 9vh;
+  max-width: 720px;
+  opacity: 0;
+  visibility: hidden;
+  color: #fff;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.caption h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(34px, 5.2vw, 72px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 10px;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+}
+.caption p {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-style: italic;
+  font-weight: 300;
+  color: #f3dfc8;
+  line-height: 1.3;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+}
+.tour__scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  right: 6vw;
+  z-index: 5;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.75);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.tour__scroll-hint .tour__hint-arrow {
+  font-size: 11px;
+  opacity: 0.85;
+  animation: hintBounce 2s infinite ease-in-out;
+}
+.tour__reduced {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0d0b09;
+  padding: 60px 7vw;
+  overflow-y: auto;
+  z-index: 102;
+}
+.tour__reduced[hidden] { display: none !important; }
+.tour__reduced-video {
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16/9;
+  border-radius: 6px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
+  object-fit: cover;
+}
+.tour__reduced-captions {
+  margin-top: 28px;
+  max-width: 720px;
+  text-align: center;
+  color: #fff;
+}
+.tour__reduced-captions h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  color: #f3dfc8;
+  margin-bottom: 12px;
+}
+.tour__reduced-item {
+  margin-top: 14px;
+}
+.tour__reduced-item strong {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  display: block;
+  margin-bottom: 4px;
+}
+.tour__reduced-item p {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* ========================================================
+   QUIET ARCHITECTURAL INQUIRY FOLIO (CONTACT)
+   ======================================================== */
+#touch{padding:16vh 7vw 20vh;text-align:center;background:var(--bg);position:relative}
+#touch h2{font-size:clamp(44px,7vw,100px);font-weight:300;letter-spacing:-.01em;line-height:1.05}
+#env{position:relative;width:min(640px,92%);margin:6vh auto 0;background:#fbf8f3;border:1px solid rgba(176,141,87,.28);border-radius:4px;box-shadow:0 24px 60px -15px rgba(27,23,18,.10);padding:44px 48px;cursor:default;text-align:left;transition:box-shadow .4s ease,border-color .4s ease}
+:root[data-theme="dark"] #env,body.dark-theme #env{background:#1e1813;border-color:rgba(255,255,255,.12);box-shadow:0 24px 60px -15px rgba(0,0,0,.45)}
+#env .env-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+#env .env-num{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass)}
+#env .env-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);opacity:.6}
+#env .letter{display:flex;flex-direction:column;gap:20px}
+.letter input,.letter textarea{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font:300 15px/1.6 Inter,system-ui,sans-serif;padding:10px 0;color:var(--ink);outline:none;transition:border-color .3s ease}
+.letter input::placeholder,.letter textarea::placeholder{color:var(--ink);opacity:.4;font-style:italic;font-family:"Cormorant Garamond",Georgia,serif;font-size:17px}
+.letter input:focus,.letter textarea:focus{border-bottom-color:var(--brass)}
+.letter-actions{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.letter button#send{background:var(--ink);color:var(--bg);border:1px solid var(--ink);padding:12px 28px;letter-spacing:.22em;font-size:10.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .3s ease,color .3s ease,border-color .3s ease}
+.letter button#send:hover{background:var(--brass);border-color:var(--brass);color:#fff}
+.letter-note{font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:var(--brass);opacity:.8}
+/* ========================================================
+   EDITORIAL ARCHITECTURAL MONOGRAPH FOOTER
+   ======================================================== */
+#footer{background:#000000;color:#f3eee7;position:relative;overflow:hidden;box-sizing:border-box;
+  padding:clamp(100px,18vh,180px) 0 0;min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.footer-text-block{width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(22px,3.8vh,38px);
+  padding-bottom:clamp(32px,5.5vh,54px);position:relative;z-index:2}
+.footer-wordmark{font-family:"Cinzel","Cormorant Garamond",Georgia,serif;
+  font-size:clamp(60px,11vw,144px);font-weight:700;
+  font-style:normal;line-height:0.95;letter-spacing:.16em;text-transform:uppercase;color:#f5f0e8;
+  margin:0;text-align:center}
+.footer-links{display:flex;align-items:center;gap:clamp(28px,5vw,56px);list-style:none;margin:0;padding:0}
+.footer-links li{margin:0;padding:0}
+.f-link-sm{font-family:Inter,system-ui,sans-serif;font-size:10px;font-weight:300;letter-spacing:.28em;
+  text-transform:uppercase;color:rgba(243,238,231,0.42);text-decoration:none;
+  transition:color .35s ease;display:inline-block;cursor:pointer}
+.f-link-sm:hover{color:rgba(243,238,231,0.85)}
+.f-link-sm.prominent{color:rgba(243,238,231,0.64);letter-spacing:.30em}
+.f-link-sm.prominent:hover{color:#ffffff}
+.footer-branch{width:100%;max-width:1376px;display:flex;justify-content:center;margin-top:auto;line-height:0;flex-shrink:0;position:relative;z-index:1}
+.footer-branch svg{width:100%;height:auto;display:block}
+@media(max-width:760px){
+  #mats{height:auto!important;position:relative!important}
+  #ms{position:static!important;height:auto!important;overflow:visible!important;display:block!important;padding:0!important}
+  #mt{display:flex!important;flex-direction:column!important;width:100%!important;transform:none!important}
+  .mp{width:100%!important;height:auto!important;min-height:auto!important;display:flex!important;flex-direction:column!important;padding:48px 6vw 40px!important;gap:26px!important;border-bottom:1px solid var(--line)}
+  .mp-intro{display:flex!important;flex-direction:column!important;padding:54px 6vw 40px!important;gap:28px!important}
+  .m-visual{height:46vh!important;max-height:360px!important;width:100%!important}
+  .m-frame{width:100%!important;height:100%!important}
+  .m-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;transform:none!important}
+  .m-photo-meta{left:22px!important;bottom:18px!important;transform:none!important}
+  .mp-material[data-index="5"] .m-photo-meta{left:50%!important;transform:translateX(-50%)!important;bottom:18px!important}
+  .m-info{width:100%!important;max-width:100%!important;transform:none!important;opacity:1!important}
+  .m-index-card{padding:22px 18px!important}
+  .m-index-list li{grid-template-columns:20px 1fr!important;gap:4px!important}
+  .m-index-list li em{grid-column:2;text-align:left!important;font-size:12.5px!important}
+  #m-indicator{display:none!important}
+  #have{height:auto!important;position:relative!important;padding:12vh 0 14vh!important}
+  #have-stage{position:static!important;height:auto!important;overflow:visible!important;display:block!important;padding:0!important}
+  .have-head{padding:0 6vw;margin-bottom:4vh}
+  .am{display:flex!important;flex-direction:column!important;padding:4vh 6vw!important;gap:36px!important;overflow-x:visible!important}
+  .am-col{width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;margin:0!important;transform:none!important;opacity:1!important}
+  .am-col .am-item,.am-item{width:100%!important;aspect-ratio:16/11!important;max-height:none!important;margin:0!important;transform:none!important;opacity:1!important}
+  .tour__scroll-hint{bottom:20px;right:auto;left:50%;transform:translateX(-50%);font-size:8.5px;letter-spacing:.24em}
+  #tt{left:6vw;right:6vw;bottom:6vh}
+  #tour-hint{display:none}
+  #back{top:calc(env(safe-area-inset-top,0px) + 16px);left:16px;padding:8px 16px}
+  .grid2{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  #footer{padding:clamp(70px,14vh,110px) 0 0;min-height:55vh}
+  .footer-wordmark{font-size:clamp(38px,11.5vw,68px);letter-spacing:.14em}
+  .footer-links{gap:clamp(20px,6vw,36px)}
+  .f-link-sm{font-size:9px;letter-spacing:.22em}
+  .footer-branch svg{width:100%}
+}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes glow{0%,100%{opacity:.75}50%{opacity:1}}
+@keyframes fall{from{transform:translate(0,-8vh) rotate(0)}to{transform:translate(10vw,112vh) rotate(420deg)}}
+@keyframes shine{to{background-position:200% 0}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1)}.rv.in{opacity:1;transform:none}
+#env{transition:transform .4s ease}#env:hover{transform:translateY(-4px)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+#hh{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;transition:opacity .45s ease}
+.hero-bottom-wrap{position:absolute;top:calc((100vh + 34.875vw)/2 + 14px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;pointer-events:none;width:90%;max-width:860px}
+.hero-title{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(22px,2.4vw,34px);font-weight:300;line-height:1.15;color:#1b1712;letter-spacing:-.01em}
+.hero-title em{font-style:italic;color:#9e7944;font-weight:300}
+.hero-scroll-hint{margin:0;font-family:Inter,system-ui,sans-serif;font-size:9.5px;font-weight:400;letter-spacing:.30em;text-transform:uppercase;color:rgba(27,23,18,0.52);line-height:1;pointer-events:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.hero-scroll-hint::after{content:"↓";font-size:11px;opacity:.85;animation:hintBounce 2s infinite ease-in-out}
+@keyframes hintBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+#stage.is-night .hero-title,#stage.night .hero-title{color:#f5f0e8}
+#stage.is-night .hero-title em,#stage.night .hero-title em{color:#dfcfb3}
+#stage.is-night .hero-scroll-hint,#stage.night .hero-scroll-hint{color:rgba(245,240,232,0.65)}
+@media(max-width:760px){
+  .hero-bottom-wrap{top:calc((100vh + 49.5vw)/2 + 10px);gap:5px}
+  .hero-title{font-size:clamp(18px,5vw,25px)}
+  .hero-scroll-hint{font-size:8px;letter-spacing:.24em}
+}
+#intro button{background:none;border:0;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;text-decoration:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}.stats b{display:block;font:300 clamp(54px,9vw,120px)/1 "Cormorant Garamond",Georgia,serif;color:var(--pink)}
+.mq{overflow:hidden;white-space:nowrap;margin-top:12vh;border-block:1px solid var(--brass);padding:18px 0}.mq div{display:inline-block;animation:mq 45s linear infinite;font:italic 300 clamp(22px,3vw,38px) "Cormorant Garamond",Georgia,serif}@keyframes mq{to{transform:translateX(-50%)}}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+
+/* Aurelia art direction layer */
+:root{--paper:#fbf9f6;--ink-soft:#5d554a;--line:rgba(27,23,18,.14);--rose:#c2467a}
+body{background:var(--paper);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:3;opacity:.025;background-image:radial-gradient(rgba(0,0,0,.9) .55px,transparent .6px);background-size:5px 5px}
+#hero{height:200vh}
+#stage{box-shadow:none}
+#craft{padding:60px 7vw 36px;background:var(--paper)}
+#craft .steps{margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.5vw,36px)}
+#craft .steps div{border-top:1px solid var(--brass);padding-top:14px;min-height:auto}
+#craft .steps b{font:300 48px/1 "Cormorant Garamond",Georgia,serif;color:var(--brass);display:block;margin-bottom:8px}
+#craft .steps .tag{font-size:11px;letter-spacing:.22em;margin-bottom:6px}
+#craft .steps p:last-child{font-size:13.5px;line-height:1.55;color:var(--ink);opacity:.8}
+#stats{padding:36px 7vw 60px;background:var(--paper)}
+#stats .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+#stats .stats b{display:block;font:300 clamp(48px,7.5vw,96px)/1 "Cormorant Garamond",Georgia,serif;color:var(--rose);margin-bottom:6px}
+#stats .mq{margin-top:40px;border-color:var(--line);border-block:1px solid var(--line);padding:16px 0}
+#touch{background:var(--paper);padding-top:15vh;padding-bottom:18vh}
+#touch h2{font-size:clamp(58px,9vw,120px)}
+#env{transition:transform .4s ease,box-shadow .4s ease}
+#env:hover{transform:translateY(-4px)}
+@media(max-width:760px){
+  #intro{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:12px 14px}
+  .header-left{justify-self:start}
+  .header-brand{font-size:15px;letter-spacing:.18em;justify-self:center;text-align:center}
+  .header-right{justify-self:end}
+  #dn{font-size:7.5px;letter-spacing:.12em;padding:3px 0;gap:4px}
+  #dn .dn-moon{font-size:10px;opacity:.88}
+  #dn .dn-sun{font-size:8.5px}
+  .enter-cta{width:auto;min-width:110px;height:34px;padding:6px 12px}
+  .cta-content{font-size:7.5px;letter-spacing:.12em}
+  .cta-arrow{margin-left:5px;font-size:10px}
+  #hero{height:220vh}
+  #heroFrame{width:var(--frame-w,88%);height:var(--frame-h,49.5vw);border-radius:var(--frame-r,10px)}
+  #stageFrame:before{inset:calc(var(--i,1)*20vh) calc(var(--i,1)*7vw);border-radius:calc(var(--i,1)*10px)}
+  #enterBtn{opacity:1;pointer-events:auto}
+  #hh h1{font-size:clamp(22px,6.2vw,32px)}
+  #craft .steps{grid-template-columns:1fr 1fr}
+
+  /* Fix 1: Mobile Stats Grid — 2x2 layout avoiding right-edge cutoff */
+  #stats{padding:36px 6vw 48px}
+  #stats .stats{grid-template-columns:repeat(2,1fr);gap:28px 16px;text-align:center}
+  #stats .stats b{font-size:clamp(44px,11vw,62px);margin-bottom:4px}
+  #stats .stats .tag{font-size:9.5px;letter-spacing:.18em;line-height:1.4}
+  #stats .mq{margin-top:28px;padding:12px 0}
+
+  /* Fix 2: Mobile Inquiry Folio — prevents header collision and button/note overlap */
+  #touch{padding:10vh 5vw 14vh}
+  #touch h2{font-size:clamp(38px,9vw,60px)}
+  #env{width:calc(100% - 24px);max-width:540px;margin:32px auto 0;padding:28px 20px}
+  #env:hover{transform:none}
+  #env .env-head{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:20px;padding-bottom:12px}
+  #env .env-num{font-size:9px;letter-spacing:.22em;white-space:nowrap}
+  #env .env-sub{font-size:9px;letter-spacing:.18em;white-space:nowrap}
+  #env .letter{gap:16px}
+  .letter input,.letter textarea{font-size:14px;padding:8px 0}
+  .letter input::placeholder,.letter textarea::placeholder{font-size:15px}
+  .letter-actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:16px}
+  .letter button#send{width:100%;padding:13px 20px;font-size:10.5px;letter-spacing:.22em;text-align:center}
+  .letter-note{text-align:center;font-size:9px;letter-spacing:.18em;white-space:nowrap;opacity:.85}
+}
+</style></head><body class="al-loading">
+
+<!-- AURELIA BLOSSOM LOADER -->
+<div id="al-intro" class="al-intro" role="status" aria-live="polite">
+  <span class="al-sr-only">Loading Aurelia</span>
+  <div id="al-sun" aria-hidden="true"></div>
+  <div class="al-container" aria-hidden="true">
+    <svg class="al-plant" id="al-plant" viewBox="0 0 160 270" overflow="visible"><g id="al-g"></g></svg>
+    <div id="al-word">AURELIA</div>
+  </div>
+</div>
+
+<header id="intro">
+  <div class="header-left">
+    <button id="dn" class="is-day" type="button" aria-label="Switch to Night opening" title="Day active · Click for Night opening"><span class="dn-moon" aria-hidden="true">☾</span><span class="dn-text">NIGHT · DAY</span><span class="dn-sun" aria-hidden="true">☀</span></button>
+  </div>
+
+  <a class="header-brand" href="#hero">Aurelia</a>
+
+  <div class="header-right">
+    <a class="enter-cta" id="enterCta" href="#mats">
+      <svg class="cta-contour-svg" viewBox="0 0 194 46" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="cta-glow" cx="92%" cy="82%" r="72%">
+            <stop offset="0%" stop-color="rgba(230, 188, 142, 0.55)" />
+            <stop offset="35%" stop-color="rgba(226, 185, 140, 0.22)" />
+            <stop offset="70%" stop-color="rgba(226, 185, 140, 0.04)" />
+            <stop offset="100%" stop-color="rgba(226, 185, 140, 0.0)" />
+          </radialGradient>
+          <radialGradient id="cta-glow-hover" cx="92%" cy="82%" r="82%">
+            <stop offset="0%" stop-color="rgba(245, 208, 168, 0.80)" />
+            <stop offset="40%" stop-color="rgba(235, 195, 150, 0.35)" />
+            <stop offset="75%" stop-color="rgba(226, 185, 140, 0.10)" />
+            <stop offset="100%" stop-color="rgba(226, 185, 140, 0.0)" />
+          </radialGradient>
+        </defs>
+        <path class="cta-border-path" vector-effect="non-scaling-stroke"
+              d="M 23,0.5 C 52,0.5 70,4.8 97,4.8 C 124,4.8 142,0.5 171,0.5 C 183.7,0.5 193.5,10.5 193.5,23 C 193.5,35.5 183.7,45.5 171,45.5 C 142,45.5 124,41.2 97,41.2 C 70,41.2 52,45.5 23,45.5 C 10.3,45.5 0.5,35.5 0.5,23 C 0.5,10.5 10.3,0.5 23,0.5 Z" />
+      </svg>
+      <div class="cta-content">
+        <span class="cta-text">Enter Aurelia</span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </div>
+    </a>
+  </div>
+</header>
+
+<div id="hero"><div id="stage">
+  <div id="heroViewport">
+    <div id="heroMediaWrap" style="position:absolute;inset:0;width:100%;height:100%;transform-origin:50% 50%;">
+      <canvas id="heroCanvasLight" class="hero-canvas is-active"></canvas>
+      <canvas id="heroCanvasNight" class="hero-canvas"></canvas>
+      <img id="heroStillLight" class="hero-still is-active" src="frames/frame_0001.webp" alt="Aurelia Villa Entrance" decoding="async">
+      <img id="heroStillNight" class="hero-still" src="frames-night/frame_0001.webp" alt="Aurelia Villa Entrance Night" decoding="async">
+      <video id="heroVidLight" class="hero-vid" muted playsinline preload="none" disablepictureinpicture tabindex="-1">
+        <source src="entrance-light.mp4" type="video/mp4">
+      </video>
+      <video id="heroVidNight" class="hero-vid" muted playsinline preload="none" disablepictureinpicture tabindex="-1">
+        <source src="entrance-night.mp4" type="video/mp4">
+      </video>
+      <div id="room"><div><p class="tag" style="color:#ffe2a8">Welcome</p><h2>You’ve <em style="color:#ffd0e2">arrived.</em></h2></div></div>
+    </div>
+  </div>
+  <div id="heroAperture" aria-hidden="true"></div>
+  <div id="hh">
+    <div class="hero-bottom-wrap">
+      <h1 class="hero-title serif">A place <em>to return to.</em></h1>
+      <p class="hero-scroll-hint">Scroll to reveal</p>
+    </div>
+  </div>
+</div></div>
+
+<section id="mats">
+  <!-- SVG Architectural Silhouettes for Material Monograph -->
+  <svg width="0" height="0" class="svg-defs" aria-hidden="true" style="position:absolute;width:0;height:0;pointer-events:none;overflow:hidden">
+    <defs>
+      <!-- 01: Soft Asymmetric Arch (Travertine) -->
+      <clipPath id="clip-mat-01" clipPathUnits="objectBoundingBox"><path d="M 0.04, 0.98 C 0.01, 0.72, 0.00, 0.38, 0.03, 0.20 C 0.06, 0.05, 0.30, 0.00, 0.54, 0.02 C 0.78, 0.04, 0.98, 0.14, 0.97, 0.32 C 0.96, 0.54, 0.99, 0.80, 0.96, 0.97 C 0.72, 1.00, 0.28, 1.00, 0.04, 0.98 Z" /></clipPath>
+      <!-- 02: Tall Organic Capsule (Teak / Oak) -->
+      <clipPath id="clip-mat-02" clipPathUnits="objectBoundingBox"><path d="M 0.06, 0.86 C 0.02, 0.65, 0.03, 0.35, 0.06, 0.14 C 0.08, 0.04, 0.26, 0.00, 0.50, 0.01 C 0.74, 0.00, 0.92, 0.04, 0.94, 0.14 C 0.97, 0.35, 0.98, 0.65, 0.94, 0.86 C 0.92, 0.96, 0.74, 1.00, 0.50, 0.99 C 0.26, 1.00, 0.08, 0.96, 0.06, 0.86 Z" /></clipPath>
+      <!-- 03: Irregular Rounded Monolith (Glass) -->
+      <clipPath id="clip-mat-03" clipPathUnits="objectBoundingBox"><path d="M 0.03, 0.94 C 0.00, 0.68, 0.02, 0.30, 0.06, 0.10 C 0.10, 0.01, 0.38, 0.03, 0.66, 0.01 C 0.88, 0.00, 0.98, 0.08, 0.98, 0.24 C 0.99, 0.50, 0.96, 0.74, 0.94, 0.92 C 0.92, 0.99, 0.65, 0.97, 0.40, 0.99 C 0.20, 1.00, 0.05, 0.99, 0.03, 0.94 Z" /></clipPath>
+      <!-- 04: Flowing Curved Rectangle (Concrete) -->
+      <clipPath id="clip-mat-04" clipPathUnits="objectBoundingBox"><path d="M 0.05, 0.94 C 0.01, 0.70, 0.00, 0.34, 0.04, 0.12 C 0.08, 0.02, 0.34, 0.00, 0.60, 0.02 C 0.82, 0.04, 0.97, 0.10, 0.97, 0.26 C 0.98, 0.52, 0.99, 0.76, 0.95, 0.92 C 0.90, 0.99, 0.62, 0.98, 0.36, 0.99 C 0.14, 1.00, 0.07, 0.99, 0.05, 0.94 Z" /></clipPath>
+      <!-- 05: Sculptural Oval / Oculus (Bronze) -->
+      <clipPath id="clip-mat-05" clipPathUnits="objectBoundingBox"><path d="M 0.06, 0.64 C 0.02, 0.42, 0.08, 0.20, 0.24, 0.07 C 0.36, 0.00, 0.64, 0.00, 0.76, 0.07 C 0.92, 0.20, 0.98, 0.42, 0.94, 0.64 C 0.90, 0.84, 0.78, 0.98, 0.50, 0.99 C 0.22, 0.98, 0.10, 0.84, 0.06, 0.64 Z" /></clipPath>
+      <!-- 06: Subtly Pinched Organic Form (Plaster) -->
+      <clipPath id="clip-mat-06" clipPathUnits="objectBoundingBox"><path d="M 0.03, 0.95 C 0.01, 0.75, 0.05, 0.55, 0.05, 0.45 C 0.04, 0.30, 0.01, 0.15, 0.04, 0.06 C 0.10, 0.00, 0.40, 0.02, 0.65, 0.01 C 0.88, 0.00, 0.96, 0.06, 0.96, 0.16 C 0.95, 0.32, 0.92, 0.48, 0.93, 0.56 C 0.94, 0.72, 0.98, 0.86, 0.95, 0.96 C 0.90, 1.00, 0.60, 0.99, 0.35, 0.99 C 0.15, 0.99, 0.05, 0.99, 0.03, 0.95 Z" /></clipPath>
+      <!-- 07: Asymmetric Stone-like Silhouette (Botanical) -->
+      <clipPath id="clip-mat-07" clipPathUnits="objectBoundingBox"><path d="M 0.06, 0.90 C 0.01, 0.72, 0.02, 0.40, 0.05, 0.22 C 0.08, 0.07, 0.32, 0.01, 0.55, 0.03 C 0.78, 0.05, 0.96, 0.12, 0.96, 0.28 C 0.97, 0.48, 0.93, 0.70, 0.94, 0.88 C 0.95, 0.97, 0.74, 1.00, 0.50, 0.98 C 0.26, 0.97, 0.09, 0.98, 0.06, 0.90 Z" /></clipPath>
+    </defs>
+  </svg>
+  <div id="ms">
+    <div id="mt">
+      <!-- PANEL 0: Editorial Monograph Intro -->
+      <div class="mp mp-intro">
+        <div class="m-intro-content">
+          <p class="tag m-intro-tag">01 — ARCHITECTURAL TECTONICS</p>
+          <h2 class="m-intro-title">HOW WE BUILD IT</h2>
+          <p class="m-intro-subtitle">Built from stone, timber, light and living matter.</p>
+          <div class="m-intro-divider"></div>
+          <p class="m-intro-text">Aurelia is not merely assembled; it is carved from geological permanence. Seven primary materials define the residence—chosen not for fleeting decoration, but for their thermal memory, honest weathering, and intimate dialogue with the sun, sea breeze, and surrounding Mediterranean landscape.</p>
+          <div class="m-intro-meta">
+            <div class="m-intro-meta-item">
+              <span class="m-meta-num">07</span>
+              <span class="m-meta-lbl">Tectonic Elements</span>
+            </div>
+            <div class="m-intro-meta-item">
+              <span class="m-meta-num">100%</span>
+              <span class="m-meta-lbl">Authentic Materials</span>
+            </div>
+            <div class="m-intro-meta-item">
+              <span class="m-meta-num">00</span>
+              <span class="m-meta-lbl">Superficial Veneers</span>
+            </div>
+          </div>
+          <div class="m-intro-scroll-hint">
+            <span>SCROLL TO DISCOVER THE MATERIALS</span>
+            <span class="m-hint-arrow">→</span>
+          </div>
+        </div>
+        <div class="m-intro-index">
+          <div class="m-index-card">
+            <div class="m-index-head">
+              <span class="tag">MATERIAL INDEX</span>
+              <span class="m-index-count">01 — 07</span>
+            </div>
+            <ol class="m-index-list">
+              <li><span>01</span><b>Travertine Limestone</b><em>The Earth Foundation</em></li>
+              <li><span>02</span><b>Architectural Teak / Oak</b><em>Warmth and Shadow</em></li>
+              <li><span>03</span><b>Ultra-clear Glass</b><em>Dissolving Boundaries</em></li>
+              <li><span>04</span><b>Board-Marked Concrete</b><em>Formwork as Ornament</em></li>
+              <li><span>05</span><b>Patinated Bronze</b><em>Living Metal</em></li>
+              <li><span>06</span><b>Natural Lime Plaster</b><em>Breathing Surfaces</em></li>
+              <li><span>07</span><b>Botanical &amp; Water</b><em>Living Equilibrium</em></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 1: Travertine Limestone -->
+      <div class="mp mp-material" data-index="1">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-01-travertine.jpg" alt="Travertine Limestone architectural facade" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 01</span>
+              <span class="m-photo-cap">ROMAN TRAVERTINE MONOLITH</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">01 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Travertine Limestone</h2>
+          <h3 class="m-subtitle">The Earth Foundation</h3>
+          <p class="m-desc">Honed Roman travertine, laid in continuous monolithic courses. Selected for thermal mass, tactile softness under bare feet, and a patina that deepens with centuries of salt air and sun.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">ORIGIN</span><span class="m-spec-val">Tivoli Quarry, Lazio</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">FINISH</span><span class="m-spec-val">Open-pore Honed</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Monolithic Facade &amp; Floors</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: Architectural Teak / Dark Oak -->
+      <div class="mp mp-material" data-index="2">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-02-wood.jpg" alt="Architectural Teak and Dark Oak joinery" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 02</span>
+              <span class="m-photo-cap">SMOKED OAK &amp; TEAK JOINERY</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">02 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Architectural Teak / Dark Oak</h2>
+          <h3 class="m-subtitle">Warmth and Shadow</h3>
+          <p class="m-desc">Sustainably harvested old-growth teak and smoked European oak. Hand-oiled, grain-matched joinery and acoustic ceiling louvers that filter daylight into warm interior ribbons.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">ORIGIN</span><span class="m-spec-val">FSC European Oak &amp; Teak</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">FINISH</span><span class="m-spec-val">Hand-Rubbed Organic Oil</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Acoustic Louvers &amp; Cabinetry</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3: Ultra-clear Structural Glass -->
+      <div class="mp mp-material" data-index="3">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-03-glass.jpg" alt="Ultra-clear Structural Glass architectural wall" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 03</span>
+              <span class="m-photo-cap">ZERO-THRESHOLD GLAZING</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">03 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Ultra-clear Structural Glass</h2>
+          <h3 class="m-subtitle">Dissolving the Boundary</h3>
+          <p class="m-desc">Floor-to-ceiling motorized low-iron glass walls that slide flush into hidden wall pockets. Zero-threshold transitions that erase the boundary between living room and horizon.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">CLARITY</span><span class="m-spec-val">Low-Iron Diamond Optiwhite</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">SYSTEM</span><span class="m-spec-val">Motorized Concealed Pockets</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Spatial Horizon Dissolution</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 4: Sculptural Architectural Concrete -->
+      <div class="mp mp-material" data-index="4">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-04-concrete.jpg" alt="Sculptural Architectural Board-Marked Concrete" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 04</span>
+              <span class="m-photo-cap">BOARD-MARKED OFF-FORM CONCRETE</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">04 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Sculptural Architectural Concrete</h2>
+          <h3 class="m-subtitle">Formwork as Ornament</h3>
+          <p class="m-desc">Board-marked off-form concrete cast with Douglas fir formwork. The natural wood grain embossed into stone-hard aggregate gives monumental stability with human-scale warmth.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">FORMWORK</span><span class="m-spec-val">Douglas Fir Rough-Sawn</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">COMPOSITION</span><span class="m-spec-val">Low-Carbon Pozzolanic Mix</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Cantilevers &amp; Structural Core</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 5: Patinated Architectural Bronze -->
+      <div class="mp mp-material" data-index="5">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-05-bronze.jpg" alt="Patinated Architectural Bronze hardware and screens" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 05</span>
+              <span class="m-photo-cap">HAND-PATINATED BRONZE ALLOY</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">05 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Patinated Architectural Bronze</h2>
+          <h3 class="m-subtitle">Living Metal</h3>
+          <p class="m-desc">Custom unlacquered bronze handles, pivoting screens, and water spouts. Left to weather naturally, each touchpoint records the passage of hands, ocean breeze, and time.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">ALLOY</span><span class="m-spec-val">Architectural Cu-Sn-Zn Bronze</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">PATINA</span><span class="m-spec-val">Unlacquered Living Weathering</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Touchpoints &amp; Brise-Soleil</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 6: Natural Lime Plaster -->
+      <div class="mp mp-material" data-index="6">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-06-plaster.jpg" alt="Natural Lime Plaster textured wall surface" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 06</span>
+              <span class="m-photo-cap">MINERAL LIME &amp; CARRARA MARBLE DUST</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">06 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Natural Lime Plaster</h2>
+          <h3 class="m-subtitle">Breathing Surfaces</h3>
+          <p class="m-desc">Multi-layer mineral lime plaster hand-troweled with crushed marble dust. Breathable, non-toxic, and light-refractive—walls that absorb ambient moisture and glow softly with morning light.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">BASE</span><span class="m-spec-val">Aged Dolomitic Slaked Lime</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">AGGREGATE</span><span class="m-spec-val">Micro-Crushed Carrara Marble</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Hygroscopic Interior Envelope</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 7: Living Botanical & Water Systems -->
+      <div class="mp mp-material" data-index="7">
+        <div class="m-visual">
+          <div class="m-frame">
+            <img class="m-photo" src="material-07-botanical.jpg" alt="Living Botanical and Water Systems courtyard" loading="lazy">
+            <div class="m-photo-meta">
+              <span class="m-photo-plate">PLATE 07</span>
+              <span class="m-photo-cap">BIOPHILIC CANOPY &amp; REFLECTION BASINS</span>
+            </div>
+          </div>
+        </div>
+        <div class="m-info">
+          <div class="m-spec-tag-wrap"><span class="tag">07 / 07 — MATERIAL</span></div>
+          <h2 class="m-title">Living Botanical &amp; Water Systems</h2>
+          <h3 class="m-subtitle">Architecture in Equilibrium</h3>
+          <p class="m-desc">Native drought-tolerant flora, descending courtyard cascading ferns, and recirculating reflection pools. A closed-loop biophilic ecosystem cooling the microclimate naturally.</p>
+          <div class="m-specs">
+            <div class="m-spec-item"><span class="m-spec-label">FLORA</span><span class="m-spec-val">Endemic Mediterranean Xeriscape</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">HYDRAULICS</span><span class="m-spec-val">Recirculating Reflection Basins</span></div>
+            <div class="m-spec-item"><span class="m-spec-label">TECTONICS</span><span class="m-spec-val">Microclimate Passive Cooling</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSISTENT EDITORIAL INDICATOR -->
+    <div id="m-indicator">
+      <div class="m-ind-left">
+        <span id="m-cur-num">OVERVIEW</span>
+        <span class="m-ind-div">·</span>
+        <span id="m-cur-name">HOW WE BUILD IT</span>
+      </div>
+      <div class="m-ind-right">
+        <div class="m-ind-bar-wrap">
+          <div id="m-cur-bar"></div>
+        </div>
+        <span class="m-ind-note">SCROLL TO EXPLORE →</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="craft"><p class="tag">How we build it</p><div class="steps"><div><b>i</b><p class="tag">Site</p><p>We read the land first: sun, wind, sea line.</p></div><div><b>ii</b><p class="tag">Structure</p><p>Reinforced frame, insulated stone façades.</p></div><div><b>iii</b><p class="tag">Craft</p><p>Joinery and stone laid by hand, on site.</p></div><div><b>iv</b><p class="tag">Life</p><p>Gardens planted, systems tuned, keys handed over.</p></div></div></section>
+
+<section id="stats"><div class="stats"><div><b data-n="25">0</b><span class="tag">Private residences</span></div><div><b data-n="244">0</b><span class="tag">m² largest home</span></div><div><b data-n="5">0</b><span class="tag">Shared amenities</span></div><div><b data-n="1">0</b><span class="tag">Gate</span></div></div><div class="mq"><div id="mqt"></div></div></section>
+<section id="have">
+  <div id="have-stage">
+    <div class="have-head">
+      <div>
+        <p class="tag">02 — WHAT WE HAVE</p>
+        <h2>Five ways to <em>stay awhile.</em></h2>
+      </div>
+      <p class="have-hint">SCROLL TO EXPLORE SPACES · TAP TO ENTER</p>
+    </div>
+    <div class="am" id="am"></div>
+  </div>
+</section>
+
+<section id="touch">
+  <p class="tag">03 — Get in touch</p>
+  <h2 style="margin-top:14px">Write us <em>a letter.</em></h2>
+  <div id="env">
+    <div class="env-head">
+      <span class="env-num">FOLIO NO. 01 / INQUIRY</span>
+      <span class="env-sub">AURELIA PRIVATE RESIDENCES</span>
+    </div>
+    <div class="letter">
+      <div id="lf">
+        <input placeholder="Your name" aria-label="Your name">
+        <input placeholder="Email address" type="email" aria-label="Email address">
+        <textarea rows="3" placeholder="Dear Aurelia…" aria-label="Inquiry message"></textarea>
+        <div class="letter-actions">
+          <button id="send" type="button">Send letter</button>
+          <span class="letter-note">Private Concierge Response</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <!-- Text content: AURELIA bold architectural wordmark + minimal links -->
+  <div class="footer-text-block">
+    <p class="footer-wordmark">Aurelia</p>
+    <ul class="footer-links">
+      <li><a class="f-link-sm" href="#">Privacy</a></li>
+      <li><a class="f-link-sm prominent" id="footerBackTop" href="#hero">Return to Beginning ↑</a></li>
+    </ul>
+  </div>
+  <!-- Botanical branch — exactly matched from reference image -->
+  <div class="footer-branch" aria-hidden="true">
+    <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generator: visioncortex VTracer 0.6.12 -->
+<svg viewBox="0 0 1376 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+<path d="M0 0 C4.7 1.47 8.24 4.23 12.04 7.25 C12.89 7.91 13.76 8.55 14.64 9.19 C20.45 13.58 24.1 19.08 26.38 25.93 C27.04 28.03 27.67 30.12 28.26 32.24 C29.89 38.03 31.52 43.26 36.31 47.19 C43.25 52.71 50.33 54.48 59.09 55.16 C65.75 55.56 72.42 55.79 79.08 56.03 C94.92 56.6 110.69 57.94 125.94 62.56 C126.77 62.81 127.61 63.05 128.45 63.3 C140.81 66.98 152.9 71.55 165 76 C165.33 75.67 165.66 75.34 166 75 C161.76 71 157.52 67.61 152.5 64.62 C145.15 60.1 140.12 54.89 136.52 46.98 C135.25 44.02 134.11 41.02 133 38 C132.78 37.43 132.57 36.85 132.34 36.26 C131.73 34.64 131.14 33.01 130.56 31.38 C130.39 30.89 130.21 30.41 130.03 29.91 C129.88 29.45 129.72 28.99 129.57 28.52 C129.43 28.13 129.3 27.74 129.16 27.33 C128.93 25.42 129.47 23.83 130 22 C153.73 37.21 153.73 37.21 157.9 46.89 C159.41 50.86 160.33 55.01 161.38 59.12 C162.97 65.34 164.49 69.94 169.06 74.49 C173.83 78.19 177.91 80.6 183.81 82 C184.45 82.16 185.09 82.32 185.75 82.49 C189.31 83.39 192.89 84.2 196.48 85 C207.81 87.53 215.92 90.75 225 98 C225 98.66 225 99.32 225 100 C225.55 100.22 226.1 100.43 226.67 100.65 C229.84 102.25 231.98 104.95 234.31 107.56 C234.55 107.83 234.55 107.83 235.77 109.17 C239.74 113.61 243.46 118.21 247 123 C247.3 122.41 247.59 121.81 247.9 121.2 C249.27 118.47 250.63 115.73 252 113 C252.66 113 253.32 113 254 113 C253.79 113.66 253.57 114.32 253.35 115 C250.58 124.25 250.65 133.17 250.81 142.75 C250.83 144.33 250.84 145.92 250.85 147.5 C250.89 151.33 250.94 155.17 251 159 C251.36 158.69 251.73 158.39 252.1 158.07 C252.59 157.66 253.08 157.24 253.59 156.82 C254.1 156.38 254.62 155.95 255.15 155.5 C256.28 154.54 257.42 153.58 258.55 152.62 C261.5 150.14 264.42 147.64 267.31 145.09 C273.47 139.68 279.75 134.63 286.39 129.83 C294.38 124.05 302.26 118.26 309 111 C309.34 110.64 309.68 110.28 310.03 109.91 C315.09 104.22 315.71 97.47 316.56 90.19 C316.68 89.21 316.79 88.23 316.9 87.25 C318.39 74.52 322.7 64.81 331 55 C331.28 54.67 331.56 54.34 331.85 53.99 C335.49 49.82 339.82 46.44 344.19 43.06 C344.7 42.66 345.21 42.26 345.74 41.84 C349.45 39.06 349.45 39.06 352.36 38.75 C352.9 38.83 353.44 38.91 354 39 C353.86 39.27 353.86 39.27 353.15 40.62 C349.15 48.67 346.85 57.14 345.3 65.94 C343.63 75.34 341.34 82.54 334.69 89.62 C333.8 90.43 332.91 91.22 332 92 C331.29 92.64 330.57 93.29 329.86 93.93 C326.82 96.68 323.79 99.41 320.52 101.89 C317.64 104.17 315.45 106.88 313.19 109.75 C312.78 110.26 312.37 110.76 311.96 111.29 C310.97 112.52 309.98 113.76 309 115 C312.71 113.92 316.11 112.52 319.56 110.79 C330.53 105.28 341.58 100.43 353.12 96.25 C353.76 96.02 354.4 95.79 355.06 95.55 C361.38 93.27 367.71 91.06 374.12 89.04 C375.94 88.46 377.75 87.89 379.56 87.31 C379.99 87.18 380.41 87.05 380.85 86.91 C388.24 84.55 394.63 81.18 400.91 76.62 C402 76 402 76 404 76 C404 76.99 404 77.98 404 79 C403.5 79.33 403.5 79.33 401 81 C401.33 81.33 401.66 81.66 402 82 C402.23 82 402.23 82 403.4 81.98 C427.2 81.66 450.87 81.92 474.62 83.44 C475.72 83.51 476.82 83.58 477.92 83.65 C482.14 83.91 486.36 84.19 490.58 84.46 C565.31 89.33 565.31 89.33 589 75 C589 74.34 589 73.68 589 73 C589.95 72.08 590.91 71.16 591.87 70.24 C594.01 67.89 595.33 65.03 596.81 62.25 C603.04 51.11 609.57 44.92 621 39 C631.37 34 631.37 34 635 34 C631.69 46.47 624.6 57.32 615 65.9 C608.34 71.45 599.75 74.17 591.76 77.23 C590.02 77.99 588.55 78.9 587 80 C594.67 78.73 602.18 77.08 609.71 75.13 C611.43 74.69 613.16 74.26 614.88 73.83 C620.59 72.38 626.12 70.71 631.57 68.47 C631.81 68.37 631.81 68.37 633.03 67.87 C638.14 65.67 642.6 62.57 645.74 57.9 C647.95 54.18 649.57 50.2 651.06 46.15 C654.28 37.58 659.15 31 665 24 C665.66 24 666.32 24 667 24 C666.51 32.29 664.47 41.03 659.47 47.79 C656.58 51.43 653.43 54.86 650 58 C649.34 58 648.68 58 648 58 C647.75 58.62 647.51 59.24 647.25 59.88 C646 62 646 62 643.88 63.25 C643.26 63.5 642.64 63.75 642 64 C645.86 64.38 648.37 63.1 651.72 61.41 C652.26 61.15 652.8 60.88 653.35 60.61 C655.07 59.77 656.79 58.92 658.5 58.06 C660.21 57.21 661.93 56.37 663.65 55.53 C664.71 55 665.78 54.47 666.84 53.94 C669.53 52.62 672.03 51.6 675 51 C675.25 50.45 675.49 49.9 675.75 49.34 C679.38 42.1 685.57 35.31 692.57 31.27 C693.38 30.84 694.19 30.42 695 30 C695.44 29.78 695.87 29.55 696.32 29.32 C704.52 25.27 713.03 23.48 722 22 C721.44 25.96 720.33 28.58 718 31.81 C717.85 32.03 717.85 32.03 717.06 33.12 C711.33 40.81 703.94 46.88 694.96 50.39 C690.55 51.77 685.92 52.36 681.37 53.1 C672.67 54.55 665.75 57.65 658.02 61.92 C654.41 63.85 650.68 65.53 646.94 67.19 C646.19 67.52 645.45 67.85 644.68 68.19 C637.61 71.27 630.37 73.76 623 76 C623.46 76.07 623.93 76.14 624.4 76.21 C633.36 77.6 641.8 79.03 650 83 C650.33 83.99 650.66 84.98 651 86 C650.13 85.71 649.26 85.42 648.39 85.13 C647.84 84.95 647.28 84.77 646.72 84.58 C645.64 84.22 644.57 83.84 643.5 83.46 C626.62 77.41 610.1 79.79 593.09 83.59 C589.28 84.44 585.46 85.25 581.64 86.05 C581.23 86.14 580.82 86.23 580.4 86.32 C569.07 88.72 557.63 90.14 546.06 90.62 C545.32 90.66 544.58 90.7 543.82 90.74 C529.31 91.42 514.87 90.89 500.38 90 C489.23 89.32 478.17 88.85 467 89 C469.97 91.31 472.94 93.62 476 96 C473.13 96 472.37 95.76 470.04 94.37 C462.63 90.02 454.39 89.14 446 88 C445.5 87.93 445.01 87.86 444.5 87.78 C415.96 83.7 388.04 90.76 361.25 99.81 C360.52 100.06 359.79 100.3 359.04 100.55 C347.95 104.29 337.47 108.82 327 114 C327.57 113.99 328.14 113.98 328.73 113.97 C334.19 113.87 339.65 113.79 345.1 113.74 C347.91 113.72 350.71 113.68 353.51 113.62 C377.47 113.15 377.47 113.15 388 119 C388.82 119.43 389.65 119.86 390.47 120.28 C392.71 121.48 394.88 122.76 397.06 124.06 C403.79 127.98 410.44 131.01 418 133 C418 133.99 418 134.98 418 136 C403.57 138.72 385.38 141.03 371.57 134.8 C364.14 131.03 357.15 126.14 350.62 120.97 C343.24 116.55 334.27 117.44 326 118 C312.45 119.39 298.65 127.31 288.3 135.86 C285.41 138.4 282.73 141.17 280.05 143.93 C277.22 146.84 274.33 149.51 271.12 152 C270.73 152.31 270.33 152.62 269.91 152.94 C269.07 153.6 268.23 154.26 267.38 154.91 C254.52 165.03 244.81 175.98 235 189 C234.66 189.45 234.32 189.9 233.97 190.36 C232.31 192.57 230.65 194.78 229 197 C228.01 196.67 227.02 196.34 226 196 C226.16 195.8 226.16 195.8 226.99 194.77 C228.24 193.21 229.48 191.66 230.73 190.1 C231.28 189.41 231.84 188.71 232.4 188.02 C235.26 184.45 238.12 180.88 240.89 177.23 C242.23 175.47 243.61 173.73 245 172 C245.31 171.62 245.62 171.23 245.94 170.84 C250.9 164.77 256.39 159.93 262.62 155.19 C268.29 150.86 273.47 146.11 278.67 141.23 C280.66 139.39 282.7 137.59 284.75 135.81 C284.92 135.67 284.92 135.67 285.77 134.93 C286.51 134.28 287.25 133.64 288 133 C284.12 134.65 281.23 137.19 278.06 139.94 C276.9 140.93 275.74 141.92 274.59 142.91 C273.99 143.42 273.4 143.93 272.79 144.46 C258.86 156.45 258.86 156.45 253.38 160.69 C252.78 161.15 252.19 161.6 251.59 162.07 C249.83 163.1 248.98 163.08 247 163 C247.04 162.68 247.04 162.68 247.22 161.04 C247.97 153.78 248.12 146.61 248.06 139.31 C248.06 138.21 248.05 137.1 248.05 135.99 C248.04 133.33 248.02 130.66 248 128 C247.01 128 246.02 128 245 128 C245.13 128.34 245.27 128.69 245.4 129.04 C249.06 139.88 248.78 152.06 245.69 162.99 C242.29 172.87 235.8 180.82 228.24 187.84 C225.33 190.56 223.12 193.63 221 197 C220.01 196.67 219.02 196.34 218 196 C219.35 194.31 220.7 192.62 222.06 190.94 C222.47 190.43 222.88 189.92 223.31 189.4 C225.59 186.61 227.88 184.09 230.56 181.69 C236.37 176.1 241.3 167.51 243.66 159.79 C244.38 155.99 244.33 152.13 244.32 148.27 C244.31 146.77 244.34 145.26 244.36 143.76 C244.41 136.1 243.47 128.64 239.31 122 C238.7 121.18 238.08 120.36 237.44 119.56 C237.09 119.11 236.75 118.66 236.39 118.2 C235.28 116.78 234.15 115.39 233 114 C232.61 113.53 232.23 113.06 231.83 112.57 C225.04 104.4 217.54 96.35 207.05 93.34 C204.48 92.68 201.89 92.08 199.29 91.51 C194.82 90.51 190.38 89.39 185.94 88.25 C185.45 88.13 184.97 88 184.47 87.88 C175.78 85.65 167.39 82.8 159.01 79.63 C158.78 79.54 158.78 79.54 157.67 79.12 C156.48 78.67 155.29 78.21 154.11 77.75 C147.29 75.32 141 75.5 134.06 77.32 C131.05 78.29 129.11 79.49 127.09 81.92 C125.63 83.89 124.3 85.92 123 88 C115.99 99.16 115.99 99.16 109.8 101.98 C103.77 104.35 97.32 105.64 91 107 C90.52 107.11 90.05 107.22 89.56 107.33 C86.89 107.91 84.41 108.11 81.69 108.06 C81.34 108.06 81.34 108.06 79.57 108.04 C79.05 108.02 78.54 108.01 78 108 C78 107.34 78 106.68 78 106 C78.26 105.86 78.26 105.86 79.58 105.14 C84.91 102.04 88.63 98.35 92.5 93.56 C97.93 86.9 103.1 81.07 111.44 78.25 C118.48 76.32 125.86 75.44 133.06 74.32 C135.39 73.94 137.69 73.49 140 73 C134.73 70.09 129.63 68.08 123.79 66.67 C122.59 66.38 121.4 66.07 120.21 65.76 C106 62.15 91.15 61.64 76.57 60.99 C72.81 60.83 69.06 60.64 65.3 60.46 C64.9 60.45 64.9 60.45 62.86 60.35 C58.16 60.13 53.48 59.83 48.79 59.46 C41.88 58.94 34.97 58.71 28.04 58.65 C26.68 58.63 25.32 58.61 23.96 58.57 C12.88 58.26 2.81 59.72 -6.77 65.67 C-7.15 65.92 -7.54 66.18 -7.93 66.44 C-9 67 -9 67 -11 67 C-10.67 66.01 -10.34 65.02 -10 64 C-8.46 63.2 -6.92 62.41 -5.38 61.62 C-4.95 61.4 -4.52 61.18 -4.08 60.95 C-0.81 59.29 2.5 58.08 6 57 C5.34 56.85 4.68 56.7 4 56.55 C-12.98 52.67 -29.45 47.74 -45.91 42.09 C-46.66 41.83 -47.4 41.58 -48.17 41.32 C-49.55 40.84 -50.94 40.36 -52.32 39.88 C-67.53 34.63 -67.53 34.63 -74.9 36.48 C-76.95 37.12 -78.97 37.8 -81 38.5 C-91.26 41.73 -101.02 42.56 -111.44 39.5 C-121.06 36.34 -131.37 31.75 -139 25 C-137.06 24.27 -135.53 23.89 -133.46 24.01 C-126.86 24.26 -120.8 23.76 -114.31 22.5 C-104.28 20.59 -95.65 19.98 -86 24 C-84.33 24.78 -82.68 25.6 -81.02 26.41 C-73.47 30.12 -66.03 32.6 -57.95 34.79 C-49.46 37.09 -41.24 39.94 -33 43 C-33.54 42.53 -34.09 42.06 -34.64 41.57 C-35.37 40.95 -36.09 40.32 -36.81 39.69 C-37.17 39.38 -37.53 39.07 -37.89 38.75 C-40.01 36.91 -42.04 35.01 -44 33 C-43.67 32.01 -43.34 31.02 -43 30 C-42.73 30.35 -42.47 30.7 -42.2 31.06 C-41.84 31.51 -41.49 31.97 -41.12 32.44 C-40.78 32.89 -40.43 33.34 -40.07 33.81 C-39 35 -39 35 -37 36 C-37 36.66 -37 37.32 -37 38 C-36.34 38 -35.68 38 -35 38 C-35 38.66 -35 39.32 -35 40 C-34.34 40.25 -33.68 40.49 -33 40.75 C-30.7 41.66 -28.55 42.75 -26.37 43.91 C-22.08 46.07 -17.76 47.41 -13.12 48.62 C-12.33 48.84 -11.54 49.05 -10.73 49.27 C2.44 52.76 15.03 54.17 28.62 54.06 C29.74 54.06 30.85 54.05 31.96 54.05 C34.64 54.04 37.32 54.02 40 54 C38.36 52.79 36.71 51.58 35.06 50.38 C34.56 50.01 34.07 49.64 33.55 49.27 C30.86 47.3 28.14 45.42 25.31 43.65 C18.92 39.6 14.85 35.25 11.86 28.32 C11.37 27.14 10.88 25.96 10.4 24.77 C8.11 19.09 5.39 13.67 2.54 8.24 C2.21 7.6 1.88 6.96 1.54 6.3 C1.24 5.74 0.95 5.17 0.64 4.59 C-0.03 2.92 -0.13 1.77 0 0 Z M4 4 C5.3 8.37 7.05 12.42 8.97 16.53 C10.15 19.07 11.25 21.6 12.26 24.2 C16.28 34.55 16.28 34.55 21 38 C21.11 34.98 20.76 33.05 20 30 C21.98 32.64 23.96 35.28 26 38 C27.08 33.7 26.85 32.26 25.5 28.31 C25.32 27.78 25.14 27.26 24.95 26.71 C21.69 17.87 14.67 10.39 7 5 C5.23 4.28 5.23 4.28 4 4 Z M-113.38 24.44 C-119.58 25.6 -125.7 26.55 -132 27 C-124.55 33.14 -113.64 38.07 -104 39 C-103.79 39.02 -103.79 39.02 -102.7 39.13 C-94.07 39.86 -85.01 38.37 -77 35 C-76.34 34.34 -75.68 33.68 -75 33 C-82.92 32.34 -90.84 31.68 -99 31 C-92.07 31 -85.14 31 -78 31 C-82.51 27.62 -82.51 27.62 -84.4 26.87 C-84.82 26.7 -85.23 26.53 -85.66 26.36 C-86.08 26.2 -86.5 26.04 -86.94 25.88 C-87.35 25.71 -87.77 25.54 -88.2 25.36 C-96.63 22.05 -104.63 22.71 -113.38 24.44 Z M132 26 C134.81 38.9 138.25 49.62 147.91 59.01 C149.54 60.5 151.16 61.78 153 63 C153.66 63 154.32 63 155 63 C153.38 59.57 151.43 56.43 149.38 53.25 C149.05 52.74 148.73 52.24 148.39 51.71 C147.6 50.48 146.8 49.24 146 48 C148.04 50.54 150.07 53.08 152.07 55.64 C152.41 56.07 152.75 56.5 153.1 56.95 C153.79 57.83 154.49 58.71 155.18 59.6 C155.51 60.03 155.85 60.45 156.2 60.89 C156.49 61.27 156.79 61.65 157.1 62.05 C158 63 158 63 160 64 C158.36 54.47 156.76 45.82 149.8 38.66 C144.45 33.48 138.53 29.54 132 26 Z M690.31 35.02 C685.58 38.58 681.44 42.55 679 48 C682.92 47.32 685.9 45.46 689.25 43.44 C689.8 43.11 690.36 42.78 690.93 42.44 C692.29 41.63 693.65 40.82 695 40 C692.15 42.18 689.24 44.21 686.25 46.19 C685.84 46.46 685.43 46.73 685 47.01 C684 47.68 683 48.34 682 49 C682 49.33 682 49.66 682 50 C688.29 50.75 693.49 48.8 699 46 C706.36 42.01 713.49 36.27 718 29.12 C719 27 719 27 719 25 C709.04 24.7 698.33 29.42 690.31 35.02 Z M663 30 C658.3 35.61 655.4 41.1 653 48 C653.99 48.33 654.98 48.66 656 49 C659.79 43.51 662.17 38.42 664 32 C663.67 31.34 663.34 30.68 663 30 Z M21 38 C22.32 39.32 23.64 40.64 25 42 C25.66 41.67 26.32 41.34 27 41 C26.01 40.01 25.02 39.02 24 38 C23.01 38 22.02 38 21 38 Z M610.45 47.63 C603.33 53.32 597.96 62.26 595.31 70.91 C595.21 71.27 595.11 71.63 595 72 C599.83 70.51 602.86 67.74 606.5 64.31 C607.06 63.81 607.61 63.3 608.18 62.78 C612.03 59.2 615.1 55.38 618 51 C615.64 58.8 609.14 64.04 603 69 C603.66 69.33 604.32 69.66 605 70 C607.65 68.27 610.29 66.51 612.91 64.73 C613.75 64.17 614.61 63.61 615.46 63.06 C622.76 57.95 627.65 48.03 631 40 C631 39.34 631 38.68 631 38 C624.46 38 615.78 44.03 610.45 47.63 Z M348 43 C347.24 43.53 346.5 44.1 345.78 44.69 C345.33 45.05 344.87 45.42 344.41 45.79 C342.39 47.45 340.39 49.12 338.41 50.81 C337.55 51.53 336.7 52.25 335.83 52.95 C328.55 58.91 324.04 67.19 321 76 C320.07 79.39 319.46 82.84 318.94 86.31 C318.91 86.52 318.91 86.52 318.75 87.57 C317.7 94.84 317.7 94.84 319 98 C325.83 89.51 329.84 79.97 334 70 C330.72 79.98 330.72 79.98 329 84.31 C328.92 84.51 328.92 84.51 328.54 85.53 C327.39 88.43 325.93 90.6 324 93 C324.33 93.99 324.66 94.98 325 96 C333.44 89.12 338.84 83.01 341.91 72.37 C343.3 67.13 344.42 61.81 345.55 56.51 C346.53 51.95 347.65 47.47 349 43 C348.67 43 348.34 43 348 43 Z M652 49 C652.33 49.99 652.66 50.98 653 52 C653.66 51.01 654.32 50.02 655 49 C654.01 49 653.02 49 652 49 Z M103.93 84.37 C101.82 86.14 99.9 88.01 98 90 C97.51 90.51 97.02 91.03 96.51 91.56 C86.42 102.16 86.42 102.16 85 105 C94.84 104.61 105.04 103.02 113.38 97.44 C118.58 93.14 122.01 86.98 125 81 C120.01 82.28 116.27 84.62 112.12 87.62 C111.83 87.84 111.83 87.84 110.33 88.9 C108.88 89.93 107.44 90.96 106 92 C111.02 87.45 116.3 83.65 122 80 C122 79.67 122 79.34 122 79 C115.46 78.71 109.39 80.76 103.93 84.37 Z M382.15 88.14 C376.19 90.96 369.82 92.77 363.55 94.77 C362 95.26 360.46 95.76 358.92 96.27 C358.45 96.41 357.98 96.56 357.5 96.71 C355.22 97.45 353.5 98.07 352 100 C357.18 99.03 362.11 97.7 367.09 95.98 C382.96 90.51 398.33 86.93 415 85 C415 84.67 415 84.34 415 84 C403.24 83.37 392.99 82.99 382.15 88.14 Z M438 84 C438 84.33 438 84.66 438 85 C440.31 85 442.62 85 445 85 C445 84.67 445 84.34 445 84 C442.69 84 440.38 84 438 84 Z M447 85 C447 85.33 447 85.66 447 86 C456.86 87.43 466.1 88.41 476 87 C476 86.67 476 86.34 476 86 C466.32 85.3 456.71 84.85 447 85 Z M192 87 C196 88 196 88 196 88 Z M197 88 C201 89 201 89 201 89 Z M336 105 C334.4 105.55 333.04 106.12 331.55 106.87 C331.34 106.97 331.34 106.97 330.29 107.48 C328.96 108.12 327.63 108.78 326.31 109.44 C325.41 109.88 324.51 110.31 323.61 110.75 C321.4 111.82 319.2 112.91 317 114 C317.66 114.66 318.32 115.32 319 116 C325.6 112.7 332.2 109.4 339 106 C338.01 105.67 337.02 105.34 336 105 Z M311.74 116.53 C311.43 116.69 311.43 116.69 309.85 117.49 C309.2 117.82 308.55 118.16 307.88 118.5 C307.55 118.67 307.55 118.67 305.88 119.51 C304.25 120.34 302.62 121.17 301 122 C301.66 122.66 302.32 123.32 303 124 C307.62 121.69 312.24 119.38 317 117 C317 116.34 317 115.68 317 115 C314.73 115 313.75 115.51 311.74 116.53 Z M355 116 C357.82 117.49 360.6 118.6 363.66 119.51 C364.09 119.64 364.52 119.77 364.97 119.9 C365.87 120.18 366.78 120.45 367.68 120.71 C369.06 121.13 370.44 121.54 371.82 121.96 C372.71 122.23 373.59 122.49 374.47 122.76 C374.88 122.88 375.29 123.01 375.71 123.14 C377.87 123.77 379.76 124.14 382 124 C382 124.66 382 125.32 382 126 C381.75 125.91 381.75 125.91 380.49 125.48 C378.6 124.83 376.7 124.19 374.8 123.55 C373.99 123.27 373.18 122.99 372.37 122.71 C357.31 117.54 357.31 117.54 352.74 118.45 C352.17 118.63 351.59 118.81 351 119 C358.9 124.97 366.59 130.69 376 134 C376.69 134.24 377.37 134.49 378.08 134.74 C388.31 137.61 400.61 136.66 411 135 C411 134.34 411 133.68 411 133 C410.43 132.76 409.85 132.51 409.26 132.26 C404.51 130.18 399.86 127.96 395.29 125.51 C394.87 125.29 394.46 125.07 394.03 124.84 C391.96 123.73 389.88 122.61 387.82 121.48 C379.81 117.13 373.11 115.69 364.06 115.88 C363.18 115.89 362.3 115.89 361.41 115.9 C359.27 115.92 357.14 115.96 355 116 Z M239 117 C240.45 120.79 242.14 124.39 244 128 C244.66 127.67 245.32 127.34 246 127 C244.61 122.57 242.44 120.08 239 117 Z M299 123 C299.66 123.66 300.32 124.32 301 125 C301 124.34 301 123.68 301 123 C300.34 123 299.68 123 299 123 Z M298 124 C295.69 125.65 293.38 127.3 291 129 C291.33 129.16 291.33 129.16 293 130 C294.98 128.68 296.96 127.36 299 126 C298.67 125.34 298.34 124.68 298 124 Z " fill="#d8c4a0" transform="translate(396,3)"/>
+</svg>
+  </div>
+</footer>
+
+<!-- SHARED AMENITY SCROLL-SCRUBBED FRAME VIEWER -->
+<div class="tour" id="tour" role="dialog" aria-modal="true" hidden>
+  <button class="tour__back" id="tourBack" type="button">Back to amenities</button>
+  <div class="tour__scroller" id="tourScroller">
+    <section class="track" id="tourTrack">
+      <div class="sticky">
+        <canvas id="tourCanvas"></canvas>
+        <div id="tourCaptions"></div>
+        <div class="tour__scroll-hint" id="tourScrollHint">
+          <span>Scroll to view</span>
+          <span class="tour__hint-arrow">↓</span>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="tour__reduced" id="tourReduced" hidden><!-- reduced-motion <video> goes here --></div>
+</div>
+
+<script type="module" src="/src/main.js"></script></body></html>

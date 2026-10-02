@@ -1,0 +1,36 @@
+# Aurelia — Private Residences (Full Specification)
+
+> Handcrafted architectural monolithic villas carved from stone, timber, and light on the Mediterranean coast. A place to return to.
+
+Aurelia is a private coastal residential enclave comprising 25 monolithic villas set against the Mediterranean shoreline. Designed with thermal memory, geological permanence, and biophilic equilibrium, the estate harmonizes Roman travertine stone, rough-sawn board-marked concrete, patinated architectural bronze, old-growth timber, and natural slaked lime plaster.
+
+## Architectural Overview
+
+- [Overview & Entrance Experience](https://aurelia.villas/): Primary architectural digital experience featuring dual-mode 60fps canvas frame scrubbing across Day and Night lighting moods
+- [Tectonic Materials Monograph](https://aurelia.villas/#mats): Detailed architectural breakdown of the seven authentic materials forming the residential structures
+- [Building Methodology & Craft](https://aurelia.villas/#craft): Four-stage construction philosophy spanning Site reading, Structure framing, On-site Craft, and Living equilibrium
+- [Estate Statistics & Dimensions](https://aurelia.villas/#stats): Key figures including 25 private villas, 244 m² flagship villa footprint, 5 shared architectural amenities, and private gated entry
+- [Amenities Sanctuary](https://aurelia.villas/#have): Five sculptural architectural amenities with interactive panoramic sequence scrubbers
+- [Private Concierge Inquiries](https://aurelia.villas/#touch): Direct folio correspondence with the Aurelia private concierge
+
+## Material Palette Specifications
+
+- [01 — Travertine Limestone](https://aurelia.villas/#mats): Origin: Tivoli Quarry, Lazio. Finish: Open-pore Honed. Application: Monolithic facades and thermal-mass floors. Selected for tactile softness and enduring geological patina.
+- [02 — Architectural Teak & Oak](https://aurelia.villas/#mats): Origin: FSC Certified European Oak & Teak. Finish: Hand-Rubbed Organic Oil. Application: Acoustic ceiling louvers, wall paneling, and bespoke cabinetry.
+- [03 — Ultra-clear Structural Glass](https://aurelia.villas/#mats): Clarity: Low-Iron Diamond Optiwhite. System: Motorized concealed pocket sliders. Application: Zero-threshold transitions dissolving interior living spaces into sea views.
+- [04 — Sculptural Concrete](https://aurelia.villas/#mats): Formwork: Rough-sawn Douglas fir. Composition: Low-carbon pozzolanic mix. Application: Structural cantilevers and core stabilizing monoliths.
+- [05 — Patinated Bronze](https://aurelia.villas/#mats): Alloy: Architectural Cu-Sn-Zn Bronze. Patina: Living unlacquered weathering. Application: Pivot screens, hardware touchpoints, and fountain spouts.
+- [06 — Natural Lime Plaster](https://aurelia.villas/#mats): Base: Aged dolomitic slaked lime. Aggregate: Micro-crushed Carrara marble dust. Application: Breathable, light-diffusing interior walls with natural hygroscopic moisture balance.
+- [07 — Botanical & Water Systems](https://aurelia.villas/#mats): Flora: Endemic Mediterranean xeriscape canopy. Hydraulics: Recirculating reflection basins. Application: Closed-loop passive microclimate cooling and biodiversity sanctuary.
+
+## Shared Amenities Collection
+
+- [Infinity Hot Pool](https://aurelia.villas/#have): Honed travertine monolith, 38°C geothermal heated spring water, framed by coastal pine forest.
+- [Mediterranean Garden](https://aurelia.villas/#have): Curated indigenous plantings, aromatic shaded walkways, and stone benches.
+- [Thermal Sanctuary & Rotunda](https://aurelia.villas/#have): Monolithic travertine rotunda with circular oculus and hydrotherapy channels.
+- [Sunset Terrace](https://aurelia.villas/#have): West-facing cantilevered stone belvedere with teak seating for golden hour views.
+- [Night Sky Observatory](https://aurelia.villas/#have): High-elevation optical viewing deck with celestial alignment and shielded zero-glare lighting.
+
+## Inquiries & Correspondence
+
+- [Private Concierge Folio](https://aurelia.villas/#touch): Confidential acquisition inquiries and scheduled private on-site consultations.

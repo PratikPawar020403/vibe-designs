@@ -1,0 +1,36 @@
+# Aurelia — Private Residences
+
+> Handcrafted architectural monolithic villas carved from stone, timber, and light on the Mediterranean coast. A place to return to.
+
+Aurelia is a private coastal residential enclave comprising 25 monolithic villas set against the Mediterranean shoreline. Designed with thermal memory, geological permanence, and biophilic equilibrium, the estate harmonizes Roman travertine stone, rough-sawn board-marked concrete, patinated architectural bronze, old-growth timber, and natural slaked lime plaster.
+
+## Architectural Sections
+
+- [Overview & Entrance](https://aurelia.villas/): Primary architectural digital experience featuring dual-mode 60fps canvas frame scrubbing (day and night moods)
+- [Tectonic Materials Monograph](https://aurelia.villas/#mats): Detailed monograph of the seven authentic materials defining the villas
+- [Building Methodology](https://aurelia.villas/#craft): Four-stage construction philosophy spanning Site reading, Structure framing, On-site Craft, and Living equilibrium
+- [Estate Monograph & Statistics](https://aurelia.villas/#stats): Key architectural specifications including 25 private residences, 244 m² flagship villa, 5 shared amenities, and private gated entry
+- [Amenities Sanctuary](https://aurelia.villas/#have): Five shared sculptural architectural amenities with interactive panoramic tours
+- [Private Concierge Inquiries](https://aurelia.villas/#touch): Direct correspondence with the Aurelia private concierge folio
+
+## Material Palette
+
+- [Travertine Limestone](https://aurelia.villas/#mats): Honed open-pore Roman travertine from the Tivoli Quarry in Lazio, providing continuous thermal mass and monolithic facades
+- [Architectural Teak & Oak](https://aurelia.villas/#mats): FSC certified European oak and sustainably harvested teak with hand-rubbed organic oil finishes
+- [Ultra-clear Structural Glass](https://aurelia.villas/#mats): Floor-to-ceiling motorized Optiwhite low-iron glass walls sliding flush into concealed pockets
+- [Sculptural Architectural Concrete](https://aurelia.villas/#mats): Low-carbon pozzolanic board-marked concrete embossed with rough-sawn Douglas fir grain
+- [Patinated Architectural Bronze](https://aurelia.villas/#mats): Custom unlacquered living copper-tin-zinc alloy touchpoints, screens, and water fixtures
+- [Natural Lime Plaster](https://aurelia.villas/#mats): Aged dolomitic slaked lime blended with micro-crushed Carrara marble dust for hygroscopic interior envelopes
+- [Living Botanical & Water Systems](https://aurelia.villas/#mats): Endemic Mediterranean xeriscape canopy and recirculating reflection basins for microclimate passive cooling
+
+## Shared Amenities Collection
+
+- [Infinity Hot Pool](https://aurelia.villas/#have): Monolithic travertine pool with 38°C geothermal heated spring overlooking the pine forest horizon
+- [Mediterranean Garden](https://aurelia.villas/#have): Layered landscape pathways with microclimate canopy and endemic Mediterranean flora
+- [Thermal Sanctuary & Rotunda](https://aurelia.villas/#have): Monolithic travertine rotunda with open-sky oculi and thermal hydrotherapy channels
+- [Sunset Terrace](https://aurelia.villas/#have): Cantilevered stone deck with bespoke teak banquet positioned toward the unobstructed western sunset
+- [Night Sky Observatory](https://aurelia.villas/#have): Elevated architectural platform equipped with high-precision optical mounts and celestial alignment in zero light pollution
+
+## Inquiries & Contact
+
+- [Private Concierge Folio](https://aurelia.villas/#touch): Confidential acquisition inquiries and private on-site viewings

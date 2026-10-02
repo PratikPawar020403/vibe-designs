@@ -1,0 +1,17 @@
+{
+  "name": "aurelia-villas",
+  "version": "2.0.0",
+  "description": "Awwwards-level interactive luxury villa digital experience",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0"
+  }
+}
