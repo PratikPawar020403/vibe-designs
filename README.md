@@ -19,16 +19,16 @@ npm install
 npm run dev
 ```
 
-### 2. [Riot Brewing Co. — The Kinetic Bazaar](./riot-beer)
+### 2. [Riot Brewing Co. — The Kinetic Bazaar](./riot-brewing-co)
 A brutalist, high-energy interactive craft beer brand showcase and motion experience built with:
 - **Horizontal Scroll Video Journey** with multi-chapter scrub interactions
 - **Interactive Canvas Particle Typography** with physics cursor repulsion & return velocity
 - **Brutalist Grid & Typography Architecture** (Next.js 14 App Router, Tailwind CSS, TypeScript)
 - **Interactive Ticket Module & Spec Panels**
 
-#### Running Riot Beer Locally:
+#### Running Riot Brewing Co. Locally:
 ```bash
-cd riot-beer
+cd riot-brewing-co
 npm install
 npm run dev
 ```
@@ -37,13 +37,13 @@ npm run dev
 
 This repository contains multiple high-craft web experiences configured for Netlify monorepo deployment:
 
-### Deploying Riot Brewing Co. (`riot-beer`)
+### Deploying Riot Brewing Co. (`riot-brewing-co`)
 1. Create a new site in **Netlify** and connect this repository: `PratikPawar020403/vibe-designs`.
 2. In **Build Settings**:
-   - **Base directory**: `riot-beer`
+   - **Base directory**: `riot-brewing-co`
    - **Build command**: `npm run build`
    - **Publish directory**: `.next`
-3. Netlify will automatically detect Next.js 14 and use `riot-beer/netlify.toml`.
+3. Netlify will automatically detect Next.js 14 and use `riot-brewing-co/netlify.toml`.
 
 ### Deploying Aurelia (`aurelia`)
 1. In Netlify Build Settings:
