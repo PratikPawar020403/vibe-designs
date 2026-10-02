@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+  }
+}
