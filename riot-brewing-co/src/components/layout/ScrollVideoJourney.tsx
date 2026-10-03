@@ -6,6 +6,7 @@ import { VideoChapter } from "@/lib/data/mock-schema";
 
 interface ScrollVideoJourneyProps {
   videoSrc: string;
+  mobileSrc?: string;
   fallbackSrc?: string;
   posterSrc?: string;
   fallbackVisual?: string;
@@ -28,6 +29,7 @@ const DEFAULT_CHAPTERS: VideoChapter[] = [
 
 export function ScrollVideoJourney({
   videoSrc,
+  mobileSrc,
   fallbackSrc,
   posterSrc = "/bengal-tiger-poster.jpg",
   fallbackVisual,
@@ -48,6 +50,14 @@ export function ScrollVideoJourney({
   const thumbRef = useRef<HTMLDivElement>(null);
   const percentDisplayRef = useRef<HTMLSpanElement>(null);
 
+  // Cached layout dimensions to prevent layout thrashing inside scroll handlers
+  const layoutMetricsRef = useRef({
+    maxScroll: 1,
+    trackWidth: 1,
+    thumbWidth: 36,
+    maxThumbLeft: 1,
+  });
+
   const stages = useMemo(() => {
     return chapters && chapters.length > 0 ? chapters : DEFAULT_CHAPTERS;
   }, [chapters]);
@@ -58,17 +68,32 @@ export function ScrollVideoJourney({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(true);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const durationRef = useRef(maxTime || 8.0);
   const targetTimeRef = useRef(0);
   const pendingTimeRef = useRef<number | null>(null);
+  const isSeekingRef = useRef(false);
+  const lastSeekTimeRef = useRef(0);
   const rAFIdRef = useRef<number | null>(null);
 
-  // Mouse drag scrubbing refs
+  // Mouse drag scrubbing refs (desktop)
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
   const startScrollLeftRef = useRef(0);
   const hasMovedRef = useRef(false);
+
+  // Responsive mobile viewport detection without duplicate media downloads
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    setIsMobileViewport(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobileViewport(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  const activeSrc = isMobileViewport && mobileSrc ? mobileSrc : videoSrc;
 
   // Accessibility: detect reduced motion
   useEffect(() => {
@@ -79,9 +104,32 @@ export function ScrollVideoJourney({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  // Viewport awareness: pause work and media when offscreen
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setIsInViewport(entry.isIntersecting);
+          if (!entry.isIntersecting && videoRef.current) {
+            videoRef.current.pause();
+            if (rAFIdRef.current) {
+              cancelAnimationFrame(rAFIdRef.current);
+              rAFIdRef.current = null;
+            }
+          }
+        }
+      },
+      { rootMargin: "250px" }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
   // Map progress (0 to 1) to target video time (0 to effectiveDuration)
-  // Strictly clamps to maxTime so unwanted trailing studio scenes are NEVER exposed.
-  // Holds the final product frame from ~86% to 100% scroll.
   const calculateTargetTime = useCallback((progress: number, duration: number) => {
     const effectiveDuration = maxTime ? Math.min(duration, maxTime) : duration;
     const startHold = 0.02; // Small 2% buffer for initial scene
@@ -92,10 +140,10 @@ export function ScrollVideoJourney({
     return Math.min(normalized * (effectiveDuration - 0.04), effectiveDuration - 0.04);
   }, [maxTime]);
 
-  // Synchronize video currentTime via requestAnimationFrame with immediate direct scrubbing
+  // Synchronize video currentTime via requestAnimationFrame with controlled seek throttling
   const updateVideoTime = useCallback(() => {
     const video = videoRef.current;
-    if (!video) {
+    if (!video || !isInViewport) {
       rAFIdRef.current = null;
       return;
     }
@@ -105,55 +153,83 @@ export function ScrollVideoJourney({
     const target = Math.min(Math.max(targetTimeRef.current, 0), effectiveDuration - 0.04);
     const diff = target - video.currentTime;
 
-    if (Math.abs(diff) < 0.02 && pendingTimeRef.current === null) {
+    if (Math.abs(diff) < 0.03 && pendingTimeRef.current === null) {
       rAFIdRef.current = null;
       return;
     }
 
-    if (!video.seeking) {
+    const now = performance.now();
+    // Allow seek if not currently seeking or if 32ms has elapsed since last seek
+    if (!video.seeking && !isSeekingRef.current && (now - lastSeekTimeRef.current > 32)) {
       pendingTimeRef.current = null;
-      video.currentTime = target;
+      isSeekingRef.current = true;
+      lastSeekTimeRef.current = now;
+
+      // Use fastSeek on supported platforms (Safari iOS hardware acceleration)
+      const anyVideo = video as unknown as { fastSeek?: (t: number) => void };
+      if (typeof anyVideo.fastSeek === "function") {
+        try {
+          anyVideo.fastSeek(target);
+        } catch {
+          video.currentTime = target;
+        }
+      } else {
+        video.currentTime = target;
+      }
     } else {
-      // Buffer latest position while decoder completes previous seek
       pendingTimeRef.current = target;
     }
 
-    if (Math.abs(target - video.currentTime) >= 0.02 || pendingTimeRef.current !== null) {
+    if (Math.abs(target - video.currentTime) >= 0.03 || pendingTimeRef.current !== null) {
       rAFIdRef.current = requestAnimationFrame(updateVideoTime);
     } else {
       rAFIdRef.current = null;
     }
-  }, [maxTime]);
+  }, [isInViewport, maxTime]);
 
   // Schedule rAF update
   const scheduleUpdate = useCallback(() => {
-    if (!rAFIdRef.current) {
+    if (!rAFIdRef.current && isInViewport) {
       rAFIdRef.current = requestAnimationFrame(updateVideoTime);
     }
-  }, [updateVideoTime]);
+  }, [isInViewport, updateVideoTime]);
 
-  // Handle native scroll event
+  // Cache layout dimensions to prevent layout thrashing on scroll
+  const updateLayoutMetrics = useCallback(() => {
+    const scroller = scrollTrackRef.current;
+    const track = trackRef.current;
+    if (!scroller || !track) return;
+
+    const scrollW = scroller.scrollWidth;
+    const clientW = scroller.clientWidth;
+    const maxScroll = Math.max(1, scrollW - clientW);
+    const trackW = track.clientWidth;
+    const thumbW = Math.max(36, (clientW / scrollW) * trackW);
+    const maxThumbL = Math.max(1, trackW - thumbW);
+
+    layoutMetricsRef.current = {
+      maxScroll,
+      trackWidth: trackW,
+      thumbWidth: thumbW,
+      maxThumbLeft: maxThumbL,
+    };
+  }, []);
+
+  // Handle native scroll event (smooth, non-blocking, zero layout reflows)
   const handleScroll = useCallback(() => {
     const scroller = scrollTrackRef.current;
     const video = videoRef.current;
     if (!scroller || !video) return;
 
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
-    if (maxScroll <= 0) return;
-
+    const { maxScroll, maxThumbLeft, thumbWidth } = layoutMetricsRef.current;
     const progress = Math.min(Math.max(scroller.scrollLeft / maxScroll, 0), 1);
     const duration = durationRef.current || video.duration || 8;
     targetTimeRef.current = calculateTargetTime(progress, duration);
 
     // Update scrollbar thumb and percentage readout directly in DOM
-    const track = trackRef.current;
     const thumb = thumbRef.current;
-    if (track && thumb) {
-      const trackWidth = track.clientWidth;
-      const thumbWidth = Math.max(36, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
-      const maxThumbLeft = Math.max(0, trackWidth - thumbWidth);
+    if (thumb) {
       const thumbLeft = progress * maxThumbLeft;
-
       thumb.style.width = `${thumbWidth}px`;
       thumb.style.transform = `translateX(${thumbLeft}px)`;
 
@@ -193,67 +269,91 @@ export function ScrollVideoJourney({
     onStageChange?.(0);
   }, [onStageChange]);
 
-  // Handle external jump requests (e.g. clicking phase cards in the story rail)
+  // Handle external jump requests
   useEffect(() => {
     if (jumpToProgress && scrollTrackRef.current) {
       const scroller = scrollTrackRef.current;
-      const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+      const { maxScroll } = layoutMetricsRef.current;
       if (maxScroll > 0) {
         scroller.scrollTo({
           left: jumpToProgress.progress * maxScroll,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
   }, [jumpToProgress]);
 
-  // Attach passive scroll listener and handle initial setup
+  // Attach native passive scroll listener and observe layout metrics
   useEffect(() => {
     const scroller = scrollTrackRef.current;
     if (!scroller) return;
 
+    updateLayoutMetrics();
     scroller.addEventListener("scroll", handleScroll, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateLayoutMetrics();
+      handleScroll();
+    });
+    resizeObserver.observe(scroller);
+
     return () => {
+      resizeObserver.disconnect();
       scroller.removeEventListener("scroll", handleScroll);
       if (rAFIdRef.current) {
         cancelAnimationFrame(rAFIdRef.current);
+        rAFIdRef.current = null;
       }
     };
-  }, [handleScroll]);
+  }, [handleScroll, updateLayoutMetrics]);
 
-  // Resize listener to keep thumb correctly scaled
-  useEffect(() => {
-    const handleResize = () => handleScroll();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [handleScroll]);
-
-  // Video metadata & seeked event listeners
+  // Video metadata & seeked event listeners with WebKit mobile handshake
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !isInViewport) return;
 
     const onLoadedMetadata = () => {
       if (video.duration && !isNaN(video.duration)) {
         durationRef.current = maxTime ? Math.min(video.duration, maxTime) : video.duration;
       }
       setIsLoaded(true);
-      video.pause();
       handleScroll();
     };
 
+    const onCanPlay = () => {
+      setIsLoaded(true);
+    };
+
     const onSeeked = () => {
+      isSeekingRef.current = false;
       if (pendingTimeRef.current !== null) {
         const nextTarget = pendingTimeRef.current;
         pendingTimeRef.current = null;
-        if (Math.abs(nextTarget - video.currentTime) >= 0.02) {
-          video.currentTime = nextTarget;
+        if (Math.abs(nextTarget - video.currentTime) >= 0.03) {
+          scheduleUpdate();
         }
       }
     };
 
     video.addEventListener("loadedmetadata", onLoadedMetadata);
+    video.addEventListener("loadeddata", onCanPlay);
+    video.addEventListener("canplay", onCanPlay);
     video.addEventListener("seeked", onSeeked);
+
+    // Explicitly load media
+    video.load();
+
+    // Mobile WebKit Handshake: Silent play/pause allows WebKit hardware pipeline to decode scrubbed frames while paused
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          video.pause();
+        })
+        .catch(() => {
+          // Autoplay policy handled gracefully
+        });
+    }
 
     if (video.readyState >= 1) {
       onLoadedMetadata();
@@ -261,47 +361,13 @@ export function ScrollVideoJourney({
 
     return () => {
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
+      video.removeEventListener("loadeddata", onCanPlay);
+      video.removeEventListener("canplay", onCanPlay);
       video.removeEventListener("seeked", onSeeked);
     };
-  }, [handleScroll, maxTime]);
+  }, [activeSrc, handleScroll, isInViewport, maxTime, scheduleUpdate]);
 
-  // Non-passive wheel event handling: enables mouse users to scrub comfortably
-  // without locking or trapping them when reaching boundary limits.
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onWheelHandler = (e: WheelEvent) => {
-      const scroller = scrollTrackRef.current;
-      if (!scroller) return;
-
-      const maxScroll = scroller.scrollWidth - scroller.clientWidth;
-      if (maxScroll <= 0) return;
-
-      // Trackpad or shift+wheel horizontal navigation: native browser behavior
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-        return;
-      }
-
-      const delta = e.deltaY;
-      const atStart = scroller.scrollLeft <= 2;
-      const atEnd = scroller.scrollLeft >= maxScroll - 2;
-
-      // Only intercept when inside the scrubbing range
-      if ((delta > 0 && !atEnd) || (delta < 0 && !atStart)) {
-        e.preventDefault();
-        scroller.scrollLeft += delta;
-      }
-      // When at boundaries, let the page scroll naturally!
-    };
-
-    container.addEventListener("wheel", onWheelHandler, { passive: false });
-    return () => {
-      container.removeEventListener("wheel", onWheelHandler);
-    };
-  }, []);
-
-  // Global mouse drag-to-scrub handlers on the viewport
+  // Desktop mouse drag-to-scrub handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     const scroller = scrollTrackRef.current;
@@ -349,7 +415,7 @@ export function ScrollVideoJourney({
     const rect = track.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const progress = Math.min(Math.max(clickX / rect.width, 0), 1);
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const { maxScroll } = layoutMetricsRef.current;
 
     scroller.scrollTo({
       left: progress * maxScroll,
@@ -361,16 +427,12 @@ export function ScrollVideoJourney({
   const handleThumbMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.preventDefault();
-    const track = trackRef.current;
     const scroller = scrollTrackRef.current;
-    if (!track || !scroller) return;
+    if (!scroller) return;
 
     const startX = e.clientX;
     const startScrollLeft = scroller.scrollLeft;
-    const trackWidth = track.clientWidth;
-    const thumbWidth = Math.max(36, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
-    const maxThumbLeft = Math.max(1, trackWidth - thumbWidth);
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const { maxScroll, maxThumbLeft } = layoutMetricsRef.current;
 
     const onMouseMove = (moveEvent: MouseEvent) => {
       const deltaX = moveEvent.clientX - startX;
@@ -393,18 +455,17 @@ export function ScrollVideoJourney({
     const touch = e.touches[0];
     if (!touch) return;
 
-    const track = trackRef.current;
     const scroller = scrollTrackRef.current;
-    if (!track || !scroller) return;
+    if (!scroller) return;
 
     const startX = touch.clientX;
     const startScrollLeft = scroller.scrollLeft;
-    const trackWidth = track.clientWidth;
-    const thumbWidth = Math.max(36, (scroller.clientWidth / scroller.scrollWidth) * trackWidth);
-    const maxThumbLeft = Math.max(1, trackWidth - thumbWidth);
-    const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+    const { maxScroll, maxThumbLeft } = layoutMetricsRef.current;
 
     const onTouchMove = (moveEvent: TouchEvent) => {
+      if (moveEvent.cancelable) {
+        moveEvent.preventDefault();
+      }
       const moveTouch = moveEvent.touches[0];
       if (!moveTouch) return;
       const deltaX = moveTouch.clientX - startX;
@@ -417,83 +478,9 @@ export function ScrollVideoJourney({
       window.removeEventListener("touchend", onTouchEnd);
     };
 
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
     window.addEventListener("touchend", onTouchEnd);
   };
-
-  // Touch directional disambiguation: horizontal swipe scrubs video, vertical swipe scrolls page naturally
-  useEffect(() => {
-    const container = containerRef.current;
-    const scroller = scrollTrackRef.current;
-    if (!container || !scroller) return;
-
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let initialScrollLeft = 0;
-    let isHorizontalSwipe: boolean | null = null;
-    let touchMoved = false;
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (trackRef.current && trackRef.current.contains(e.target as Node)) {
-        return;
-      }
-      const touch = e.touches[0];
-      if (!touch) return;
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      initialScrollLeft = scroller.scrollLeft;
-      isHorizontalSwipe = null;
-      touchMoved = false;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (trackRef.current && trackRef.current.contains(e.target as Node)) {
-        return;
-      }
-      const touch = e.touches[0];
-      if (!touch) return;
-
-      const deltaX = touch.clientX - touchStartX;
-      const deltaY = touch.clientY - touchStartY;
-
-      if (isHorizontalSwipe === null) {
-        if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
-          isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
-        }
-      }
-
-      if (isHorizontalSwipe === true) {
-        touchMoved = true;
-        if (e.cancelable) {
-          e.preventDefault();
-        }
-        scroller.scrollLeft = initialScrollLeft - deltaX * 1.5;
-      }
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      if (!touchMoved && isHorizontalSwipe === null && onBurst) {
-        const touch = e.changedTouches[0];
-        if (touch) {
-          onBurst({
-            clientX: touch.clientX,
-            clientY: touch.clientY,
-          } as unknown as React.MouseEvent<HTMLDivElement>);
-        }
-      }
-      isHorizontalSwipe = null;
-    };
-
-    container.addEventListener("touchstart", onTouchStart, { passive: true });
-    container.addEventListener("touchmove", onTouchMove, { passive: false });
-    container.addEventListener("touchend", onTouchEnd, { passive: true });
-
-    return () => {
-      container.removeEventListener("touchstart", onTouchStart);
-      container.removeEventListener("touchmove", onTouchMove);
-      container.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [onBurst]);
 
   const currentStage = stages[activeStageIdx] || stages[0];
   const staticFallbackImage = posterSrc || fallbackVisual || "/mockup.jpg";
@@ -503,29 +490,31 @@ export function ScrollVideoJourney({
       ref={containerRef}
       className="relative w-full h-[45dvh] min-h-[280px] max-h-[420px] md:h-full md:min-h-[calc(100vh-4rem)] md:max-h-none flex items-center justify-center overflow-hidden select-none bg-paper-white"
       onMouseDown={handleMouseDown}
+      onClick={(e) => {
+        if (!hasMovedRef.current && onBurst) {
+          onBurst(e);
+        }
+      }}
     >
       {/* 
         Stage 1: Pinned Video Viewport
         Centred in the gallery frame with exact proportions of the product visual.
       */}
       <div className="relative w-full h-full flex items-center justify-center p-3 sm:p-4 md:p-8 pb-12 sm:pb-14 pointer-events-none">
-        {/* Poster preview / Fallback for error, reduced motion or pre-load */}
-        {(!isLoaded || prefersReducedMotion || hasError) && (
-          <img
-            src={staticFallbackImage}
-            alt={`${productName} Visual Journey`}
-            className={clsx(
-              "absolute max-h-[35dvh] md:max-h-[80vh] max-w-full object-contain drop-shadow-2xl transition-opacity duration-300",
-              isLoaded && !prefersReducedMotion && !hasError ? "opacity-0" : "opacity-100"
-            )}
-          />
-        )}
+        {/* Poster preview / Fallback for error, reduced motion, or during initial load */}
+        <img
+          src={staticFallbackImage}
+          alt={`${productName} Visual Journey`}
+          className={clsx(
+            "absolute max-h-[35dvh] md:max-h-[80vh] max-w-full object-contain drop-shadow-2xl transition-opacity duration-300",
+            isLoaded && !prefersReducedMotion && !hasError ? "opacity-0 pointer-events-none" : "opacity-100"
+          )}
+        />
 
         {/* Scrubbable Process Video */}
-        {!prefersReducedMotion && !hasError && (
+        {!prefersReducedMotion && !hasError && isInViewport && (
           <video
             ref={videoRef}
-            src={videoSrc}
             poster={posterSrc}
             muted
             playsInline
@@ -539,14 +528,18 @@ export function ScrollVideoJourney({
               isLoaded ? "opacity-100" : "opacity-0"
             )}
           >
-            {fallbackSrc && <source src={fallbackSrc} type="video/mp4" />}
+            <source src={activeSrc} type="video/mp4" />
+            {fallbackSrc && fallbackSrc !== activeSrc && (
+              <source src={fallbackSrc} type="video/mp4" />
+            )}
           </video>
         )}
       </div>
 
       {/* 
-        Stage 2: Horizontal Scroll Track (Invisible native scroller)
-        Captures touch swipe, trackpad horizontal swipe, shift+wheel, and drag.
+        Stage 2: Horizontal Scroll Track (Native Momentum Scroller)
+        Captures native touch swipe, trackpad horizontal swipe, shift+wheel, and drag.
+        Uses touch-action: pan-x pan-y to allow smooth horizontal scrubbing AND normal vertical page scrolling.
       */}
       <div
         ref={scrollTrackRef}
@@ -559,7 +552,7 @@ export function ScrollVideoJourney({
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           WebkitOverflowScrolling: "touch",
-          touchAction: "pan-y",
+          touchAction: "pan-x pan-y",
         }}
         tabIndex={0}
         role="region"
@@ -588,7 +581,9 @@ export function ScrollVideoJourney({
           <span className="w-2 h-2 bg-rani-pink inline-block flex-shrink-0" />
           <span className="font-bold text-ink-black">{currentStage.step}</span>
           <span className="text-ink-black/40">/</span>
-          <span className="text-ink-black font-semibold text-[10px] sm:text-xs truncate max-w-[110px] sm:max-w-none">{currentStage.label}</span>
+          <span className="text-ink-black font-semibold text-[10px] sm:text-xs truncate max-w-[110px] sm:max-w-none">
+            {currentStage.label}
+          </span>
         </div>
 
         {/* Center: The Interactive Scrollbar Track */}
@@ -600,9 +595,10 @@ export function ScrollVideoJourney({
         >
           {/* Subtle tick marks for stage transitions */}
           {stages.slice(1).map((stage, idx) => {
-            const pos = stage.targetProgress !== undefined
-              ? `${Math.round(stage.targetProgress * 100)}%`
-              : `${Math.round(((idx + 1) / stages.length) * 100)}%`;
+            const pos =
+              stage.targetProgress !== undefined
+                ? `${Math.round(stage.targetProgress * 100)}%`
+                : `${Math.round(((idx + 1) / stages.length) * 100)}%`;
             return (
               <div
                 key={idx}
@@ -636,7 +632,9 @@ export function ScrollVideoJourney({
 
         {/* Right: Percentage Counter */}
         <div className="font-mono text-[11px] sm:text-xs tracking-wider text-ink-black flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
-          <span ref={percentDisplayRef} className="font-bold w-9 sm:w-10 text-right">0%</span>
+          <span ref={percentDisplayRef} className="font-bold w-9 sm:w-10 text-right">
+            0%
+          </span>
         </div>
       </div>
 

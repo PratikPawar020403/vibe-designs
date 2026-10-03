@@ -55,6 +55,7 @@ export interface VideoChapter {
 
 export interface VideoJourneyConfig {
   src: string;
+  mobileSrc?: string;
   fallbackSrc?: string;
   poster: string;
   maxTime?: number;
@@ -77,8 +78,9 @@ export const MOCK_CORE_COLLECTION: Product[] = [
       "/difference.jpg"
     ],
     videoJourney: {
-      src: "/bengal-tiger-scrub.mp4",
-      fallbackSrc: "/bengal-tiger.mp4",
+      src: "/bengal-tiger-desktop.mp4",
+      mobileSrc: "/bengal-tiger-mobile.mp4",
+      fallbackSrc: "/bengal-tiger-desktop.mp4",
       poster: "/bengal-tiger-poster.jpg",
       trackLabel: "TIGER EXPEDITION",
       chapters: [
@@ -104,8 +106,9 @@ export const MOCK_CORE_COLLECTION: Product[] = [
       "/experimental_bottle.jpg"
     ],
     videoJourney: {
-      src: "/bombay-brew-process-scrub.mp4",
-      fallbackSrc: "/bombay-brew-process.mp4",
+      src: "/bombay-brew-desktop.mp4",
+      mobileSrc: "/bombay-brew-mobile.mp4",
+      fallbackSrc: "/bombay-brew-desktop.mp4",
       poster: "/bombay-brew-poster.jpg",
       maxTime: 6.40,
       trackLabel: "MUMBAI ART JOURNEY",
@@ -136,8 +139,9 @@ export const MOCK_EXPERIMENTAL_ARCHIVE: Product[] = [
       "/kinetic-bottle.jpg"
     ],
     videoJourney: {
-      src: "/kinetic-process-scrub.mp4",
-      fallbackSrc: "/kinetic-process.mp4",
+      src: "/kinetic-desktop.mp4",
+      mobileSrc: "/kinetic-mobile.mp4",
+      fallbackSrc: "/kinetic-desktop.mp4",
       poster: "/kinetic-poster.jpg",
       maxTime: 5.90,
       trackLabel: "KINETIC JOURNEY",
@@ -165,8 +169,9 @@ export const MOCK_EXPERIMENTAL_ARCHIVE: Product[] = [
       "/past_release.jpg"
     ],
     videoJourney: {
-      src: "/nightfall-stout-process-scrub.mp4",
-      fallbackSrc: "/nightfall-stout-process.mp4",
+      src: "/nightfall-stout-desktop.mp4",
+      mobileSrc: "/nightfall-stout-mobile.mp4",
+      fallbackSrc: "/nightfall-stout-desktop.mp4",
       poster: "/nightfall-stout-poster.jpg",
       maxTime: 5.3,
       trackLabel: "NIGHTFALL JOURNEY",
@@ -199,8 +204,9 @@ export const MOCK_EDITORIAL_CONTENT: Product[] = [
       "/process-phase-4.jpg"
     ],
     videoJourney: {
-      src: "/process-story-scrub.mp4",
-      fallbackSrc: "/process-story.mp4",
+      src: "/process-story-desktop.mp4",
+      mobileSrc: "/process-story-mobile.mp4",
+      fallbackSrc: "/process-story-desktop.mp4",
       poster: "/process-story-poster.jpg",
       trackLabel: "BREWING PROCESS",
       chapters: [

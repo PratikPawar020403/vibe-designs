@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Image from "next/image";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,7 +15,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://riotbrewing.co"),
+  metadataBase: new URL("https://riot-brewing-co.netlify.app"),
   title: "RIOT BREWING CO. // THE KINETIC BAZAAR",
   description: "A meticulously curated brutalist gallery space interrupted by flashes of vibrant kinetic energy. 05 Beers / 05 Worlds.",
   keywords: ["Riot Brewing Co.", "Kinetic Bazaar", "Craft Beer", "Brutalist Design", "IPA", "Bengal Tiger", "Mumbai"],
@@ -59,9 +60,12 @@ export default function RootLayout({
         {/* Minimal Global Header */}
         <header className="fixed top-0 w-full h-16 border-b border-ink-black flex items-center px-4 sm:px-6 z-50 bg-paper-white select-none">
           <div className="flex items-center gap-3">
-            <img 
+            <Image 
               src="/logo.png" 
               alt="Riot Brewing Co." 
+              width={33}
+              height={40}
+              priority
               className="h-10 w-auto object-contain shrink-0" 
             />
             <div className="font-display font-bold text-lg sm:text-xl tracking-tight uppercase">

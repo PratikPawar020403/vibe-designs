@@ -167,6 +167,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
           <ScrollVideoJourney
             key={selectedProduct.id}
             videoSrc={selectedProduct.videoJourney.src}
+            mobileSrc={selectedProduct.videoJourney.mobileSrc}
             fallbackSrc={selectedProduct.videoJourney.fallbackSrc}
             posterSrc={selectedProduct.videoJourney.poster}
             fallbackVisual={selectedProduct.primaryVisual}
@@ -183,7 +184,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
           <div className="flex h-full items-center gap-6 sm:gap-16 px-4 sm:px-8 w-max">
             {/* Intro Card */}
             <div className="flex-shrink-0 w-[80vw] sm:w-[85vw] md:w-[45vw] h-[36dvh] md:h-[70vh] relative snap-center border-4 border-ink-black shadow-[8px_8px_0_0_rgb(10,10,10)] md:shadow-[16px_16px_0_0_rgb(10,10,10)]">
-               <img src={selectedProduct.primaryVisual} className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
+               <img src={selectedProduct.primaryVisual} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" alt="Hero" />
                <div className="absolute inset-0 bg-ink-black/40 flex items-center justify-center p-4 sm:p-8">
                   <h2 className="font-display text-3xl sm:text-5xl md:text-7xl text-paper-white text-center uppercase tracking-tighter mix-blend-overlay">The Journey</h2>
                </div>
@@ -193,7 +194,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
             {selectedProduct.editorialSteps.map((step, idx) => (
               <div key={idx} className="flex-shrink-0 w-[80vw] sm:w-[85vw] md:w-[35vw] snap-center bg-paper-white p-4 sm:p-8 border-4 border-ink-black shadow-[8px_8px_0_0_rgb(0,34,255)] md:shadow-[12px_12px_0_0_rgb(0,34,255)] flex flex-col gap-4 sm:gap-6 transform transition-snappy hover:-translate-y-2 hover:shadow-[16px_16px_0_0_rgb(255,0,127)]">
                 <div className="overflow-hidden border-2 border-ink-black h-40 sm:h-64 md:h-80 relative">
-                  <img src={step.visual} className="absolute inset-0 w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-700 ease-out" alt={step.title} />
+                  <img src={step.visual} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 hover:scale-105 transition-all duration-700 ease-out" alt={step.title} />
                 </div>
                 <div>
                   <h3 className="font-display text-2xl sm:text-4xl uppercase mb-1 sm:mb-2 text-ink-black">{step.title}</h3>
@@ -213,6 +214,8 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
                 <img 
                   src={vis} 
                   alt={`${selectedProduct.name} View ${idx + 1}`} 
+                  loading="lazy"
+                  decoding="async"
                   className="max-h-[35dvh] md:max-h-[85vh] max-w-full object-contain drop-shadow-2xl group-active:scale-[0.98] transition-transform duration-75"
                 />{visuals.length > 1 && (
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">

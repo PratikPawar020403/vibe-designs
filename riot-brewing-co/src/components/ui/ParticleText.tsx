@@ -165,6 +165,7 @@ export const ParticleText = ({
     let width = 0;
     let height = 0;
     let dpr = 1;
+    let isIntersecting = true;
 
     const pointer = {
       active: false,
@@ -270,11 +271,15 @@ export const ParticleText = ({
         gathering = false;
       }
 
-      animationFrame = window.requestAnimationFrame(render);
+      if (isIntersecting) {
+        animationFrame = window.requestAnimationFrame(render);
+      } else {
+        animationFrame = null;
+      }
     };
 
     const ensureRenderLoop = (): void => {
-      if (animationFrame === null) {
+      if (animationFrame === null && isIntersecting) {
         animationFrame = window.requestAnimationFrame(render);
       }
     };
@@ -400,8 +405,8 @@ export const ParticleText = ({
       }
 
       const maxParticles = isMobile
-        ? Math.min(1300, Math.max(700, Math.floor((width * height) / 60)))
-        : Math.max(1200, Math.min(6500, Math.floor((width * height) / 75)));
+        ? Math.min(480, Math.max(240, Math.floor((width * height) / 140)))
+        : Math.max(1200, Math.min(4200, Math.floor((width * height) / 85)));
       const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
       const selected = targets.filter((_, index) => index % stride === 0);
 
@@ -523,11 +528,26 @@ export const ParticleText = ({
 
     const resizeObserver = new ResizeObserver(queueSample);
     resizeObserver.observe(container);
+
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          ensureRenderLoop();
+        } else if (animationFrame !== null) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+      }
+    }, { threshold: 0.05 });
+    intersectionObserver.observe(container);
+
     void sampleText();
 
     return () => {
       buildId += 1;
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       reduceMotionQuery?.removeEventListener('change', handleReduceMotionChange);
       canvas.removeEventListener('pointerenter', handlePointerEnter);
       canvas.removeEventListener('pointermove', handlePointerMove);

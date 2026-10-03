@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { clsx } from "clsx";
 
 export function FooterCtaSection() {
@@ -233,7 +234,7 @@ export function FooterCtaSection() {
       */}
       <div className="w-full bg-paper-white py-4 px-6 sm:px-10 lg:px-14 border-t border-ink-black flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-ink-black/60 uppercase tracking-widest gap-3">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Riot Brewing Co." className="h-6 w-auto object-contain shrink-0" />
+          <Image src="/logo.png" alt="Riot Brewing Co." width={20} height={24} loading="lazy" className="h-6 w-auto object-contain shrink-0" />
           <span>{"[ END OF TRANSMISSION // KEEP IT COLD ]"}</span>
         </div>
         <span>© {new Date().getFullYear()} {"//"} RIOT BREWING CO.</span>
