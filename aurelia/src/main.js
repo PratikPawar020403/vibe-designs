@@ -23,8 +23,18 @@ let heroCtxNight=heroCanvasNight?heroCanvasNight.getContext('2d',{alpha:false}):
 const heroVidLight=$('heroVidLight'),heroVidNight=$('heroVidNight');
 const heroStillLight=$('heroStillLight'),heroStillNight=$('heroStillNight');
 
-let heroOpeningMode='day';
-let heroBaseProgress=0;
+const THEME_STORAGE_KEY = 'aurelia-theme-mode';
+
+function getInitialTheme() {
+  try {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    if (saved === 'night' || saved === 'day') return saved;
+  } catch (e) {}
+  return (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'night' : 'day';
+}
+
+let heroOpeningMode = getInitialTheme();
+let heroBaseProgress = 0;
 
 /* ========================================================
    AURELIA BLOSSOM LOADER SYSTEM
@@ -258,12 +268,13 @@ const AureliaLoader=(()=>{
 window.AureliaLoader=AureliaLoader;
 
 
-if(heroStillLight){
-  if(heroStillLight.complete&&heroStillLight.naturalWidth>0){
+const heroInitStill = (heroOpeningMode === 'night' && heroStillNight) ? heroStillNight : heroStillLight;
+if(heroInitStill){
+  if(heroInitStill.complete&&heroInitStill.naturalWidth>0){
     signalHeroReady();
   }else{
-    heroStillLight.addEventListener('load',()=>signalHeroReady(),{once:true});
-    heroStillLight.addEventListener('error',()=>signalHeroReady(),{once:true});
+    heroInitStill.addEventListener('load',()=>signalHeroReady(),{once:true});
+    heroInitStill.addEventListener('error',()=>signalHeroReady(),{once:true});
   }
 }
 
@@ -359,17 +370,20 @@ function pumpHeroQueue(){
 }
 
 function preloadHeroSequence(){
-  for(let i=1;i<=Math.min(12,HERO_CONFIG.frameCount);i++){
-    loadHeroFrame(i,false);
-  }
-  for(let i=13;i<=HERO_CONFIG.frameCount;i++){
-    heroPreloadQueue.push({idx:i,isNight:false});
-  }
-  for(let i=1;i<=Math.min(6,HERO_CONFIG.frameCount);i++){
-    loadHeroFrame(i,true);
-  }
-  for(let i=7;i<=HERO_CONFIG.frameCount;i++){
-    heroPreloadQueue.push({idx:i,isNight:true});
+  const isNight = heroOpeningMode === 'night';
+  const primaryCount = Math.min(12, HERO_CONFIG.frameCount);
+  const secondaryCount = Math.min(6, HERO_CONFIG.frameCount);
+
+  if (isNight) {
+    for(let i=1; i<=primaryCount; i++) loadHeroFrame(i, true);
+    for(let i=1; i<=secondaryCount; i++) loadHeroFrame(i, false);
+    for(let i=primaryCount+1; i<=HERO_CONFIG.frameCount; i++) heroPreloadQueue.push({idx:i, isNight:true});
+    for(let i=secondaryCount+1; i<=HERO_CONFIG.frameCount; i++) heroPreloadQueue.push({idx:i, isNight:false});
+  } else {
+    for(let i=1; i<=primaryCount; i++) loadHeroFrame(i, false);
+    for(let i=1; i<=secondaryCount; i++) loadHeroFrame(i, true);
+    for(let i=primaryCount+1; i<=HERO_CONFIG.frameCount; i++) heroPreloadQueue.push({idx:i, isNight:false});
+    for(let i=secondaryCount+1; i<=HERO_CONFIG.frameCount; i++) heroPreloadQueue.push({idx:i, isNight:true});
   }
   pumpHeroQueue();
 }
@@ -740,10 +754,19 @@ if(innerWidth>760&&mats&&mt&&typeof gsap!=='undefined'){
    CINEMATIC AMENITY SCROLL-SCRUBBED FRAME SEQUENCES
    ======================================================== */
 const pad = (n) => String(n).padStart(4, '0');
-const AMENITIES = [
+
+/* Single Canonical Source of Truth for Amenities */
+const AMENITIES_DATA = [
   {
+    index: 0,
+    num: '01',
     id: 'pool',
     title: 'Infinity Hot Pool',
+    phrase: 'Staircase · pool · forest',
+    detail: 'Travertine Monolith · 38°C Heated Spring · Forest Horizon',
+    image: 'amenity-01-pool.jpg',
+    baseRot: -0.8,
+    baseOffset: 0,
     frameCount: 192,
     fps: 24,
     captions: [
@@ -753,8 +776,15 @@ const AMENITIES = [
     ]
   },
   {
+    index: 1,
+    num: '02',
     id: 'garden',
     title: 'Biophilic Garden',
+    phrase: 'Garden pathway · layered landscape',
+    detail: 'Endemic Mediterranean Flora · Microclimate Canopy · Shaded Walks',
+    image: 'amenity-02-garden.jpg',
+    baseRot: 0.6,
+    baseOffset: 2,
     frameCount: 192,
     fps: 24,
     captions: [
@@ -764,8 +794,15 @@ const AMENITIES = [
     ]
   },
   {
+    index: 2,
+    num: '03',
     id: 'gym',
     title: 'Private Wellness Gym',
+    phrase: 'Sculptural entrance · sanctuary · interior',
+    detail: 'Monolithic Travertine Rotunda · Open Sky Oculi · Thermal Channels',
+    image: 'amenity-03-gym.jpg',
+    baseRot: 0.0,
+    baseOffset: -1,
     frameCount: 192,
     fps: 24,
     captions: [
@@ -775,8 +812,15 @@ const AMENITIES = [
     ]
   },
   {
+    index: 3,
+    num: '04',
     id: 'sunset',
     title: 'Sunset Lounge & Dining',
+    phrase: 'Terrace · golden hour · open sky',
+    detail: 'Cantilevered Stone Deck · Teak Banquet · Unobstructed West Horizon',
+    image: 'amenity-04-sunset.jpg',
+    baseRot: 0.8,
+    baseOffset: 3,
     frameCount: 192,
     fps: 24,
     captions: [
@@ -786,8 +830,15 @@ const AMENITIES = [
     ]
   },
   {
+    index: 4,
+    num: '05',
     id: 'observatory',
     title: 'Private Observatory',
+    phrase: 'Night garden · telescope · cosmos',
+    detail: 'High-Elevation Optical Mounts · Celestial Orientation · Zero Light-Spill',
+    image: 'amenity-05-observatory.jpg',
+    baseRot: -0.6,
+    baseOffset: 0,
     frameCount: 192,
     fps: 24,
     captions: [
@@ -797,79 +848,128 @@ const AMENITIES = [
     ]
   }
 ];
+
 const framePath = (id, n) => `frames/${id}/frame_${pad(n)}.webp`;
 
-const A_META = [
-  { sub: 'Staircase · pool · forest', detail: 'Travertine Monolith · 38°C Heated Spring · Forest Horizon', img: 'amenity-01-pool.jpg' },
-  { sub: 'Garden pathway · layered landscape', detail: 'Endemic Mediterranean Flora · Microclimate Canopy · Shaded Walks', img: 'amenity-02-garden.jpg' },
-  { sub: 'Sculptural entrance · sanctuary · interior', detail: 'Monolithic Travertine Rotunda · Open Sky Oculi · Thermal Channels', img: 'amenity-03-gym.jpg' },
-  { sub: 'Terrace · golden hour · open sky', detail: 'Cantilevered Stone Deck · Teak Banquet · Unobstructed West Horizon', img: 'amenity-04-sunset.jpg' },
-  { sub: 'Night garden · telescope · cosmos', detail: 'High-Elevation Optical Mounts · Celestial Orientation · Zero Light-Spill', img: 'amenity-05-observatory.jpg' }
-];
-
 const am = $('am');
-AMENITIES.forEach((a, i) => {
-  const meta = A_META[i];
-  const col = document.createElement('div');
-  col.className = 'am-col';
-  col.dataset.index = i;
-  col.dataset.amenity = a.id;
-  col.tabIndex = 0;
-  col.setAttribute('role', 'button');
-  col.setAttribute('aria-label', `Explore ${a.title}`);
-  col.innerHTML = `
-    <div class="am-item">
-      <div class="am-img-wrap">
-        <img class="am-img" src="${meta.img}" alt="${a.title}" loading="lazy">
+if (am) {
+  am.innerHTML = '';
+  AMENITIES_DATA.forEach((a) => {
+    const col = document.createElement('div');
+    col.className = 'am-col';
+    col.dataset.index = a.index;
+    col.dataset.amenity = a.id;
+    col.tabIndex = 0;
+    col.setAttribute('role', 'button');
+    col.setAttribute('aria-label', `Explore ${a.title}`);
+    col.innerHTML = `
+      <div class="am-item">
+        <div class="am-img-wrap">
+          <img class="am-img" src="${a.image}" alt="${a.title}" loading="lazy">
+        </div>
+        <div class="am-overlay"></div>
+        <div class="am-top">
+          <span class="am-num">${a.num}</span>
+          <span class="am-explore">ENTER SPACE →</span>
+        </div>
+        <div class="am-meta">
+          <h3 class="am-title">${a.title}</h3>
+          <p class="am-phrase">${a.phrase}</p>
+          <div class="am-detail"><span>EXPERIENCE ${a.num}</span><span>${a.detail.split('·')[0].trim()}</span></div>
+        </div>
       </div>
-      <div class="am-overlay"></div>
-      <div class="am-top">
-        <span class="am-num">0${i + 1}</span>
-        <span class="am-explore">ENTER SPACE →</span>
+      <div class="am-col-foot">
+        <p class="am-scroll-hint">Scroll to view</p>
       </div>
-      <div class="am-meta">
-        <h3 class="am-title">${a.title}</h3>
-        <p class="am-phrase">${meta.sub}</p>
-        <div class="am-detail"><span>EXPERIENCE 0${i + 1}</span><span>${meta.detail.split('·')[0].trim()}</span></div>
-      </div>
-    </div>
-    <div class="am-col-foot">
-      <p class="am-scroll-hint">Scroll to view</p>
-    </div>
-  `;
-  am.append(col);
-});
+    `;
+    am.append(col);
+  });
+}
+
+let activeAmenityIndex = 0;
+
+function updateAmenityActiveState(activeIndex) {
+  if (activeIndex === activeAmenityIndex && am && am.children[activeIndex]?.classList.contains('is-active')) return;
+  activeAmenityIndex = activeIndex;
+  if (!am) return;
+  [...am.children].forEach((col, i) => {
+    col.classList.toggle('is-active', i === activeIndex);
+  });
+}
 
 function updateAmenityCurve() {
-  if (innerWidth <= 760) return;
+  if (!am || !am.children.length) return;
+  const isDesktop = innerWidth > 760;
+
+  if (!isDesktop) {
+    const viewportCenter = innerHeight / 2;
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    [...am.children].forEach((item, i) => {
+      const rect = item.getBoundingClientRect();
+      const itemCenter = rect.top + rect.height / 2;
+      const dist = Math.abs(itemCenter - viewportCenter);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestIndex = i;
+      }
+      item.style.transform = '';
+      item.style.opacity = '';
+      item.style.zIndex = '';
+      const itemInner = item.querySelector('.am-item');
+      if (itemInner) itemInner.classList.remove('is-dimmed');
+    });
+
+    updateAmenityActiveState(closestIndex);
+    return;
+  }
+
   const c = innerWidth / 2;
   const items = [...am.children];
-  const baseRot = [-0.8, 0.6, 0.0, 0.8, -0.6];
-  const baseOffset = [0, 2, -1, 3, 0];
+  let closestIndex = 0;
+  let minDistance = Infinity;
 
   items.forEach((item, i) => {
     const r = item.getBoundingClientRect();
     const itemCenter = r.left + r.width / 2;
     const d = (itemCenter - c) / innerWidth;
+    const absD = Math.abs(d);
 
-    const bRot = baseRot[i] || 0;
-    const bOff = baseOffset[i] || 0;
+    if (absD < minDistance) {
+      minDistance = absD;
+      closestIndex = i;
+    }
+
+    const data = AMENITIES_DATA[i] || {};
+    const bRot = data.baseRot || 0;
+    const bOff = data.baseOffset || 0;
 
     const translateY = (d * d * 40) + (bOff * 2);
     const rotate = bRot + (d * 2.2);
-    const scale = 1 - Math.min(0.08, Math.abs(d) * 0.10);
-    const opacity = Math.max(0.85, 1 - Math.abs(d) * 0.25);
-    const zIndex = Math.round((1 - Math.abs(d)) * 10);
+    const scale = 1 - Math.min(0.08, absD * 0.10);
+    const opacity = Math.max(0.85, 1 - absD * 0.25);
+    const zIndex = Math.round((1 - absD) * 10);
 
     item.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
     item.style.opacity = opacity.toFixed(3);
     item.style.zIndex = zIndex;
+
+    const itemInner = item.querySelector('.am-item');
+    if (itemInner) {
+      itemInner.classList.toggle('is-dimmed', absD > 0.42);
+    }
   });
+
+  updateAmenityActiveState(closestIndex);
 }
 
 let drag = 0, dx = 0, sx = 0, isPointerDown = 0;
-am.addEventListener('scroll', updateAmenityCurve, { passive: true });
-addEventListener('resize', updateAmenityCurve);
+if (am) {
+  am.addEventListener('scroll', updateAmenityCurve, { passive: true });
+}
+window.addEventListener('scroll', updateAmenityCurve, { passive: true });
+window.addEventListener('resize', updateAmenityCurve, { passive: true });
 updateAmenityCurve();
 
 /* Unified editorial scroll scrubbing for amenities matching home page (GSAP ScrollTrigger scrub: 0.6) */
@@ -903,25 +1003,27 @@ if (innerWidth > 760 && $('have') && $('have-stage') && am && typeof gsap !== 'u
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       updateAmenityCurve();
     }
-  });
+  }, { passive: true });
 }
 
-am.addEventListener('pointerdown', e => {
-  isPointerDown = 1;
-  dx = e.clientX;
-  sx = am.scrollLeft;
-  drag = 0;
-});
-addEventListener('pointerup', () => {
-  isPointerDown = 0;
-  setTimeout(() => drag = 0, 80);
-});
-addEventListener('pointermove', e => {
-  if (isPointerDown && Math.abs(e.clientX - dx) > 6) {
-    drag = 1;
-    am.scrollLeft = sx - (e.clientX - dx);
-  }
-});
+if (am) {
+  am.addEventListener('pointerdown', e => {
+    isPointerDown = 1;
+    dx = e.clientX;
+    sx = am.scrollLeft;
+    drag = 0;
+  });
+  window.addEventListener('pointerup', () => {
+    isPointerDown = 0;
+    setTimeout(() => { drag = 0; }, 80);
+  });
+  window.addEventListener('pointermove', e => {
+    if (isPointerDown && Math.abs(e.clientX - dx) > 8) {
+      drag = 1;
+      am.scrollLeft = sx - (e.clientX - dx);
+    }
+  });
+}
 
 /* ========================================================
    SCRUBBER ENGINE (FACTORY, ONE INSTANCE PER OPEN, DESTROYED ON CLOSE)
@@ -932,43 +1034,72 @@ function createScrubber({ scroller, track, canvas, count, pathFor, captionEls,
                           lerp = 0.15, concurrency = 6, lookahead = 6, maxDpr = 2 }) {
   const ctx = canvas.getContext('2d');
   const frames = new Array(count);
-  let cw = 0, ch = 0, th = 0, target = 0, current = 0, last = null, dir = 1;
-  let running = false, dead = false;
+  const loading = new Set();
+  let cw = 0, ch = 0, target = 0, current = 0, last = null, dir = 1;
+  let running = false, dead = false, rafId = null;
 
-  const loadFrame = (i) => new Promise((res) => {
-    if (dead) return res(null);
+  function loadFrame(i) {
+    if (dead || i < 0 || i >= count || frames[i] || loading.has(i)) return;
+    loading.add(i);
     const img = new Image();
     img.decoding = 'async';
-    img.onload = () => { if (!dead) frames[i] = img; res(img); };
-    img.onerror = () => res(null);
+    img.onload = () => {
+      loading.delete(i);
+      if (!dead) {
+        frames[i] = img;
+        if (Math.abs(i - Math.round(current)) <= 2) {
+          schedule();
+        }
+      }
+    };
+    img.onerror = () => {
+      loading.delete(i);
+    };
     img.src = pathFor(i + 1);
-  });
+  }
+
+  function preloadAnchors() {
+    const anchors = [0, Math.floor(count * 0.25), Math.floor(count * 0.5), Math.floor(count * 0.75), count - 1];
+    anchors.forEach(loadFrame);
+  }
+
+  function requestNeighborhood(centerIdx) {
+    if (dead) return;
+    const windowRadius = 8;
+    for (let offset = 0; offset <= windowRadius; offset++) {
+      if (centerIdx + offset < count) loadFrame(centerIdx + offset);
+      if (centerIdx - offset >= 0) loadFrame(centerIdx - offset);
+    }
+  }
 
   async function preloadRest() {
     let next = 1;
-    const worker = async () => {
-      while (!dead && next < count) {
-        const i = next++;
-        await loadFrame(i);
-        if (i % 12 === 0) schedule();
+    while (!dead && next < count) {
+      if (loading.size < concurrency) {
+        loadFrame(next++);
       }
-    };
-    await Promise.all(Array.from({ length: concurrency }, worker));
+      await new Promise(r => setTimeout(r, 16));
+    }
   }
 
   function nearest(idx) {
     if (frames[idx]) return frames[idx];
-    for (let d = 1; d < count; d++) {
-      if (frames[idx - d]) return frames[idx - d];
-      if (frames[idx + d]) return frames[idx + d];
+    const maxSearch = 18;
+    for (let d = 1; d <= maxSearch; d++) {
+      if (idx - d >= 0 && frames[idx - d]) return frames[idx - d];
+      if (idx + d < count && frames[idx + d]) return frames[idx + d];
     }
-    return null;
+    return last || frames[0] || null;
   }
 
   function decodeAhead(idx) {
     for (let k = 1; k <= lookahead; k++) {
-      const img = frames[clamp(idx + k * dir, 0, count - 1)];
-      if (img && img.decode) img.decode().catch(() => {});
+      const targetIdx = clamp(idx + k * dir, 0, count - 1);
+      const img = frames[targetIdx];
+      if (img && !img._decoded && img.decode) {
+        img._decoded = true;
+        img.decode().catch(() => {});
+      }
     }
   }
 
@@ -976,27 +1107,28 @@ function createScrubber({ scroller, track, canvas, count, pathFor, captionEls,
     const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
     cw = Math.round(scroller.clientWidth * dpr);
     ch = Math.round(scroller.clientHeight * dpr);
-    canvas.width = cw;
-    canvas.height = ch;
-    th = track.offsetHeight;
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
+    }
     ctx.imageSmoothingQuality = 'high';
     last = null;
     schedule();
   }
 
-  function draw(idx) {                       // object-fit: cover
+  function draw(idx) {
     const img = nearest(idx);
-    if (!img || img === last) return;
+    if (!img) return;
+    if (img === last && canvas.width === cw && canvas.height === ch) return;
     const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
     last = img;
   }
 
-  function progress() {                      // REQUIRED formula (scroller is at viewport top-left)
-    const top = track.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
-    const range = th - scroller.clientHeight;
-    return range > 0 ? clamp(-top / range, 0, 1) : 0;
+  function progress() {
+    const maxScroll = scroller.scrollHeight - scroller.clientHeight;
+    return maxScroll > 0 ? clamp(scroller.scrollTop / maxScroll, 0, 1) : 0;
   }
 
   function updateCaptions(p) {
@@ -1014,42 +1146,59 @@ function createScrubber({ scroller, track, canvas, count, pathFor, captionEls,
     const p = progress();
     target = p * (count - 1);
     updateCaptions(p);
+
     const tourHint = $('tourScrollHint');
     if (tourHint) {
       const hintOp = clamp(1 - p * 6, 0, 1);
       tourHint.style.opacity = hintOp.toFixed(3);
     }
+
     const diff = target - current;
     if (Math.abs(diff) > 0.001) dir = diff > 0 ? 1 : -1;
-    current += diff * lerp;                  // REQUIRED lerp
+    current += diff * lerp;
     const settled = Math.abs(target - current) < 0.02;
     if (settled) current = target;
+
     const idx = clamp(Math.round(current), 0, count - 1);
+    requestNeighborhood(idx);
     draw(idx);
     decodeAhead(idx);
-    if (settled) running = false; else requestAnimationFrame(tick);
+
+    if (settled) {
+      running = false;
+      rafId = null;
+    } else {
+      rafId = requestAnimationFrame(tick);
+    }
   }
 
-  function schedule() { if (!dead && !running) { running = true; requestAnimationFrame(tick); } }
+  function schedule() {
+    if (!dead && !running) {
+      running = true;
+      rafId = requestAnimationFrame(tick);
+    }
+  }
 
   scroller.addEventListener('scroll', schedule, { passive: true });
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
   return {
-    async start() {
+    start() {
       resize();
-      const first = await loadFrame(0);      // poster frame first
-      if (first) { last = null; draw(0); }
+      loadFrame(0);
+      preloadAnchors();
       preloadRest();
       schedule();
     },
-    destroy() {                              // free everything
+    destroy() {
       dead = true;
+      if (rafId) cancelAnimationFrame(rafId);
       scroller.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', resize);
       frames.length = 0;
+      loading.clear();
       canvas.width = canvas.height = 0;
-    },
+    }
   };
 }
 
@@ -1087,7 +1236,7 @@ function showReduced(a) {
 }
 
 function openTour(id, triggerEl) {
-  const a = AMENITIES.find((x) => x.id === id);
+  const a = AMENITIES_DATA.find((x) => x.id === id);
   if (!a) return;
   trigger = triggerEl;
   tour.setAttribute('aria-label', a.title);
@@ -1146,8 +1295,8 @@ function closeTour() {
   if (trigger) trigger.focus();
 }
 
-backBtn.addEventListener('click', closeTour);
-addEventListener('keydown', (e) => { if (e.key === 'Escape' && !tour.hidden) closeTour(); });
+if (backBtn) backBtn.addEventListener('click', closeTour);
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !tour.hidden) closeTour(); });
 
 // Grid wiring: each card needs data-amenity="<id>"
 document.querySelectorAll('[data-amenity]').forEach((card) => {
@@ -1162,7 +1311,7 @@ document.querySelectorAll('[data-amenity]').forEach((card) => {
   });
   // warm the HTTP cache so the tour opens instantly
   const warm = () => {
-    const a = AMENITIES.find(x => x.id === card.dataset.amenity);
+    const a = AMENITIES_DATA.find(x => x.id === card.dataset.amenity);
     if (!a) return;
     for (let i = 1; i <= 12; i++) new Image().src = framePath(a.id, i);
   };
@@ -1324,73 +1473,124 @@ const cio=new IntersectionObserver(e=>e.forEach(x=>{
 document.querySelectorAll('.stats b').forEach(b=>cio.observe(b));
 
 /* ========================================================
-   CINEMATIC ALTERNATE OPENING (DAY → NIGHT / NIGHT → DAY)
+   CINEMATIC ALTERNATE OPENING & SITE THEME SYSTEM
    ======================================================== */
-const dnBtn=$('dn');
-if(dnBtn){
-  dnBtn.onclick=()=>{
-    const isSwitchingToNight=(heroOpeningMode==='day');
-    heroOpeningMode=isSwitchingToNight?'night':'day';
+function setSiteTheme(mode, persist = true) {
+  heroOpeningMode = mode;
+  const isNight = (mode === 'night');
+  
+  // 1. Synchronize HTML document theme token attribute
+  document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
 
-    // 1. Update button active indicator and aria labels
-    dnBtn.classList.toggle('is-night', heroOpeningMode === 'night');
-    dnBtn.classList.toggle('is-day', heroOpeningMode === 'day');
-    const stageEl = $('stage');
-    if (stageEl) stageEl.classList.toggle('is-night', heroOpeningMode === 'night');
-    dnBtn.setAttribute('aria-label', (heroOpeningMode === 'day') ? 'Switch to Night opening' : 'Switch to Day opening');
-    dnBtn.setAttribute('title', (heroOpeningMode === 'day') ? 'Day active · Click for Night opening' : 'Night active · Click for Day opening');
+  // 2. Persist to localStorage if explicitly requested
+  if (persist) {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, mode);
+    } catch (e) {}
+  }
 
-    // 2. Reset frame indices to 1 (0:00)
-    heroCurIdx=1;
-    heroTargetIdx=1;
-    heroLastDrawn=null;
+  // 3. Update theme-color meta tags
+  const metaThemes = document.querySelectorAll('meta[name="theme-color"]');
+  metaThemes.forEach(m => {
+    m.removeAttribute('media');
+    m.setAttribute('content', isNight ? '#15110d' : '#fbf9f6');
+  });
 
-    // 3. Scroll position stays unchanged; record base progress so scroll continues from 0:00
-    if(typeof ScrollTrigger!=='undefined'){
-      const st=ScrollTrigger.getById('heroTrigger');
-      if(st){
-        heroBaseProgress=st.progress;
+  // 4. Update Day/Night button state and accessibility labels
+  const dnBtn = $('dn');
+  if (dnBtn) {
+    dnBtn.classList.toggle('is-night', isNight);
+    dnBtn.classList.toggle('is-day', !isNight);
+    dnBtn.setAttribute('aria-label', isNight ? 'Switch to Day opening' : 'Switch to Night opening');
+    dnBtn.setAttribute('title', isNight ? 'Night active · Click for Day opening' : 'Day active · Click for Night opening');
+  }
+
+  // 5. Update stage and still image elements
+  const stageEl = $('stage');
+  if (stageEl) {
+    stageEl.classList.toggle('is-night', isNight);
+  }
+
+  if (heroStillNight && heroStillLight) {
+    heroStillNight.classList.toggle('is-active', isNight);
+    heroStillLight.classList.toggle('is-active', !isNight);
+  }
+
+  // 6. Reset hero frame scrub state to frame 1
+  heroCurIdx = 1;
+  heroTargetIdx = 1;
+  heroLastDrawn = null;
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    const st = ScrollTrigger.getById('heroTrigger');
+    if (st) {
+      heroBaseProgress = st.progress;
+    }
+  }
+
+  // 7. Update hero canvas / video layers
+  if (!isReducedMotion) {
+    if (isNight) {
+      drawHeroFrame(1, 'night');
+      if (heroCanvasNight) heroCanvasNight.classList.add('is-active');
+      if (heroCanvasLight) heroCanvasLight.classList.remove('is-active');
+    } else {
+      drawHeroFrame(1, 'day');
+      if (heroCanvasLight) heroCanvasLight.classList.add('is-active');
+      if (heroCanvasNight) heroCanvasNight.classList.remove('is-active');
+    }
+    decodeHeroAhead(1);
+  } else {
+    if (isNight) {
+      if (heroVidNight) {
+        heroVidNight.currentTime = 0;
+        heroVidNight.style.display = 'block';
+        heroVidNight.classList.add('is-active');
+        heroVidNight.play().catch(() => {});
+      }
+      if (heroVidLight) {
+        heroVidLight.classList.remove('is-active');
+        heroVidLight.pause();
+      }
+    } else {
+      if (heroVidLight) {
+        heroVidLight.currentTime = 0;
+        heroVidLight.style.display = 'block';
+        heroVidLight.classList.add('is-active');
+        heroVidLight.play().catch(() => {});
+      }
+      if (heroVidNight) {
+        heroVidNight.classList.remove('is-active');
+        heroVidNight.pause();
       }
     }
+  }
+}
 
-    // 4. Subtle crossfade between the two video/canvas layers
-    if(!isReducedMotion){
-      if(heroOpeningMode==='night'){
-        drawHeroFrame(1,'night');
-        if(heroCanvasNight)heroCanvasNight.classList.add('is-active');
-        if(heroCanvasLight)heroCanvasLight.classList.remove('is-active');
-        if(heroStillLight)heroStillLight.style.opacity='0';
-      }else{
-        drawHeroFrame(1,'day');
-        if(heroCanvasLight)heroCanvasLight.classList.add('is-active');
-        if(heroCanvasNight)heroCanvasNight.classList.remove('is-active');
-        if(heroStillNight)heroStillNight.style.opacity='0';
-      }
-      decodeHeroAhead(1);
-    }else{
-      if(heroOpeningMode==='night'){
-        if(heroVidNight){
-          heroVidNight.currentTime=0;
-          heroVidNight.style.display='block';
-          heroVidNight.classList.add('is-active');
-          heroVidNight.play().catch(()=>{});
-        }
-        if(heroVidLight){
-          heroVidLight.classList.remove('is-active');
-          heroVidLight.pause();
-        }
-      }else{
-        if(heroVidLight){
-          heroVidLight.currentTime=0;
-          heroVidLight.style.display='block';
-          heroVidLight.classList.add('is-active');
-          heroVidLight.play().catch(()=>{});
-        }
-        if(heroVidNight){
-          heroVidNight.classList.remove('is-active');
-          heroVidNight.pause();
-        }
-      }
-    }
+const dnBtn = $('dn');
+if (dnBtn) {
+  dnBtn.onclick = () => {
+    const nextMode = (heroOpeningMode === 'day') ? 'night' : 'day';
+    setSiteTheme(nextMode, true);
   };
 }
+
+// System theme changes (prefers-color-scheme)
+if (typeof window !== 'undefined' && window.matchMedia) {
+  const sysTheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const handleSysChange = (e) => {
+    try {
+      if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+        setSiteTheme(e.matches ? 'night' : 'day', false);
+      }
+    } catch (err) {}
+  };
+  if (sysTheme.addEventListener) {
+    sysTheme.addEventListener('change', handleSysChange);
+  } else if (sysTheme.addListener) {
+    sysTheme.addListener(handleSysChange);
+  }
+}
+
+// Initial synchronization on module execution
+setSiteTheme(heroOpeningMode, false);
