@@ -46,18 +46,18 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
               { text: "KINETIC", color: "#0022ff" },
               { text: "BAZAAR", color: "#0a0a0a" },
             ]}
-            particleSize={2.8}
+            particleSize={2.6}
             density={2.8}
             color="#0a0a0a"
             highlightColor="#ff007f"
-            scatter={75}
-            gatherDuration={800}
-            stagger={100}
-            pointerRepel={35}
-            repelRadius={80}
-            idleDrift={0.12}
+            scatter={60}
+            gatherDuration={750}
+            stagger={80}
+            pointerRepel={30}
+            repelRadius={70}
+            idleDrift={0.10}
             trigger="mount"
-            fontSize="clamp(3.0rem, 13vw, 4.8rem)"
+            fontSize="clamp(2.6rem, 11vw, 4.2rem)"
             fontWeight={900}
             fontFamily="var(--font-clash), sans-serif"
             glow={false}

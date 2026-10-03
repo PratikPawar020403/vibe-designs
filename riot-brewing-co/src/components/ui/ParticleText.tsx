@@ -332,7 +332,7 @@ export const ParticleText = ({
         if (m.width > widestLineWidth) widestLineWidth = m.width;
       }
 
-      const estimatedLineHeight = resolvedSize * 0.90;
+      const estimatedLineHeight = resolvedSize * 1.08;
       const totalEstimatedHeight = parsedLines.length * estimatedLineHeight;
 
       const scaleW = maxTextWidth / widestLineWidth;
@@ -348,9 +348,9 @@ export const ParticleText = ({
         if (currentBuild !== buildId) return;
       }
 
-      const lineHeight = resolvedSize * 0.90;
-      const ascent = Math.ceil(resolvedSize * 0.80);
-      const padding = Math.max(20, Math.ceil(resolvedSize * 0.20));
+      const lineHeight = resolvedSize * 1.08;
+      const ascent = Math.ceil(resolvedSize * 0.85);
+      const padding = Math.max(16, Math.ceil(resolvedSize * 0.15));
 
       // Re-measure with final scaled font
       offscreen.width = 100;
@@ -409,16 +409,16 @@ export const ParticleText = ({
       }
 
       const maxParticles = isMobile
-        ? Math.min(2800, Math.max(1600, Math.floor((width * height) / 45)))
-        : Math.max(1600, Math.min(4800, Math.floor((width * height) / 70)));
+        ? Math.min(3200, Math.max(1800, Math.floor((width * height) / 40)))
+        : Math.max(1800, Math.min(4800, Math.floor((width * height) / 70)));
 
       let selected = targets;
       if (targets.length > maxParticles) {
         const ratio = maxParticles / targets.length;
-        // Deterministic pseudo-random subsampling completely eliminates diagonal Moiré banding
-        selected = targets.filter((_, index) => {
-          const pseudo = ((index * 1664525 + 1013904223) >>> 0) / 4294967296;
-          return pseudo < ratio;
+        // 2D Spatial trigonometric hash completely eliminates periodic banding and dead zones
+        selected = targets.filter((target) => {
+          const h = Math.sin(target.x * 12.9898 + target.y * 78.233) * 43758.5453;
+          return (h - Math.floor(h)) < ratio;
         });
       }
 
