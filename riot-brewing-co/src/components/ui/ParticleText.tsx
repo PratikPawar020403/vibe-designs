@@ -202,7 +202,7 @@ export const ParticleText = ({
       const size = particle.size;
       ctx.fillStyle = particle.color;
 
-      if (size <= 2.2) {
+      if (size <= 1.8) {
         ctx.fillRect(particle.x - size / 2, particle.y - size / 2, size, size);
         return;
       }
@@ -240,9 +240,10 @@ export const ParticleText = ({
           baseY = particle.startY + (particle.targetY - particle.startY) * eased;
           if (progress < 1) complete = false;
         } else if (!reducedMotion && idleDrift > 0) {
+          const driftFactor = width < 768 ? 0.35 : 1.0;
           const driftTime = now * 0.001;
-          baseX += Math.sin(driftTime * 0.9 + particle.seed * 10) * idleDrift * particle.depth;
-          baseY += Math.cos(driftTime * 0.75 + particle.depth * 10) * idleDrift * particle.depth;
+          baseX += Math.sin(driftTime * 0.9 + particle.seed * 10) * idleDrift * particle.depth * driftFactor;
+          baseY += Math.cos(driftTime * 0.75 + particle.depth * 10) * idleDrift * particle.depth * driftFactor;
         }
 
         if (pointer.active && !reducedMotion && pointerRepel > 0 && repelRadius > 0) {
@@ -317,8 +318,8 @@ export const ParticleText = ({
       if (!offCtx) return;
 
       // Fit font size to container boundaries
-      const maxTextWidth = width * (isMobile ? 0.86 : 0.90);
-      const maxTextHeight = height * (isMobile ? 0.78 : 0.82);
+      const maxTextWidth = width * (isMobile ? 0.88 : 0.90);
+      const maxTextHeight = height * (isMobile ? 0.80 : 0.82);
 
       // Set offscreen font for measurement
       offscreen.width = 100;
@@ -334,11 +335,14 @@ export const ParticleText = ({
       const estimatedLineHeight = resolvedSize * 0.90;
       const totalEstimatedHeight = parsedLines.length * estimatedLineHeight;
 
-      if (widestLineWidth > maxTextWidth || totalEstimatedHeight > maxTextHeight) {
-        const scaleW = maxTextWidth / widestLineWidth;
-        const scaleH = maxTextHeight / totalEstimatedHeight;
-        const scale = Math.min(scaleW, scaleH);
-        resolvedSize = Math.max(16, Math.floor(resolvedSize * scale));
+      const scaleW = maxTextWidth / widestLineWidth;
+      const scaleH = maxTextHeight / totalEstimatedHeight;
+      const optimalScale = Math.min(scaleW, scaleH);
+
+      // Scale down if overflowing, or scale up to fill space gracefully
+      if (optimalScale < 0.98 || optimalScale > 1.05) {
+        const appliedScale = optimalScale < 1 ? optimalScale : Math.min(optimalScale, 1.45);
+        resolvedSize = Math.max(18, Math.floor(resolvedSize * appliedScale));
         font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
         await waitForFonts(font);
         if (currentBuild !== buildId) return;
@@ -381,7 +385,7 @@ export const ParticleText = ({
 
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets: Target[] = [];
-      const step = Math.max(2, Math.floor(density));
+      const step = 2; // Strict 2px orthogonal grid for uniform alignment
 
       const offsetX = Math.floor(width / 2 - offscreen.width / 2);
       const offsetY = Math.floor(height / 2 - offscreen.height / 2);
@@ -405,10 +409,18 @@ export const ParticleText = ({
       }
 
       const maxParticles = isMobile
-        ? Math.min(480, Math.max(240, Math.floor((width * height) / 140)))
-        : Math.max(1200, Math.min(4200, Math.floor((width * height) / 85)));
-      const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
-      const selected = targets.filter((_, index) => index % stride === 0);
+        ? Math.min(2800, Math.max(1600, Math.floor((width * height) / 45)))
+        : Math.max(1600, Math.min(4800, Math.floor((width * height) / 70)));
+
+      let selected = targets;
+      if (targets.length > maxParticles) {
+        const ratio = maxParticles / targets.length;
+        // Deterministic pseudo-random subsampling completely eliminates diagonal Moiré banding
+        selected = targets.filter((_, index) => {
+          const pseudo = ((index * 1664525 + 1013904223) >>> 0) / 4294967296;
+          return pseudo < ratio;
+        });
+      }
 
       particles = selected.map((target, index) => {
         const seed = ((index * 9301 + 49297) % 233280) / 233280;
@@ -427,7 +439,7 @@ export const ParticleText = ({
           startY: reducedMotion ? target.y : startY,
           targetX: target.x,
           targetY: target.y,
-          size: Math.max(1.2, particleSize * (0.8 + target.alpha * 0.4)),
+          size: Math.max(1.8, particleSize * (0.85 + target.alpha * 0.35)),
           color: particleColor,
           seed,
           depth,
