@@ -110,12 +110,12 @@ export const MOCK_CORE_COLLECTION: Product[] = [
       mobileSrc: "/bombay-brew-mobile.mp4",
       fallbackSrc: "/bombay-brew-desktop.mp4",
       poster: "/bombay-brew-poster.jpg",
-      maxTime: 6.40,
+      maxTime: 7.60,
       trackLabel: "MUMBAI ART JOURNEY",
       chapters: [
         { step: "01", label: "TRAIN", targetProgress: 0.05 },
-        { step: "02", label: "AUTO", targetProgress: 0.50 },
-        { step: "03", label: "BOMBAY BREW", targetProgress: 0.95 },
+        { step: "02", label: "AUTO", targetProgress: 0.45 },
+        { step: "03", label: "BOMBAY BREW", targetProgress: 0.92 },
       ]
     },
     description: "Classic IPA heavily infused with vibrant local street art culture. Scroll horizontally to journey from the Mumbai local train through street art auto-rickshaws to the Bombay Brew can.",
@@ -143,12 +143,12 @@ export const MOCK_EXPERIMENTAL_ARCHIVE: Product[] = [
       mobileSrc: "/kinetic-mobile.mp4",
       fallbackSrc: "/kinetic-desktop.mp4",
       poster: "/kinetic-poster.jpg",
-      maxTime: 5.90,
+      maxTime: 6.30,
       trackLabel: "KINETIC JOURNEY",
       chapters: [
         { step: "01", label: "VILLAGE HARVEST", targetProgress: 0.05 },
-        { step: "02", label: "THE CART", targetProgress: 0.50 },
-        { step: "03", label: "KINETIC BOTTLE", targetProgress: 0.95 },
+        { step: "02", label: "THE CART", targetProgress: 0.45 },
+        { step: "03", label: "KINETIC BOTTLE", targetProgress: 0.90 },
       ]
     },
     description: "A limited run exploring kinetic motion and raw harvest botanicals. Scroll horizontally to journey from the village fields and bullock cart to the Kinetic Brew IPA bottle.",

@@ -66,10 +66,14 @@ export function ScrollVideoJourney({
   const activeStageIdxRef = useRef(0);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isInViewport, setIsInViewport] = useState(true);
-  const [isMobileViewport, setIsMobileViewport] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
 
   const durationRef = useRef(maxTime || 8.0);
   const targetTimeRef = useRef(0);
@@ -159,22 +163,27 @@ export function ScrollVideoJourney({
     }
 
     const now = performance.now();
-    // Allow seek if not currently seeking or if 32ms has elapsed since last seek
-    if (!video.seeking && !isSeekingRef.current && (now - lastSeekTimeRef.current > 32)) {
+    const timeSinceLastSeek = now - lastSeekTimeRef.current;
+    const canSeek = (!video.seeking && !isSeekingRef.current) || timeSinceLastSeek > 60;
+
+    if (canSeek && timeSinceLastSeek > 32) {
       pendingTimeRef.current = null;
       isSeekingRef.current = true;
       lastSeekTimeRef.current = now;
 
-      // Use fastSeek on supported platforms (Safari iOS hardware acceleration)
-      const anyVideo = video as unknown as { fastSeek?: (t: number) => void };
-      if (typeof anyVideo.fastSeek === "function") {
-        try {
-          anyVideo.fastSeek(target);
-        } catch {
+      try {
+        const anyVideo = video as unknown as { fastSeek?: (t: number) => void };
+        if (typeof anyVideo.fastSeek === "function") {
+          try {
+            anyVideo.fastSeek(target);
+          } catch {
+            video.currentTime = target;
+          }
+        } else {
           video.currentTime = target;
         }
-      } else {
-        video.currentTime = target;
+      } catch {
+        // Safe seek
       }
     } else {
       pendingTimeRef.current = target;
@@ -229,12 +238,12 @@ export function ScrollVideoJourney({
     // Update scrollbar thumb and percentage readout directly in DOM
     const thumb = thumbRef.current;
     if (thumb) {
-      const thumbLeft = Math.max(0, Math.min(progress * maxThumbLeft, maxThumbLeft));
-      thumb.style.width = `${thumbWidth}px`;
-      thumb.style.transform = `translateX(${thumbLeft}px)`;
+      const pct = Math.max(0, Math.min(progress, 1)) * 100;
+      thumb.style.left = `${pct}%`;
+      thumb.style.transform = `translateX(-${pct}%)`;
 
       if (percentDisplayRef.current) {
-        percentDisplayRef.current.textContent = `${Math.round(progress * 100)}%`;
+        percentDisplayRef.current.textContent = `${Math.round(pct)}%`;
       }
     }
 
@@ -315,7 +324,10 @@ export function ScrollVideoJourney({
     const video = videoRef.current;
     if (!video || !isInViewport) return;
 
+    let isSubscribed = true;
+
     const onLoadedMetadata = () => {
+      if (!isSubscribed) return;
       if (video.duration && !isNaN(video.duration)) {
         durationRef.current = maxTime ? Math.min(video.duration, maxTime) : video.duration;
       }
@@ -324,48 +336,46 @@ export function ScrollVideoJourney({
     };
 
     const onCanPlay = () => {
+      if (!isSubscribed) return;
       setIsLoaded(true);
+      handleScroll();
+
+      // Silent play/pause handshake once video is ready to unlock paused hardware decoding
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            if (isSubscribed) video.pause();
+          })
+          .catch(() => {});
+      }
     };
 
     const onSeeked = () => {
       isSeekingRef.current = false;
       if (pendingTimeRef.current !== null) {
-        const nextTarget = pendingTimeRef.current;
-        pendingTimeRef.current = null;
-        if (Math.abs(nextTarget - video.currentTime) >= 0.03) {
-          scheduleUpdate();
-        }
+        scheduleUpdate();
       }
     };
 
     video.addEventListener("loadedmetadata", onLoadedMetadata);
     video.addEventListener("loadeddata", onCanPlay);
     video.addEventListener("canplay", onCanPlay);
+    video.addEventListener("canplaythrough", onCanPlay);
     video.addEventListener("seeked", onSeeked);
 
-    // Explicitly load media
-    video.load();
-
-    // Mobile WebKit Handshake: Silent play/pause allows WebKit hardware pipeline to decode scrubbed frames while paused
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          video.pause();
-        })
-        .catch(() => {
-          // Autoplay policy handled gracefully
-        });
-    }
-
-    if (video.readyState >= 1) {
+    if (video.readyState >= 2) {
+      onCanPlay();
+    } else if (video.readyState >= 1) {
       onLoadedMetadata();
     }
 
     return () => {
+      isSubscribed = false;
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
       video.removeEventListener("loadeddata", onCanPlay);
       video.removeEventListener("canplay", onCanPlay);
+      video.removeEventListener("canplaythrough", onCanPlay);
       video.removeEventListener("seeked", onSeeked);
     };
   }, [activeSrc, handleScroll, isInViewport, maxTime, scheduleUpdate]);
@@ -431,17 +441,16 @@ export function ScrollVideoJourney({
     e.stopPropagation();
     e.preventDefault();
     const scroller = scrollTrackRef.current;
-    if (!scroller) return;
+    const track = trackRef.current;
+    if (!scroller || !track) return;
 
-    const startX = e.clientX;
-    const startScrollLeft = scroller.scrollLeft;
-    const { maxScroll, maxThumbLeft } = layoutMetricsRef.current;
+    const { maxScroll } = layoutMetricsRef.current;
 
     const onMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = moveEvent.clientX - startX;
-      const deltaRatio = maxThumbLeft > 0 ? deltaX / maxThumbLeft : 0;
-      const newScrollLeft = Math.max(0, Math.min(startScrollLeft + deltaRatio * maxScroll, maxScroll));
-      scroller.scrollLeft = newScrollLeft;
+      const rect = track.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const progress = Math.min(Math.max((moveEvent.clientX - rect.left) / rect.width, 0), 1);
+      scroller.scrollLeft = progress * maxScroll;
     };
 
     const onMouseUp = () => {
@@ -460,11 +469,10 @@ export function ScrollVideoJourney({
     if (!touch) return;
 
     const scroller = scrollTrackRef.current;
-    if (!scroller) return;
+    const track = trackRef.current;
+    if (!scroller || !track) return;
 
-    const startX = touch.clientX;
-    const startScrollLeft = scroller.scrollLeft;
-    const { maxScroll, maxThumbLeft } = layoutMetricsRef.current;
+    const { maxScroll } = layoutMetricsRef.current;
 
     const onTouchMove = (moveEvent: TouchEvent) => {
       if (moveEvent.cancelable) {
@@ -472,10 +480,10 @@ export function ScrollVideoJourney({
       }
       const moveTouch = moveEvent.touches[0];
       if (!moveTouch) return;
-      const deltaX = moveTouch.clientX - startX;
-      const deltaRatio = maxThumbLeft > 0 ? deltaX / maxThumbLeft : 0;
-      const newScrollLeft = Math.max(0, Math.min(startScrollLeft + deltaRatio * maxScroll, maxScroll));
-      scroller.scrollLeft = newScrollLeft;
+      const rect = track.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      const progress = Math.min(Math.max((moveTouch.clientX - rect.left) / rect.width, 0), 1);
+      scroller.scrollLeft = progress * maxScroll;
     };
 
     const onTouchEnd = () => {
@@ -512,32 +520,27 @@ export function ScrollVideoJourney({
           alt={`${productName} Visual Journey`}
           className={clsx(
             "absolute max-h-[35dvh] md:max-h-[80vh] max-w-full object-contain drop-shadow-2xl transition-opacity duration-300",
-            isLoaded && !prefersReducedMotion && !hasError ? "opacity-0 pointer-events-none" : "opacity-100"
+            isLoaded && !prefersReducedMotion ? "opacity-0 pointer-events-none" : "opacity-100"
           )}
         />
 
         {/* Scrubbable Process Video */}
-        {!prefersReducedMotion && !hasError && isInViewport && (
+        {!prefersReducedMotion && isInViewport && (
           <video
             ref={videoRef}
+            src={activeSrc}
             poster={posterSrc}
             muted
             playsInline
-            preload="metadata"
+            preload="auto"
             disablePictureInPicture
             disableRemotePlayback
-            onError={() => setHasError(true)}
             className={clsx(
               "max-h-[35dvh] md:max-h-[80vh] max-w-full object-contain drop-shadow-2xl",
               "transition-opacity duration-300",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
-          >
-            <source src={activeSrc} type="video/mp4" />
-            {fallbackSrc && fallbackSrc !== activeSrc && (
-              <source src={fallbackSrc} type="video/mp4" />
-            )}
-          </video>
+          />
         )}
       </div>
 
@@ -624,7 +627,7 @@ export function ScrollVideoJourney({
               "flex items-center justify-center border-r border-l border-ink-black",
               "before:content-[''] before:absolute before:-top-3 before:-bottom-3 before:-left-3 before:-right-3 before:z-10"
             )}
-            style={{ width: "36px", transform: "translateX(0px)" }}
+            style={{ width: "32px", left: "0%", transform: "translateX(0%)" }}
           >
             {/* Grip lines */}
             <div className="flex gap-0.5 pointer-events-none">

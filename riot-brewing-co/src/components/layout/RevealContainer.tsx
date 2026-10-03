@@ -19,7 +19,7 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
     return (
       <div 
         ref={containerRef}
-        className="w-full flex flex-col bg-paper-white text-ink-black relative border-b border-ink-black select-none overflow-hidden"
+        className="w-full h-[48dvh] min-h-[320px] max-h-[420px] flex flex-col justify-between bg-paper-white text-ink-black relative border-b border-ink-black select-none overflow-hidden"
       >
         {/* Geometric Cubes Pattern on White Background */}
         <div 
@@ -31,17 +31,14 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
           }}
         />
 
-        {/* Structured Brutalist Top Bar matching section header rhythm */}
-        <div className="w-full px-4 py-2.5 bg-ink-black text-paper-white border-b border-ink-black flex items-center justify-between font-mono text-[10px] sm:text-xs uppercase tracking-widest relative z-20">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-rani-pink inline-block animate-pulse" />
-            <span className="font-bold">RIOT BREWING CO.</span>
-          </div>
-          <span className="text-paper-white/70">05 BEERS // 05 WORLDS</span>
+        {/* Top Metadata */}
+        <div className="w-full pt-4 px-4 font-mono text-[11px] text-ink-black/70 uppercase tracking-[0.2em] pointer-events-none z-20 flex items-center justify-center gap-2 whitespace-nowrap">
+          <span className="w-1.5 h-1.5 bg-rani-pink inline-block animate-pulse" />
+          <span>05 BEERS // 05 WORLDS</span>
         </div>
 
-        {/* Dedicated Canvas Frame with zero overlap */}
-        <div className="w-full h-[40dvh] min-h-[220px] max-h-[300px] flex items-center justify-center relative z-10 px-4 py-3">
+        {/* Center: Bold ParticleText Canvas */}
+        <div className="w-full flex-1 flex items-center justify-center relative z-10 px-3 py-2">
           <ParticleText
             lines={[
               { text: "EXPLORE", color: "#0a0a0a" },
@@ -49,18 +46,18 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
               { text: "KINETIC", color: "#0022ff" },
               { text: "BAZAAR", color: "#0a0a0a" },
             ]}
-            particleSize={1.8}
-            density={2.2}
+            particleSize={2.2}
+            density={2.6}
             color="#0a0a0a"
             highlightColor="#ff007f"
-            scatter={45}
-            gatherDuration={750}
-            stagger={80}
-            pointerRepel={25}
-            repelRadius={60}
-            idleDrift={0.25}
+            scatter={75}
+            gatherDuration={800}
+            stagger={100}
+            pointerRepel={35}
+            repelRadius={80}
+            idleDrift={0.3}
             trigger="mount"
-            fontSize="clamp(1.9rem, 8vw, 3rem)"
+            fontSize="clamp(2.4rem, 10vw, 3.8rem)"
             fontWeight={900}
             fontFamily="var(--font-clash), sans-serif"
             glow={false}
@@ -68,8 +65,8 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
           />
         </div>
 
-        {/* Structured Brutalist Bottom Action Bar */}
-        <div className="w-full py-2.5 px-4 bg-paper-white text-ink-black border-t border-ink-black font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 relative z-20 text-center">
+        {/* Bottom Directional Prompt */}
+        <div className="w-full pb-4 px-4 font-mono text-[11px] uppercase tracking-widest pointer-events-none z-20 text-center flex items-center justify-center gap-1.5 text-ink-black font-bold whitespace-nowrap">
           <span className="text-electric-blue">↓</span>
           <span>SELECT A PRODUCT TO BEGIN</span>
           <span className="text-electric-blue">↓</span>
