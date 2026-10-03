@@ -14,14 +14,74 @@ interface RevealContainerProps {
 
 export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  if (isMobile) {
+    return (
+      <div 
+        ref={containerRef}
+        className="w-full flex flex-col bg-paper-white text-ink-black relative border-b border-ink-black select-none overflow-hidden"
+      >
+        {/* Geometric Cubes Pattern on White Background */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage: "url('/cubes.png')",
+            backgroundRepeat: "repeat",
+            filter: "invert(1)",
+          }}
+        />
+
+        {/* Structured Brutalist Top Bar matching section header rhythm */}
+        <div className="w-full px-4 py-2.5 bg-ink-black text-paper-white border-b border-ink-black flex items-center justify-between font-mono text-[10px] sm:text-xs uppercase tracking-widest relative z-20">
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-rani-pink inline-block animate-pulse" />
+            <span className="font-bold">RIOT BREWING CO.</span>
+          </div>
+          <span className="text-paper-white/70">05 BEERS // 05 WORLDS</span>
+        </div>
+
+        {/* Dedicated Canvas Frame with zero overlap */}
+        <div className="w-full h-[40dvh] min-h-[220px] max-h-[300px] flex items-center justify-center relative z-10 px-4 py-3">
+          <ParticleText
+            lines={[
+              { text: "EXPLORE", color: "#0a0a0a" },
+              { text: "THE", color: "#ff007f" },
+              { text: "KINETIC", color: "#0022ff" },
+              { text: "BAZAAR", color: "#0a0a0a" },
+            ]}
+            particleSize={1.8}
+            density={2.2}
+            color="#0a0a0a"
+            highlightColor="#ff007f"
+            scatter={45}
+            gatherDuration={750}
+            stagger={80}
+            pointerRepel={25}
+            repelRadius={60}
+            idleDrift={0.25}
+            trigger="mount"
+            fontSize="clamp(1.9rem, 8vw, 3rem)"
+            fontWeight={900}
+            fontFamily="var(--font-clash), sans-serif"
+            glow={false}
+            className="w-full h-full"
+          />
+        </div>
+
+        {/* Structured Brutalist Bottom Action Bar */}
+        <div className="w-full py-2.5 px-4 bg-paper-white text-ink-black border-t border-ink-black font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 relative z-20 text-center">
+          <span className="text-electric-blue">↓</span>
+          <span>SELECT A PRODUCT TO BEGIN</span>
+          <span className="text-electric-blue">↓</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop view
   return (
     <div 
-      className={clsx(
-        "w-full items-center justify-center bg-paper-white text-ink-black relative overflow-hidden select-none",
-        isMobile 
-          ? "flex flex-col min-h-[52dvh] sm:min-h-[58dvh] border-b border-ink-black" 
-          : "hidden md:flex h-full min-h-[calc(100vh-4rem)]"
-      )}
+      className="hidden md:flex flex-col justify-between w-full h-full min-h-[calc(100vh-4rem)] bg-paper-white text-ink-black relative overflow-hidden select-none"
       ref={containerRef}
     >
       {/* Geometric Cubes Pattern on White Background */}
@@ -35,16 +95,13 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
       />
 
       {/* Top Label */}
-      <div className="absolute top-5 sm:top-8 left-1/2 -translate-x-1/2 font-mono text-[11px] sm:text-xs text-ink-black/70 uppercase tracking-[0.25em] pointer-events-none z-20 flex items-center gap-2 whitespace-nowrap">
+      <div className="w-full pt-8 px-8 font-mono text-xs text-ink-black/70 uppercase tracking-[0.25em] pointer-events-none z-20 flex items-center justify-center gap-2 whitespace-nowrap">
         <span className="w-1.5 h-1.5 bg-rani-pink inline-block animate-pulse" />
         <span>RIOT BREWING CO.</span>
       </div>
       
       {/* Center: ParticleText with Previous Color Configuration */}
-      <div className={clsx(
-        "w-full flex items-center justify-center relative z-10 p-4 sm:p-6",
-        isMobile ? "h-[38dvh] sm:h-[42dvh] pt-12 pb-14" : "h-full min-h-[calc(100vh-4rem)] pt-16 pb-20"
-      )}>
+      <div className="w-full flex-1 flex items-center justify-center relative z-10 px-8 py-4">
         <ParticleText
           lines={[
             { text: "EXPLORE", color: "#0a0a0a" },
@@ -52,18 +109,18 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
             { text: "KINETIC", color: "#0022ff" },
             { text: "BAZAAR", color: "#0a0a0a" },
           ]}
-          particleSize={isMobile ? 2.0 : 2.4}
-          density={isMobile ? 2.4 : 2.8}
+          particleSize={2.4}
+          density={2.8}
           color="#0a0a0a"
           highlightColor="#ff007f"
-          scatter={isMobile ? 90 : 120}
+          scatter={120}
           gatherDuration={800}
-          stagger={isMobile ? 120 : 160}
-          pointerRepel={isMobile ? 45 : 55}
-          repelRadius={isMobile ? 90 : 120}
+          stagger={160}
+          pointerRepel={55}
+          repelRadius={120}
           idleDrift={0.35}
           trigger="mount"
-          fontSize={isMobile ? "clamp(2.4rem, 9.5vw, 4rem)" : "clamp(3.5rem, 8vw, 6.5rem)"}
+          fontSize="clamp(3.5rem, 8vw, 6.5rem)"
           fontWeight={900}
           fontFamily="var(--font-clash), sans-serif"
           glow={false}
@@ -72,12 +129,12 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
       </div>
       
       {/* Bottom Metadata & Directional Prompt */}
-      <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] sm:text-xs uppercase tracking-widest pointer-events-none z-20 text-center flex flex-col items-center gap-1 whitespace-nowrap">
-        <div className="text-ink-black/50 tracking-[0.2em] text-[10px] sm:text-xs">
+      <div className="w-full pb-8 px-8 font-mono text-xs uppercase tracking-widest pointer-events-none z-20 text-center flex flex-col items-center gap-1 whitespace-nowrap">
+        <div className="text-ink-black/50 tracking-[0.2em] text-xs">
           05 BEERS / 05 WORLDS
         </div>
-        <div className="text-ink-black font-bold tracking-wider flex items-center gap-1 text-[11px] sm:text-xs">
-          <span>{isMobile ? "SELECT A PRODUCT TO BEGIN ↓" : "SELECT A PRODUCT TO BEGIN →"}</span>
+        <div className="text-ink-black font-bold tracking-wider flex items-center gap-1 text-xs">
+          <span>SELECT A PRODUCT TO BEGIN →</span>
         </div>
       </div>
     </div>
@@ -157,8 +214,8 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
         className={clsx(
           "w-full md:flex-1 flex relative group items-center shrink-0 md:shrink",
           selectedProduct.videoJourney 
-            ? "p-0 overflow-hidden border-b md:border-b-0" 
-            : "p-4 sm:p-8 overflow-x-auto overflow-y-hidden snap-x snap-mandatory border-b md:border-b-0 h-[45dvh] min-h-[280px] md:h-full",
+            ? "p-0 overflow-hidden border-b border-ink-black md:border-b-0" 
+            : "p-4 sm:p-8 overflow-x-auto overflow-y-hidden snap-x snap-mandatory border-b border-ink-black md:border-b-0 h-[48dvh] min-h-[300px] md:h-full",
           !selectedProduct.editorialSteps && !selectedProduct.videoJourney && "cursor-pointer"
         )}
         onClick={!selectedProduct.videoJourney ? handleImageClick : undefined}
@@ -293,7 +350,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
                         "w-full p-2.5 sm:p-2 border transition-all duration-150 text-left outline-none block select-none cursor-pointer",
                         isActive
                           ? "border-electric-blue bg-electric-blue/5 shadow-[2px_2px_0px_0px_rgba(0,34,255,1)]"
-                          : "border-ink-black/15 bg-paper-white hover:border-ink-black/40 hover:bg-ink-black/[0.02]"
+                          : "border-ink-black bg-paper-white hover:border-electric-blue hover:bg-ink-black/[0.02]"
                       )}
                     >
                       <div className="flex items-center justify-between mb-0.5">
@@ -320,7 +377,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
         
         {/* The Ticket / Spec Module */}
         {selectedProduct.specs && (
-          <div className="mt-5 pt-4 border-t border-ink-black/15">
+          <div className="mt-5 pt-4 border-t border-ink-black">
             <TicketModule specs={selectedProduct.specs} />
           </div>
         )}

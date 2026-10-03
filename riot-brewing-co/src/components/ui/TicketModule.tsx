@@ -8,7 +8,7 @@ export function TicketModule({
   commerce?: CommerceCapability;
 }) {
   return (
-    <div className="border border-ink-black flex flex-col font-mono text-xs uppercase w-64 bg-paper-white shadow-[4px_4px_0px_0px_rgba(10,10,10,1)]">
+    <div className="border border-ink-black flex flex-col font-mono text-xs uppercase w-full max-w-sm sm:max-w-md bg-paper-white shadow-[4px_4px_0px_0px_rgba(10,10,10,1)]">
       {/* Specs Section */}
       <div className="p-3">
         <div className="flex justify-between border-b border-ink-black pb-2 mb-2">

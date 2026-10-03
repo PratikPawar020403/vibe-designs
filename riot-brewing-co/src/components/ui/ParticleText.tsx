@@ -109,7 +109,7 @@ const resolveFontSize = (
   const computed = window.getComputedStyle(probe).fontSize;
   probe.remove();
   const size = parseFloat(computed) || 96;
-  return Math.max(36, size);
+  return Math.max(16, size);
 };
 
 const waitForFonts = async (font: string): Promise<void> => {
@@ -317,8 +317,8 @@ export const ParticleText = ({
       if (!offCtx) return;
 
       // Fit font size to container boundaries
-      const maxTextWidth = width * 0.90;
-      const maxTextHeight = height * 0.82;
+      const maxTextWidth = width * (isMobile ? 0.86 : 0.90);
+      const maxTextHeight = height * (isMobile ? 0.78 : 0.82);
 
       // Set offscreen font for measurement
       offscreen.width = 100;
@@ -331,22 +331,22 @@ export const ParticleText = ({
         if (m.width > widestLineWidth) widestLineWidth = m.width;
       }
 
-      const estimatedLineHeight = resolvedSize * 0.88;
+      const estimatedLineHeight = resolvedSize * 0.90;
       const totalEstimatedHeight = parsedLines.length * estimatedLineHeight;
 
       if (widestLineWidth > maxTextWidth || totalEstimatedHeight > maxTextHeight) {
         const scaleW = maxTextWidth / widestLineWidth;
         const scaleH = maxTextHeight / totalEstimatedHeight;
         const scale = Math.min(scaleW, scaleH);
-        resolvedSize = Math.max(32, Math.floor(resolvedSize * scale));
+        resolvedSize = Math.max(16, Math.floor(resolvedSize * scale));
         font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
         await waitForFonts(font);
         if (currentBuild !== buildId) return;
       }
 
-      const lineHeight = resolvedSize * 0.88;
-      const ascent = Math.ceil(resolvedSize * 0.78);
-      const padding = Math.max(20, Math.ceil(resolvedSize * 0.15));
+      const lineHeight = resolvedSize * 0.90;
+      const ascent = Math.ceil(resolvedSize * 0.80);
+      const padding = Math.max(20, Math.ceil(resolvedSize * 0.20));
 
       // Re-measure with final scaled font
       offscreen.width = 100;
@@ -360,7 +360,7 @@ export const ParticleText = ({
       }
 
       const totalCanvasWidth = Math.ceil(widestLineWidth) + padding * 2;
-      const totalCanvasHeight = Math.ceil(parsedLines.length * lineHeight) + padding * 2;
+      const totalCanvasHeight = Math.ceil(ascent + (parsedLines.length - 1) * lineHeight + resolvedSize * 0.25) + padding * 2;
 
       // Crucial: Changing canvas dimensions resets canvas context state
       offscreen.width = totalCanvasWidth;

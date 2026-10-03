@@ -204,8 +204,8 @@ export function ScrollVideoJourney({
     const clientW = scroller.clientWidth;
     const maxScroll = Math.max(1, scrollW - clientW);
     const trackW = track.clientWidth;
-    const thumbW = Math.max(36, (clientW / scrollW) * trackW);
-    const maxThumbL = Math.max(1, trackW - thumbW);
+    const thumbW = Math.min(trackW, Math.max(28, Math.floor((clientW / scrollW) * trackW)));
+    const maxThumbL = Math.max(0, trackW - thumbW);
 
     layoutMetricsRef.current = {
       maxScroll,
@@ -229,7 +229,7 @@ export function ScrollVideoJourney({
     // Update scrollbar thumb and percentage readout directly in DOM
     const thumb = thumbRef.current;
     if (thumb) {
-      const thumbLeft = progress * maxThumbLeft;
+      const thumbLeft = Math.max(0, Math.min(progress * maxThumbLeft, maxThumbLeft));
       thumb.style.width = `${thumbWidth}px`;
       thumb.style.transform = `translateX(${thumbLeft}px)`;
 
@@ -296,6 +296,9 @@ export function ScrollVideoJourney({
       handleScroll();
     });
     resizeObserver.observe(scroller);
+    if (trackRef.current) {
+      resizeObserver.observe(trackRef.current);
+    }
 
     return () => {
       resizeObserver.disconnect();
@@ -436,8 +439,9 @@ export function ScrollVideoJourney({
 
     const onMouseMove = (moveEvent: MouseEvent) => {
       const deltaX = moveEvent.clientX - startX;
-      const deltaRatio = deltaX / maxThumbLeft;
-      scroller.scrollLeft = startScrollLeft + deltaRatio * maxScroll;
+      const deltaRatio = maxThumbLeft > 0 ? deltaX / maxThumbLeft : 0;
+      const newScrollLeft = Math.max(0, Math.min(startScrollLeft + deltaRatio * maxScroll, maxScroll));
+      scroller.scrollLeft = newScrollLeft;
     };
 
     const onMouseUp = () => {
@@ -469,8 +473,9 @@ export function ScrollVideoJourney({
       const moveTouch = moveEvent.touches[0];
       if (!moveTouch) return;
       const deltaX = moveTouch.clientX - startX;
-      const deltaRatio = deltaX / maxThumbLeft;
-      scroller.scrollLeft = startScrollLeft + deltaRatio * maxScroll;
+      const deltaRatio = maxThumbLeft > 0 ? deltaX / maxThumbLeft : 0;
+      const newScrollLeft = Math.max(0, Math.min(startScrollLeft + deltaRatio * maxScroll, maxScroll));
+      scroller.scrollLeft = newScrollLeft;
     };
 
     const onTouchEnd = () => {
@@ -488,7 +493,7 @@ export function ScrollVideoJourney({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[45dvh] min-h-[280px] max-h-[420px] md:h-full md:min-h-[calc(100vh-4rem)] md:max-h-none flex items-center justify-center overflow-hidden select-none bg-paper-white"
+      className="relative w-full h-[48dvh] min-h-[300px] max-h-[440px] md:h-full md:min-h-[calc(100vh-4rem)] md:max-h-none flex items-center justify-center overflow-hidden select-none bg-paper-white"
       onMouseDown={handleMouseDown}
       onClick={(e) => {
         if (!hasMovedRef.current && onBurst) {
@@ -500,7 +505,7 @@ export function ScrollVideoJourney({
         Stage 1: Pinned Video Viewport
         Centred in the gallery frame with exact proportions of the product visual.
       */}
-      <div className="relative w-full h-full flex items-center justify-center p-3 sm:p-4 md:p-8 pb-12 sm:pb-14 pointer-events-none">
+      <div className="relative w-full h-full flex items-center justify-center p-3 sm:p-4 md:p-8 pb-14 sm:pb-16 pointer-events-none">
         {/* Poster preview / Fallback for error, reduced motion, or during initial load */}
         <img
           src={staticFallbackImage}
@@ -577,11 +582,11 @@ export function ScrollVideoJourney({
       */}
       <div className="absolute bottom-0 left-0 w-full h-11 bg-paper-white border-t border-ink-black flex items-center px-3 sm:px-6 gap-2 sm:gap-4 z-30 select-none pointer-events-auto">
         {/* Left: Active Stage Name */}
-        <div className="font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <div className="font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 flex-shrink-0 w-[120px] sm:w-auto">
           <span className="w-2 h-2 bg-rani-pink inline-block flex-shrink-0" />
-          <span className="font-bold text-ink-black">{currentStage.step}</span>
-          <span className="text-ink-black/40">/</span>
-          <span className="text-ink-black font-semibold text-[10px] sm:text-xs truncate max-w-[110px] sm:max-w-none">
+          <span className="font-bold text-ink-black shrink-0">{currentStage.step}</span>
+          <span className="text-ink-black/40 shrink-0">/</span>
+          <span className="text-ink-black font-semibold text-[10px] sm:text-xs truncate max-w-[85px] sm:max-w-none">
             {currentStage.label}
           </span>
         </div>
@@ -590,7 +595,7 @@ export function ScrollVideoJourney({
         <div
           ref={trackRef}
           onClick={handleTrackClick}
-          className="relative flex-1 h-3.5 bg-paper-white border border-ink-black cursor-pointer shadow-[2px_2px_0px_0px_rgba(10,10,10,1)] flex items-center"
+          className="relative flex-1 h-3.5 bg-paper-white border border-ink-black overflow-hidden cursor-pointer shadow-[2px_2px_0px_0px_rgba(10,10,10,1)] flex items-center"
           title="Click or drag scrollbar to scrub journey"
         >
           {/* Subtle tick marks for stage transitions */}
@@ -619,7 +624,7 @@ export function ScrollVideoJourney({
               "flex items-center justify-center border-r border-l border-ink-black",
               "before:content-[''] before:absolute before:-top-3 before:-bottom-3 before:-left-3 before:-right-3 before:z-10"
             )}
-            style={{ width: "48px", transform: "translateX(0px)" }}
+            style={{ width: "36px", transform: "translateX(0px)" }}
           >
             {/* Grip lines */}
             <div className="flex gap-0.5 pointer-events-none">
