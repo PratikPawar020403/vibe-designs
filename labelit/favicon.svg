@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#0A0A0A" />
+  
+  <!-- Bold Geometric L -->
+  <path d="M10 8h4.5v11.5H23V24H10V8z" fill="#F5F0EB" />
+</svg>

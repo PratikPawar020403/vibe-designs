@@ -1,0 +1,54 @@
+/* css/accessibility.css */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .scroll-indicator-line::after {
+    animation: none;
+  }
+  
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  .custom-cursor {
+    display: none !important;
+  }
+
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto !important;
+  }
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* High contrast */
+@media (forced-colors: active) {
+  .loader-bar,
+  .process-step::before,
+  .service-row {
+    border-color: CanvasText;
+  }
+}

@@ -1,0 +1,45 @@
+/* css/typography.css */
+/* Inter is loaded via <link> in index.html */
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--text-body);
+  color: var(--color-fg);
+  background: var(--color-bg);
+  font-weight: 400;
+}
+
+.text-hero {
+  font-size: var(--text-hero);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.text-section {
+  font-size: var(--text-section);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.text-body {
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-meta {
+  font-size: var(--text-meta);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.text-small {
+  font-size: var(--text-small);
+  font-weight: 400;
+  line-height: 1.5;
+}

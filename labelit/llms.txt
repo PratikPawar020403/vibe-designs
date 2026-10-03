@@ -1,0 +1,30 @@
+# LABELIT — Precision Bottle Labeling
+> Precision bottle labeling, custom vessel architecture, and tactile packaging engineering.
+
+## Overview
+LABELIT transforms plain glass, metal, and polymer vessels into iconic branded products through micro-tolerance robotic alignment, vacuum registration, and thermal bonding.
+
+## Capabilities
+- Custom Labeling: Bespoke die-cut geometries, multi-substrate laminations, and custom adhesive chemistry engineered for unique bottle surfaces.
+- Precision Application: Multi-axis robotic positioning calibrated to ±0.1mm tolerance for tapered necks, fluted glass, and irregular vessel contours.
+- Short-Run Production: Rapid turnaround boutique runs for single-cask distillers, limited cosmetic drops, and serialized editions.
+- Large-Scale Production: Continuous high-throughput industrial lines handling upwards of 25,000 units per hour with automated reel splicing and 100% vision QA.
+- Premium Finishes: Heavyweight tactile varnish, micro-embossing, gold leaf hot stamping, holographic security threads, and velvet soft-touch coatings.
+
+## Methodology (The Five-Step Pipeline)
+1. Prepare: Deionization and corona flame surface treatment eliminate static and optimize glass surface energy.
+2. Align: Multi-point laser registration cameras identify vessel seams and position target axes within ±0.1mm.
+3. Apply: Dynamic pneumatic wipe-down rollers apply progressive pressure to purge air and establish uniform adhesion.
+4. Inspect: 360-degree machine vision cameras verify barcode grade, margin parallelism, and micro-emboss integrity.
+5. Deliver: Robotic collation and padded cellular crating protect labeled vessels during transit.
+
+## Vessel Architecture
+- The Alpine Cylinder (Series AL-750): Nordic Minimalist Geometry calibrated for spirits and skincare.
+- The Artisan Flask (Series FL-500): Planar front and back surfaces for single malts and luxury fragrances.
+- The Modular Prismatic (Series MD-TRIO): Tiered faceted geometry for craft beverages and tonics.
+- The Sculptural Prism (Series SC-750): Diamond-facet crystalline architecture.
+
+## Contact
+- Email: hello@labelit.com
+- Phone: +1 (800) 492-LABEL
+- Production Hub: India

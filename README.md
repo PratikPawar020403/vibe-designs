@@ -48,6 +48,23 @@ npm install
 npm run dev
 ```
 
+### 4. [LABELIT — Precision Bottle Labeling](./labelit)
+An Awwwards-caliber interactive luxury bottle packaging digital experience showcasing high-precision labeling, vessel architecture, and tactile brand engineering:
+- **120-Frame Canvas Scrollytelling Journey**: Synchronized scroll engine scrubbing through the complete transformation from blank glass vessel to fully labeled, 24K gold foil finished bottle.
+- **Dynamic Per-Frame Bottle Centering**: Portrait-friendly mobile framing tracking bottle centers in real-time coordinates.
+- **3D Curved Vessel Architecture Gallery**: Built with WebGL & OGL (`ogl.mjs`), featuring smooth drag, wheel, touch, and full keyboard arrow/A-D navigation.
+- **Methodology Pipeline**: Interactive 5-step accordion rail with ARIA APG compliance and arrow key navigation.
+- **Idle GPU/CPU Optimization**: `IntersectionObserver` auto-pauses WebGL and canvas animation loops when sections are out of the viewport.
+- **Agentic AI Web Accessibility**: Includes comprehensive `llms.txt` and `llms-full.txt` specifications.
+
+#### Running LABELIT Locally:
+```bash
+cd labelit
+npm install
+npm run dev
+# or: python -m http.server 8080
+```
+
 ## Netlify Deployment Guide
 
 This repository contains multiple high-craft web experiences configured for Netlify monorepo deployment:
@@ -72,5 +89,11 @@ This repository contains multiple high-craft web experiences configured for Netl
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
 2. Netlify will automatically detect Vite and use `aur-fee/netlify.toml`.
+
+### Deploying LABELIT (`labelit`)
+1. In Netlify Build Settings:
+   - **Base directory**: `labelit`
+   - **Publish directory**: `.`
+2. Netlify will serve the static experience and use `labelit/netlify.toml`.
 
 

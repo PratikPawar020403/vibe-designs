@@ -1,0 +1,88 @@
+/* css/components.css */
+
+/* Reveal animation utility - graceful enhancement */
+.reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for children */
+.reveal-stagger > * {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-normal) var(--ease-out);
+}
+
+/* Custom cursor - Persistent precision dot (no enlargement) */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 999999;
+  mix-blend-mode: difference;
+  transition: opacity 0.2s ease, width 0.15s ease, height 0.15s ease, margin 0.15s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(-100px, -100px, 0);
+  will-change: transform;
+}
+
+.custom-cursor.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Maintain clean dot size on hover without enlarging */
+.custom-cursor.is-hover {
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+}
+
+/* Subtle tactile tap feedback on press */
+.custom-cursor.is-active {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor *:not(input):not(textarea):not(select) {
+  cursor: none !important;
+}
+
+/* Horizontal rule / divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--container-padding);
+  padding: 0.5rem 1rem;
+  background: var(--color-fg);
+  color: var(--color-bg);
+  font-size: var(--text-small);
+  z-index: 10000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}

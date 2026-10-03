@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vibe-designs.netlify.app/labelit/sitemap.xml

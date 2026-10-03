@@ -1,0 +1,112 @@
+/* css/layout.css */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 var(--container-padding);
+  height: var(--nav-height);
+  transition: background var(--duration-normal) var(--ease-out), backdrop-filter var(--duration-normal);
+}
+
+.nav.is-scrolled {
+  background: rgba(206, 202, 191, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.nav-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.nav-logo {
+  font-family: 'Londrina Shadow', cursive, sans-serif;
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  justify-self: start;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-self: center;
+}
+
+.nav-links a {
+  font-size: var(--text-nav);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-fg);
+  transition: width var(--duration-fast) var(--ease-out);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  font-size: var(--text-nav);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-fg);
+  padding: 0.6rem 1.5rem;
+  transition: background var(--duration-fast), color var(--duration-fast);
+  justify-self: end;
+}
+
+.nav-cta:hover {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+.nav-menu-btn {
+  display: none;
+  width: 2rem;
+  height: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  justify-self: end;
+}
+
+.nav-menu-btn span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-fg);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.section {
+  padding: var(--space-3xl) 0;
+  overflow: hidden;
+}

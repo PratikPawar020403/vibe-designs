@@ -1,0 +1,42 @@
+/* css/variables.css */
+:root {
+  /* Colors */
+  --hero-bg: #CECABF; /* Matched base background color from bottle hero image (RGB: 206, 202, 191) */
+  --color-bg: #CECABF; /* Single base background color across entire website */
+  --color-fg: #0A0A0A;
+  --color-accent: #C8A97E;
+  --color-muted: #6B675E;
+  --color-dark-bg: #0A0A0A;
+  --color-dark-fg: #CECABF;
+  --color-border: rgba(10, 10, 10, 0.08);
+
+  /* Typography Sizes */
+  --text-hero: clamp(3.5rem, 9vw, 10rem);
+  --text-section: clamp(2.2rem, 5vw, 5.5rem);
+  --text-body: clamp(1rem, 1.15vw, 1.25rem);
+  --text-small: clamp(0.75rem, 0.85vw, 0.875rem);
+  --text-meta: clamp(0.6875rem, 0.75vw, 0.8125rem);
+  --text-nav: 0.8125rem;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.75rem;
+  --space-xl: clamp(2rem, 4vw, 3rem);
+  --space-2xl: clamp(3rem, 5vw, 4.5rem);
+  --space-3xl: clamp(4.5rem, 8vw, 6.5rem);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 0.3s;
+  --duration-normal: 0.6s;
+  --duration-slow: 1s;
+  --duration-slower: 1.5s;
+
+  /* Layout */
+  --nav-height: 4.5rem;
+  --container-max: 1440px;
+  --container-padding: clamp(1.5rem, 4vw, 4rem);
+}

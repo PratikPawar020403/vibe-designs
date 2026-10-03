@@ -1,0 +1,23 @@
+# LABELIT — Complete Technical & Design Architecture Specification
+
+## Brand Mission
+We turn plain bottles into branded products. Precision labeling for products designed to be noticed. The label is the first handshake between brand promise and human sensory experience.
+
+## Performance Engineering
+- 120-frame precomputed canvas scrollytelling engine with dynamic per-frame crop centering.
+- WebGL 3D curved vessel carousel with OGL and viewport-aware IntersectionObserver pausing.
+- Zero-jank compositor-friendly transform transitions.
+- Fully accessible keyboard navigation for carousel, accordion, and responsive navigation.
+
+## Technical Specifications
+- Application Precision: 99.98%
+- Optical Alignment Tolerance: ±0.1mm
+- Quality Standard: Zero Bubble Defect Rate
+- Certified: ISO 9001
+- Compatible Substrates: Borosilicate Glass, Recycled Flint, Anodized Aluminium, Bio-Resins, Matte Ceramic.
+
+## Contact & Operations
+- Inquiry: hello@labelit.com
+- Telephone: +1 (800) 492-5223
+- Facility: India
+- Turnaround: Prototypes in 48h / Full Production in 10 Days

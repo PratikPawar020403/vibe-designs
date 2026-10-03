@@ -1,0 +1,40 @@
+.scroll-reveal {
+  margin: 20px 0;
+  display: block;
+  transform: none;
+}
+
+.brand-statement.scroll-reveal {
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.scroll-reveal-text {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  display: inline-block;
+  width: 100%;
+}
+
+.word {
+  display: inline-block;
+  will-change: opacity, filter, transform;
+}
+
+/* Ensure gradient on em text applies seamlessly to child words with blur/opacity */
+.brand-statement em {
+  font-style: normal;
+  display: inline;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.brand-statement em .word {
+  color: var(--color-accent, #C8A97E);
+  background: linear-gradient(135deg, #e8d7be 0%, #c8a97e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
