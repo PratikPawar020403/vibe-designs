@@ -25,8 +25,8 @@ export const MegtikFooter: React.FC = () => {
     let state: 'idle' | 'playing' | 'paused' | 'hold' | 'failed' = 'idle';
     let visible = false;
     let loaded = false;
-    let holdTimer: NodeJS.Timeout | null = null;
-    let fadeTimer: NodeJS.Timeout | null = null;
+    let holdTimer: ReturnType<typeof setTimeout> | null = null;
+    let fadeTimer: ReturnType<typeof setTimeout> | null = null;
 
     function load() {
       if (loaded || !video) return;
