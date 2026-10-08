@@ -615,6 +615,7 @@
     align-items: center;
     gap: 1.8rem;
     margin: 0;
+    width: 100%;
   }
 
   .combo-photo-slot.is-coffee,
@@ -623,20 +624,59 @@
     height: auto;
   }
 
+  /* Flaw 1 fix: Ensure center editorial content stretches to full available container width */
   .combo-center-content {
     order: -1;
-    max-width: 100%;
+    width: 100%;
+    max-width: 440px;
+    min-height: 220px;
+    padding: 0 1rem;
+    box-sizing: border-box;
   }
 
   .combos-index-nav {
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
   }
+
+  /* Flaw 2 fix: Hide desktop horizontal traveling line marker on mobile/tablet multi-row layout */
+  .combo-traveling-line {
+    display: none !important;
+  }
+
+  /* Flaw 2 enhancement: Clean active caramel anchor dot for selected card on touch/mobile */
+  .combo-nav-card.is-active .combo-nav-dot-anchor {
+    opacity: 1;
+    background-color: var(--combo-caramel);
+    box-shadow: 0 0 6px rgba(150, 101, 62, 0.6);
+  }
 }
 
 @media (max-width: 600px) {
+  .megtik-combos-section {
+    padding: 4rem 1.25rem 5rem;
+    gap: 2rem;
+  }
+
+  .combos-hero-stage {
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .combos-section-title {
+    font-size: clamp(1.65rem, 6.5vw, 2.4rem);
+    letter-spacing: 0.1em;
+    padding-left: 0.1em;
+  }
+
+  .combo-center-content {
+    min-height: 210px;
+    padding: 0 0.5rem;
+  }
+
   .combos-index-nav {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .combo-hero-title {

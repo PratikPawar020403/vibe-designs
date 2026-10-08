@@ -106,6 +106,8 @@ export const MegtikCombos: React.FC<MegtikCombosProps> = ({
   // ---------------------------------------------------------------------------
   const updateCursor = useCallback(
     (nextIndex: number, animate = true) => {
+      if (typeof window !== 'undefined' && window.innerWidth <= 960) return;
+
       const nav = navRef.current;
       const activeCard = cardRefs.current[nextIndex];
       const marker = travelingLineRef.current;
