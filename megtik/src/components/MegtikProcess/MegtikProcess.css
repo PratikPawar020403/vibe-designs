@@ -1,0 +1,444 @@
+/* MEGTIK — Section 03: Process Film (One-Screen Editorial Composition) */
+
+:root {
+  --process-bg: #eee5d7;
+  --process-frame-outer: #f6f0e4;
+  --process-ink: #3c3026;
+  --process-muted: #796b5d;
+  --process-caramel: #96653e;
+  --process-line: rgba(60, 48, 38, 0.2);
+  --process-shadow: 0 24px 54px -14px rgba(67, 49, 34, 0.16),
+                    0 6px 18px -4px rgba(67, 49, 34, 0.06);
+}
+
+.megtik-process-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  /* Fits comfortably in a single screen on desktop */
+  height: 100vh;
+  background-color: var(--process-bg);
+  background-image: 
+    radial-gradient(circle at 50% 25%, #f7f0e4 0%, var(--process-bg) 75%);
+  color: var(--process-ink);
+  padding: 2.8vh 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Subtle architectural divider from Section 02 */
+.process-continuity-rule {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 1px;
+  background: rgba(60, 48, 38, 0.15);
+}
+
+/* =========================================================
+   COMPACT EDITORIAL HEADING (12–15vh budget)
+   ========================================================= */
+.process-header-block {
+  text-align: center;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1vh;
+  z-index: 2;
+}
+
+.process-section-label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--process-muted);
+}
+
+.process-section-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(2rem, 3.2vw, 3.1rem);
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  line-height: 1.05;
+  color: var(--process-ink);
+  margin: 0;
+  padding-left: 0.14em;
+}
+
+.process-section-subtitle {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.25vw, 1.2rem);
+  letter-spacing: 0.03em;
+  color: var(--process-muted);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* =========================================================
+   CINEMATIC EDITORIAL FILM WINDOW (50–54vh budget)
+   74–80vw wide, 16:9 ratio, 28–32px radius, physical frame
+   ========================================================= */
+.process-film-window {
+  position: relative;
+  width: min(78vw, 1060px);
+  height: min(51vh, 520px);
+  aspect-ratio: 16 / 9;
+  border-radius: 30px;
+  background: var(--process-frame-outer);
+  padding: 8px;
+  box-shadow: var(--process-shadow);
+  border: 1px solid rgba(60, 48, 38, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  z-index: 2;
+  margin: 1.2vh 0;
+}
+
+.process-film-window:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 28px 64px -14px rgba(67, 49, 34, 0.22),
+    0 10px 24px -5px rgba(67, 49, 34, 0.08);
+}
+
+/* Inner Screen */
+.film-screen-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background-color: #0e0906;
+}
+
+.film-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 22px;
+  pointer-events: none;
+}
+
+/* Subtle Specular Top Sheen */
+.film-frame-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 15%, rgba(255, 255, 255, 0.75) 50%, transparent 85%);
+  pointer-events: none;
+}
+
+/* =========================================================
+   MINIMAL EDITORIAL VIDEO OVERLAYS (FADES IN ON HOVER/TAP)
+   ========================================================= */
+.film-controls-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 9, 6, 0.25) 0%,
+    transparent 35%,
+    transparent 65%,
+    rgba(14, 9, 6, 0.35) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.4rem 1.8rem;
+  pointer-events: none;
+}
+
+.process-film-window:hover .film-controls-overlay,
+.film-controls-overlay.is-paused {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.controls-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.film-vintage-tag {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #f6efe6;
+  opacity: 0.85;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.film-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(20, 13, 9, 0.55);
+  border: 1px solid rgba(246, 239, 230, 0.25);
+  backdrop-filter: blur(8px);
+  color: #f6efe6;
+  padding: 0.32rem 0.75rem;
+  border-radius: 25px;
+  font-family: var(--font-sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.film-sound-toggle:hover {
+  background: rgba(35, 23, 16, 0.8);
+  border-color: var(--process-caramel);
+  color: #ffffff;
+}
+
+/* Center Play/Pause Indicator */
+.controls-center-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(20, 13, 9, 0.65);
+  border: 1px solid rgba(246, 239, 230, 0.3);
+  backdrop-filter: blur(10px);
+  color: #f6efe6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.process-film-window:hover .controls-center-play {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+/* Bottom status bar */
+.controls-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.film-stage-live {
+  font-family: var(--font-editorial);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: #f6efe6;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+}
+
+.film-time-counter {
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: #d8cbbd;
+  opacity: 0.85;
+}
+
+/* =========================================================
+   EDITORIAL FILM CHAPTER TIMELINE (8–10vh budget)
+   Connected thin continuous line with numbered nodes
+   No buttons, no pills, pure editorial timeline
+   ========================================================= */
+.process-film-timeline {
+  position: relative;
+  width: min(78vw, 1060px);
+  margin-bottom: 1.5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Continuous Track Line */
+.timeline-track-rail {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background-color: var(--process-line);
+}
+
+/* Active Fill Line representing video progress */
+.timeline-track-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5px;
+  background-color: var(--process-caramel);
+  transform-origin: left;
+  transition: width 0.15s linear;
+}
+
+/* Nodes Row mapped horizontally */
+.timeline-nodes-row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: -4px; /* Centers the dot exactly on the 1px track */
+}
+
+/* Single Chapter Item */
+.timeline-chapter-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+/* Node Dot on the continuous line */
+.chapter-node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--process-bg);
+  border: 1.5px solid var(--process-muted);
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-chapter-node:hover .chapter-node-dot {
+  transform: scale(1.3);
+  border-color: var(--process-caramel);
+}
+
+.timeline-chapter-node.is-active .chapter-node-dot {
+  background-color: var(--process-caramel);
+  border-color: var(--process-caramel);
+  box-shadow: 0 0 8px rgba(150, 101, 62, 0.5);
+  transform: scale(1.25);
+}
+
+.timeline-chapter-node.is-passed .chapter-node-dot {
+  background-color: var(--process-caramel);
+  border-color: var(--process-caramel);
+}
+
+/* Chapter Label underneath the dot */
+.chapter-node-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--process-muted);
+  opacity: 0.7;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.chapter-node-num {
+  font-weight: 500;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  opacity: 0.8;
+}
+
+.chapter-node-name {
+  font-weight: 500;
+}
+
+.timeline-chapter-node:hover .chapter-node-label {
+  opacity: 1;
+  color: var(--process-ink);
+}
+
+.timeline-chapter-node.is-active .chapter-node-label {
+  color: var(--process-ink);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.timeline-chapter-node.is-active .chapter-node-name {
+  color: var(--process-caramel);
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================= */
+@media (max-width: 950px) {
+  .megtik-process-section {
+    height: auto;
+    min-height: 100vh;
+    padding: 5rem 1.5rem 6rem;
+    justify-content: center;
+    gap: 2.2rem;
+  }
+
+  .process-header-block {
+    margin-top: 0;
+  }
+
+  .process-film-window {
+    width: 92vw;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    padding: 7px;
+    margin: 0;
+  }
+
+  .film-screen-inner,
+  .film-video-player {
+    border-radius: 18px;
+  }
+
+  .process-film-timeline {
+    width: 92vw;
+    margin-bottom: 0;
+  }
+
+  .chapter-node-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+  }
+}
+
+@media (max-width: 650px) {
+  .chapter-node-label {
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: 0.46rem;
+    letter-spacing: 0.12em;
+  }
+
+  .timeline-nodes-row {
+    gap: 0.5rem;
+  }
+}

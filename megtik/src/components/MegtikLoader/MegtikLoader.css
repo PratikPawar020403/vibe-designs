@@ -1,0 +1,188 @@
+/* =========================================================
+   MEGTIK — Creative Coffee Mug Loading Screen v5 Styles
+   Exact design and motion from Megtik mug loader v5
+   ========================================================= */
+
+:root {
+  --ink: #2b1d16;
+  --timber: #3a281c;
+  --wood: #8a6342;
+  --gold: #d9a066;
+  --glow: #f4e6c8;
+  --seal: #f3efd6;
+  --muted: #6b5546;
+}
+
+.mkl {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  user-select: none;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #cdd4db 0%, #dfe0dc 45%, #efe6d4 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+}
+
+.brand {
+  position: absolute;
+  top: max(7vh, 36px);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.34em;
+  margin-right: -0.34em;
+  color: var(--timber);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.mug {
+  width: clamp(200px, 56vw, 280px);
+  height: auto;
+  overflow: visible;
+  transform-origin: 50% 92%;
+}
+
+.cap {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1;
+  min-height: 1.7rem;
+  color: var(--ink);
+  text-align: center;
+}
+
+.pct {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  margin-top: -0.4rem;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.wv {
+  animation: mkl-wave 1.6s linear infinite;
+}
+
+@keyframes mkl-wave {
+  to {
+    transform: translateX(-100px);
+  }
+}
+
+.steam {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.steam.on {
+  opacity: 1;
+}
+
+.steam path {
+  fill: none;
+  stroke: url(#vg);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-dasharray: 58 100;
+  stroke-dashoffset: 58;
+  animation: mkl-steam 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes mkl-steam {
+  from {
+    stroke-dashoffset: 58;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mkl-blink 4.2s infinite;
+}
+
+@keyframes mkl-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+.happy {
+  display: none;
+}
+
+.mug.joy .happy {
+  display: block;
+}
+
+.mug.joy .calm {
+  display: none;
+}
+
+.stream {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: mkl-pour 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes mkl-pour {
+  from {
+    transform: scaleX(0.82);
+  }
+  to {
+    transform: scaleX(1.12);
+  }
+}
+
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  will-change: transform;
+}
+
+.band svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+.band .body {
+  background: var(--ink);
+  height: 160vh;
+}
+
+.band .flip {
+  transform: scaleY(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wv,
+  .steam path,
+  .eyes,
+  .stream {
+    animation: none !important;
+  }
+}

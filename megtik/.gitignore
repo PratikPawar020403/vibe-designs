@@ -1,0 +1,66 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Production build output
+dist/
+dist-ssr/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Editor & OS directories
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# Scratch, screenshots, and local test artifacts
+scratch/
+test_footer.png
+footer_test.png
+footer_real.png
+footer_playing.png
+footer_screenshot.png
+first_frame_captured.png
+interior_frame_captured.png
+screenshot.png
+temp_chrome_*
+
+# Root-level raw source media & scripts (production assets live in public/)
+/*.mp4
+/*.py
+/*.ttf
+/1.jpg
+/2.jpg
+/3.jpg
+/5.jpg
+/6.jpg
+/7.png
+/8.jpg
+/9.jpg
+/5ed3881f3cb038c09bca8f2e6befd911.jpg
+/cf5a3c100939df33681cdfc857342454.jpg
+/d1c43c607d705782320b62b66cca6e2b.jpg
+/image.png_20261004024437.jpg
+/logo.jpg
+/megtik-poster.jpg
+/MEGTIK_coffee_house_exterior_design_20261004024430.jpg
+/sll3.png
+/favicon.jpg

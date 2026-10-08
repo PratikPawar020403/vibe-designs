@@ -65,6 +65,21 @@ npm run dev
 # or: python -m http.server 8080
 ```
 
+### 5. [MEGTIK — Coffee House & Architectural Experience](./megtik)
+An Awwwards-caliber cinematic specialty coffee and brutalist architectural digital experience built with:
+- **192-Frame Sub-frame Interpolated Canvas Entrance**: Continuous scroll-scrubbed camera traversal through architectural coffee sanctuary
+- **Physical 3D FlipCard Menu Architecture**: Powered by Motion & pointer physics with tactile front/back exploration
+- **Cinematic Process Film Studio**: Integrated archival 1080p process sequence with stage telemetry and idle GPU viewport pausing
+- **Curated Combos Engine**: Decoupled dual-card complementary arc animation with interrupt-safe GSAP transitions
+- **Atmospheric Dusk Editorial Footer**: Featuring foreground editorial typography and physical coffee spill animation seamlessly blended into studio ground
+
+#### Running MEGTIK Locally:
+```bash
+cd megtik
+npm install
+npm run dev
+```
+
 ## Netlify Deployment Guide
 
 This repository contains multiple high-craft web experiences configured for Netlify monorepo deployment:
@@ -95,5 +110,12 @@ This repository contains multiple high-craft web experiences configured for Netl
    - **Base directory**: `labelit`
    - **Publish directory**: `.`
 2. Netlify will serve the static experience and use `labelit/netlify.toml`.
+
+### Deploying MEGTIK (`megtik`)
+1. In Netlify Build Settings:
+   - **Base directory**: `megtik`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+2. Netlify will automatically detect Vite and use `megtik/netlify.toml`.
 
 
