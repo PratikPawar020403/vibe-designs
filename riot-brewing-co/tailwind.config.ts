@@ -13,6 +13,10 @@ const config: Config = {
         'ink-black': 'rgb(var(--color-ink-black) / <alpha-value>)',
         'electric-blue': 'rgb(var(--color-electric-blue) / <alpha-value>)',
         'rani-pink': 'rgb(var(--color-rani-pink) / <alpha-value>)',
+        'beer-gold-light': '#FFD25A',
+        'beer-gold': '#FFB000',
+        'beer-gold-dark': '#D77A00',
+        'beer-foam': '#FFF6DC',
       },
       fontFamily: {
         display: ['var(--font-clash)'],

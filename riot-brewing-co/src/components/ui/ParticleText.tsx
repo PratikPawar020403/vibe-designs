@@ -26,6 +26,8 @@ export interface ParticleTextProps {
   fontWeight?: number | string;
   fontFamily?: string;
   glow?: boolean;
+  startGather?: boolean;
+  onReady?: () => void;
   className?: string;
   style?: CSSProperties;
 }
@@ -139,11 +141,27 @@ export const ParticleText = ({
   fontWeight = 900,
   fontFamily = 'inherit',
   glow = false,
+  startGather: shouldGatherProp = true,
+  onReady,
   className = '',
   style
 }: ParticleTextProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const shouldGatherRef = useRef<boolean>(shouldGatherProp);
+  const onReadyRef = useRef<(() => void) | undefined>(onReady);
+  const triggerGatherRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    onReadyRef.current = onReady;
+  }, [onReady]);
+
+  useEffect(() => {
+    shouldGatherRef.current = shouldGatherProp;
+    if (shouldGatherProp && triggerGatherRef.current) {
+      triggerGatherRef.current();
+    }
+  }, [shouldGatherProp]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
@@ -160,6 +178,7 @@ export const ParticleText = ({
     let resizeFrame: number | null = null;
     let buildId = 0;
     let gathering = false;
+    let waitingForGather = !shouldGatherRef.current;
     let gatherStart = 0;
     let reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
     let width = 0;
@@ -194,6 +213,7 @@ export const ParticleText = ({
         particle.delay = reducedMotion ? 0 : particle.seed * stagger;
       });
 
+      waitingForGather = false;
       gatherStart = now;
       gathering = true;
     };
@@ -232,7 +252,12 @@ export const ParticleText = ({
         let baseY = particle.targetY;
         let progress = 1;
 
-        if (gathering) {
+        if (waitingForGather && !reducedMotion) {
+          baseX = particle.startX;
+          baseY = particle.startY;
+          progress = 0;
+          complete = false;
+        } else if (gathering) {
           const local = (now - gatherStart - particle.delay) / Math.max(1, reducedMotion ? 1 : gatherDuration);
           progress = clamp(local, 0, 1);
           const eased = easeOutCubic(progress);
@@ -452,17 +477,46 @@ export const ParticleText = ({
       pointer.smoothX = pointer.x;
       pointer.smoothY = pointer.y;
 
+      document.documentElement.dataset.heroReady = 'true';
+      onReadyRef.current?.();
+      window.dispatchEvent(new CustomEvent('riot:hero-ready'));
+
       if (reducedMotion) {
         particles.forEach(particle => {
           particle.x = particle.targetX;
           particle.y = particle.targetY;
         });
+        waitingForGather = false;
         gathering = false;
-      } else {
+      } else if (shouldGatherRef.current) {
         startGather(false);
+      } else {
+        waitingForGather = true;
+        gathering = false;
       }
 
+      isIntersecting = true;
       ensureRenderLoop();
+    };
+
+    triggerGatherRef.current = () => {
+      if (reducedMotion) {
+        waitingForGather = false;
+        gathering = false;
+        return;
+      }
+      startGather(true);
+      ensureRenderLoop();
+    };
+
+    const handleLoaderDissolveStart = (): void => {
+      shouldGatherRef.current = true;
+      triggerGatherRef.current?.();
+    };
+
+    const handleLoaderComplete = (): void => {
+      shouldGatherRef.current = true;
+      triggerGatherRef.current?.();
     };
 
     let lastW = 0;
@@ -528,6 +582,8 @@ export const ParticleText = ({
       void sampleText();
     };
 
+    window.addEventListener('riot:loader-dissolve-start', handleLoaderDissolveStart);
+    window.addEventListener('riot:loader-complete', handleLoaderComplete);
     reduceMotionQuery?.addEventListener('change', handleReduceMotionChange);
     canvas.addEventListener('pointerenter', handlePointerEnter);
     canvas.addEventListener('pointermove', handlePointerMove);
@@ -558,8 +614,11 @@ export const ParticleText = ({
 
     return () => {
       buildId += 1;
+      triggerGatherRef.current = null;
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
+      window.removeEventListener('riot:loader-dissolve-start', handleLoaderDissolveStart);
+      window.removeEventListener('riot:loader-complete', handleLoaderComplete);
       reduceMotionQuery?.removeEventListener('change', handleReduceMotionChange);
       canvas.removeEventListener('pointerenter', handlePointerEnter);
       canvas.removeEventListener('pointermove', handlePointerMove);

@@ -10,9 +10,19 @@ import { useEffect, useState, useRef } from "react";
 interface RevealContainerProps {
   selectedProduct: Product | null;
   onCloseMobile: () => void;
+  startGather?: boolean;
+  onHeroReady?: () => void;
 }
 
-export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
+export function HeroCanvas({
+  isMobile = false,
+  startGather = true,
+  onReady,
+}: {
+  isMobile?: boolean;
+  startGather?: boolean;
+  onReady?: () => void;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   if (isMobile) {
@@ -61,6 +71,8 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
             fontWeight={900}
             fontFamily="var(--font-clash), sans-serif"
             glow={false}
+            startGather={startGather}
+            onReady={onReady}
             className="w-full h-full"
           />
         </div>
@@ -121,6 +133,8 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
           fontWeight={900}
           fontFamily="var(--font-clash), sans-serif"
           glow={false}
+          startGather={startGather}
+          onReady={onReady}
           className="w-full h-full"
         />
       </div>
@@ -138,7 +152,12 @@ export function HeroCanvas({ isMobile = false }: { isMobile?: boolean }) {
   );
 }
 
-export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContainerProps) {
+export function RevealContainer({
+  selectedProduct,
+  onCloseMobile,
+  startGather = true,
+  onHeroReady,
+}: RevealContainerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [bursts, setBursts] = useState<{id: number, x: number, y: number}[]>([]);
@@ -177,7 +196,7 @@ export function RevealContainer({ selectedProduct, onCloseMobile }: RevealContai
   };
 
   if (!selectedProduct) {
-    return <HeroCanvas isMobile={false} />;
+    return <HeroCanvas isMobile={false} startGather={startGather} onReady={onHeroReady} />;
   }
 
   // Combine primary and secondary visuals for the gallery

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { PageLoader } from "@/components/layout/PageLoader";
 import { ProductIndex } from "@/components/layout/ProductIndex";
 import { RevealContainer, HeroCanvas } from "@/components/layout/RevealContainer";
 import { FooterCtaSection } from "@/components/layout/FooterCtaSection";
@@ -8,12 +9,27 @@ import { MOCK_CORE_COLLECTION, MOCK_EXPERIMENTAL_ARCHIVE, MOCK_EDITORIAL_CONTENT
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isHeroReady, setIsHeroReady] = useState(false);
+  const [dissolveStarted, setDissolveStarted] = useState(false);
+
+  const handleHeroReady = useCallback(() => {
+    setIsHeroReady(true);
+  }, []);
+
+  const handleDissolveStart = useCallback(() => {
+    setDissolveStarted(true);
+  }, []);
 
   const allContent = [...MOCK_CORE_COLLECTION, ...MOCK_EXPERIMENTAL_ARCHIVE, ...MOCK_EDITORIAL_CONTENT];
   const selectedProduct = allContent.find(p => p.id === selectedId) || null;
 
   return (
     <div className="flex flex-col min-h-[calc(100dvh-4rem)]">
+      <PageLoader
+        isHeroReady={isHeroReady}
+        onDissolveStart={handleDissolveStart}
+      />
+
       {/* 
         Upper Showcase Canvas
       */}
@@ -28,7 +44,11 @@ export default function Home() {
           {/* Mobile Hero: Rendered at top of mobile home screen */}
           {!selectedId && (
             <div className="block md:hidden">
-              <HeroCanvas isMobile />
+              <HeroCanvas
+                isMobile
+                startGather={dissolveStarted}
+                onReady={handleHeroReady}
+              />
             </div>
           )}
 
@@ -60,6 +80,8 @@ export default function Home() {
           <RevealContainer 
             selectedProduct={selectedProduct} 
             onCloseMobile={() => setSelectedId(null)}
+            startGather={dissolveStarted}
+            onHeroReady={handleHeroReady}
           />
         </div>
       </div>
