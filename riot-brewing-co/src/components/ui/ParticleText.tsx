@@ -114,15 +114,6 @@ const resolveFontSize = (
   return Math.max(16, size);
 };
 
-const waitForFonts = async (font: string): Promise<void> => {
-  if (typeof document === 'undefined' || !('fonts' in document)) return;
-
-  try {
-    await document.fonts.load(font);
-  } catch {}
-
-};
-
 export const ParticleText = ({
   text = 'React Bits',
   lines,
@@ -310,13 +301,19 @@ export const ParticleText = ({
       }
     };
 
-    const sampleText = async (): Promise<void> => {
+    let lastW = 0;
+    let lastH = 0;
+
+    const sampleText = (preservePositions = false): void => {
       const currentBuild = ++buildId;
       const rect = container.getBoundingClientRect();
       width = Math.floor(rect.width);
       height = Math.floor(rect.height);
 
       if (width <= 0 || height <= 0) return;
+
+      lastW = width;
+      lastH = height;
 
       const isMobile = width < 768;
       dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
@@ -329,9 +326,6 @@ export const ParticleText = ({
       const resolvedFamily = resolveCanvasFontFamily(fontFamily, container);
       let resolvedSize = resolveFontSize(fontSize, container, fontWeight, resolvedFamily);
       let font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
-
-      await waitForFonts(font);
-      if (currentBuild !== buildId) return;
 
       // Parse lines: if lines array provided, use it; otherwise split text by newline
       const parsedLines: ParticleTextLine[] = lines && lines.length > 0
@@ -369,9 +363,9 @@ export const ParticleText = ({
         const appliedScale = optimalScale < 1 ? optimalScale : Math.min(optimalScale, 1.45);
         resolvedSize = Math.max(18, Math.floor(resolvedSize * appliedScale));
         font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
-        await waitForFonts(font);
-        if (currentBuild !== buildId) return;
       }
+
+      if (currentBuild !== buildId) return;
 
       const lineHeight = resolvedSize * 1.08;
       const ascent = Math.ceil(resolvedSize * 0.85);
@@ -447,6 +441,8 @@ export const ParticleText = ({
         });
       }
 
+      const prevParticles = preservePositions ? particles : [];
+
       particles = selected.map((target, index) => {
         const seed = ((index * 9301 + 49297) % 233280) / 233280;
         const depth = 0.45 + (((index * 233 + 97) % 1000) / 1000) * 0.9;
@@ -454,8 +450,9 @@ export const ParticleText = ({
 
         const angle = seed * Math.PI * 2;
         const distance = (reducedMotion ? 0 : scatter) * (0.35 + depth * 0.75);
-        const startX = target.x + Math.cos(angle) * distance + (seed - 0.5) * scatter * 0.45;
-        const startY = target.y + Math.sin(angle) * distance + (depth - 0.9) * scatter * 0.45;
+        const prev = prevParticles[index];
+        const startX = prev ? prev.x : target.x + Math.cos(angle) * distance + (seed - 0.5) * scatter * 0.45;
+        const startY = prev ? prev.y : target.y + Math.sin(angle) * distance + (depth - 0.9) * scatter * 0.45;
 
         return {
           x: reducedMotion ? target.x : startX,
@@ -468,7 +465,7 @@ export const ParticleText = ({
           color: particleColor,
           seed,
           depth,
-          delay: seed * stagger
+          delay: preservePositions ? 0 : seed * stagger
         };
       });
 
@@ -488,11 +485,13 @@ export const ParticleText = ({
         });
         waitingForGather = false;
         gathering = false;
-      } else if (shouldGatherRef.current) {
-        startGather(false);
-      } else {
-        waitingForGather = true;
-        gathering = false;
+      } else if (!preservePositions) {
+        if (shouldGatherRef.current) {
+          startGather(false);
+        } else {
+          waitingForGather = true;
+          gathering = false;
+        }
       }
 
       isIntersecting = true;
@@ -519,17 +518,16 @@ export const ParticleText = ({
       triggerGatherRef.current?.();
     };
 
-    let lastW = 0;
-    let lastH = 0;
     const queueSample = (): void => {
       const rect = container.getBoundingClientRect();
       const curW = Math.floor(rect.width);
       const curH = Math.floor(rect.height);
+      if (curW <= 0 || curH <= 0) return;
       if (Math.abs(curW - lastW) > 10 || Math.abs(curH - lastH) > 10) {
         lastW = curW;
         lastH = curH;
         if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
-        resizeFrame = window.requestAnimationFrame(sampleText);
+        resizeFrame = window.requestAnimationFrame(() => sampleText(false));
       }
     };
 
@@ -579,7 +577,7 @@ export const ParticleText = ({
     const reduceMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
     const handleReduceMotionChange = (event: MediaQueryListEvent): void => {
       reducedMotion = event.matches;
-      void sampleText();
+      sampleText(false);
     };
 
     window.addEventListener('riot:loader-dissolve-start', handleLoaderDissolveStart);
@@ -593,6 +591,18 @@ export const ParticleText = ({
     canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
     canvas.addEventListener('touchend', handleTouchEnd, { passive: true });
     canvas.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+    // Immediate synchronous build on mount (0ms delay on mobile)
+    sampleText(false);
+
+    let isCancelled = false;
+    if (typeof document !== 'undefined' && 'fonts' in document && document.fonts.status !== 'loaded') {
+      document.fonts.ready.then(() => {
+        if (!isCancelled && width > 0 && height > 0) {
+          sampleText(true);
+        }
+      }).catch(() => {});
+    }
 
     const resizeObserver = new ResizeObserver(queueSample);
     resizeObserver.observe(container);
@@ -610,9 +620,8 @@ export const ParticleText = ({
     }, { threshold: 0.05 });
     intersectionObserver.observe(container);
 
-    void sampleText();
-
     return () => {
+      isCancelled = true;
       buildId += 1;
       triggerGatherRef.current = null;
       resizeObserver.disconnect();

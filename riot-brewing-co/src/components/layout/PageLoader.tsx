@@ -17,6 +17,7 @@ export const LOADER_COLORS = {
 } as const;
 
 const POUR = 3200;
+const MOBILE_POUR = 2600;
 const HOLD = 300;
 const DISS = 900;
 const SESSION_STORAGE_KEY = 'riot-brewing-loader-shown';
@@ -158,31 +159,37 @@ export function PageLoader({
     let W = 0;
     let H = 0;
     let D = 1;
+    let isMobileViewport = false;
     let bub: Bubble[] = [];
     let t0: number | null = null;
     let raf = 0;
     let cancelled = false;
     let finished = false;
     let dissolveStarted = false;
-    let fontsReady = !(document.fonts && document.fonts.ready);
+    let fontsReady = true;
     let readySinceMs: number | null = null;
     let hiddenAt: number | null = null;
     let displayFont = getDisplayFontFamily(wd);
 
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        fontsReady = true;
-        displayFont = getDisplayFontFamily(wd);
-      });
+      document.fonts.ready
+        .then(() => {
+          if (!cancelled) {
+            fontsReady = true;
+            displayFont = getDisplayFontFamily(wd);
+          }
+        })
+        .catch(() => {});
     }
 
     function size() {
       if (!cv || !ld) return;
       const prevD = D;
-      D = Math.min(window.devicePixelRatio || 1, 2);
       const rect = ld.getBoundingClientRect();
       const cssW = rect.width || window.innerWidth;
       const cssH = rect.height || window.innerHeight;
+      isMobileViewport = cssW < 768;
+      D = Math.min(window.devicePixelRatio || 1, isMobileViewport ? 1.5 : 2);
       W = cv.width = Math.max(1, Math.round(cssW * D));
       H = cv.height = Math.max(1, Math.round(cssH * D));
       if (bub.length > 0 && prevD !== D) {
@@ -207,7 +214,10 @@ export function PageLoader({
     }
 
     function ease(t: number) {
-      return 0.5 - Math.cos(Math.PI * t) / 2;
+      const tc = Math.max(0, Math.min(1, t));
+      // Blend immediate linear velocity (22%) with cosine ease so the pour rises visibly from frame 1 on mobile
+      const cosine = 0.5 - Math.cos(Math.PI * tc) / 2;
+      return 0.22 * tc + 0.78 * cosine;
     }
 
     function wave(base: number, amp: number, ph: number) {
@@ -229,14 +239,15 @@ export function PageLoader({
 
     function draw(ms: number, q: number, diss: number) {
       if (!x) return;
+      const qc = Math.max(0, Math.min(1, q));
       x.globalCompositeOperation = 'source-over';
       x.fillStyle = LOADER_COLORS.paperWhite;
       x.fillRect(0, 0, W, H);
 
-      const amp0 = (10 + 26 * Math.sin(Math.PI * Math.min(q, 1))) * D;
-      const s0 = ms / 1000;
-      const yP0 = H * (1 - q) - amp0 * 2 * q;
-      const yA0 = yP0 - (40 + 50 * Math.min(q * 3, 1)) * D;
+      const amp0 = (10 + 26 * Math.sin(Math.PI * qc)) * D;
+      const s0 = Math.max(0, ms) / 1000;
+      const yP0 = H * (1 - qc) - amp0 * 2 * qc;
+      const yA0 = yP0 - (40 + 50 * Math.min(qc * 3, 1)) * D;
 
       x.fillStyle = (function () {
         const g = x.createLinearGradient(0, yA0 - amp0, 0, yP0 + amp0);
@@ -259,10 +270,10 @@ export function PageLoader({
       x.textBaseline = 'middle';
       x.fillText('RIOT', W / 2, H * 0.46);
 
-      const amp = (10 + 26 * Math.sin(Math.PI * Math.min(q, 1))) * D;
-      const s = ms / 1000;
-      const yP = H * (1 - q) - amp * 2 * q;
-      const yB = H * (1 - Math.max(0, q * 1.12 - 0.12)) - amp * 2 * q + 14 * D;
+      const amp = (10 + 26 * Math.sin(Math.PI * qc)) * D;
+      const s = Math.max(0, ms) / 1000;
+      const yP = H * (1 - qc) - amp * 2 * qc;
+      const yB = H * (1 - Math.max(0, qc * 1.12 - 0.12)) - amp * 2 * qc + 14 * D;
 
       x.globalCompositeOperation = 'multiply';
       x.fillStyle = LOADER_COLORS.raniPink;
@@ -277,13 +288,13 @@ export function PageLoader({
       const k0 = 0.006 / D;
       const fa = amp0 * 0.8;
       const fp = s0 * 1.6 + 0.4;
-      const fm = Math.min(q * 5, 1);
+      const fm = Math.max(0, Math.min(qc * 5, 1));
       const n2 = Math.ceil(W / (24 * D));
 
       function dc(a: number, b2: number, r: number, p: number) {
-        if (!x) return;
+        if (!x || r <= 0) return;
         x.beginPath();
-        x.arc(a, b2, r, 0, 7);
+        x.arc(a, b2, Math.max(0, r), 0, 7);
         if (p) {
           x.fillStyle = LOADER_COLORS.foam;
           x.fill();
@@ -294,20 +305,24 @@ export function PageLoader({
         }
       }
 
-      for (let p = 0; p < 2; p++) {
-        for (let j = 0; j <= n2; j++) {
-          const fx = j * 24 * D;
-          const fy =
-            yA0 +
-            Math.sin(fx * k0 + fp) * fa +
-            Math.sin(fx * k0 * 2.3 - fp * 1.4) * fa * 0.4;
-          const fr =
-            (15 + 9 * Math.abs(Math.sin(j * 1.7))) *
-            D *
-            fm *
-            (1 + 0.06 * Math.sin(s0 * 3 + j));
-          dc(fx, fy - fr * 0.35, fr, p);
-          dc(fx + 12 * D, fy - fr * 1.15, fr * 0.65, p);
+      if (fm > 0) {
+        for (let p = 0; p < 2; p++) {
+          for (let j = 0; j <= n2; j++) {
+            const fx = j * 24 * D;
+            const fy =
+              yA0 +
+              Math.sin(fx * k0 + fp) * fa +
+              Math.sin(fx * k0 * 2.3 - fp * 1.4) * fa * 0.4;
+            const fr = Math.max(
+              0,
+              (15 + 9 * Math.abs(Math.sin(j * 1.7))) *
+                D *
+                fm *
+                (1 + 0.06 * Math.sin(s0 * 3 + j))
+            );
+            dc(fx, fy - fr * 0.35, fr, p);
+            dc(fx + 12 * D, fy - fr * 1.15, fr * 0.65, p);
+          }
         }
       }
 
@@ -317,9 +332,9 @@ export function PageLoader({
         if (b.y < -0.05) b.y = 1.05;
         const px = (b.x + Math.sin(s * 1.5 + b.p) * 0.012) * W;
         const py = b.y * H;
-        if (py > yA0 + b.r * 0.5 + amp * 0.2) {
+        if (b.r > 0 && py > yA0 + b.r * 0.5 + amp * 0.2) {
           x.beginPath();
-          x.arc(px, py, b.r, 0, 7);
+          x.arc(px, py, Math.max(0, b.r), 0, 7);
           x.fillStyle = LOADER_COLORS.bubbleFill;
           x.fill();
           x.lineWidth = 1.5 * D;
@@ -339,7 +354,7 @@ export function PageLoader({
             const r = Math.max(0, Math.min(1, (diss - dl) / 0.5));
             if (r > 0) {
               x.beginPath();
-              x.arc(a * g, c * g, r * g * 0.78, 0, 7);
+              x.arc(a * g, c * g, Math.max(0, r * g * 0.78), 0, 7);
               x.fill();
             }
           }
@@ -352,19 +367,20 @@ export function PageLoader({
       if (document.hidden) return;
 
       if (t0 === null) t0 = ts;
-      const ms = ts - t0;
-      const q = ease(Math.min(ms / POUR, 1));
+      const ms = Math.max(0, ts - t0);
+      const pourDuration = isMobileViewport ? MOBILE_POUR : POUR;
+      const q = ease(Math.max(0, Math.min(ms / pourDuration, 1)));
       const p = Math.round(q * 100);
       let diss = 0;
 
       const isReady =
-        (fontsReady && heroReadyRef.current) || ms > POUR + HOLD + 1500;
+        (fontsReady && heroReadyRef.current) || ms > pourDuration + HOLD + 600;
       if (isReady && readySinceMs === null) {
         readySinceMs = ms;
       }
 
       const dissolveStartMs =
-        readySinceMs !== null ? Math.max(POUR + HOLD, readySinceMs) : null;
+        readySinceMs !== null ? Math.max(pourDuration + HOLD, readySinceMs) : null;
       if (dissolveStartMs !== null && ms > dissolveStartMs) {
         diss = Math.min((ms - dissolveStartMs) / DISS, 1);
       }
@@ -423,6 +439,8 @@ export function PageLoader({
         setUnmounted(true);
         return;
       }
+      // Draw initial frame synchronously so there is 0ms blank delay on mobile
+      draw(0, 0, 0);
       if (!document.hidden) {
         raf = window.requestAnimationFrame(frame);
       } else {
@@ -469,23 +487,8 @@ export function PageLoader({
     window.addEventListener('resize', handleResize);
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    // Ensure the display font is loaded before first draw
-    const fontLoadPromise =
-      document.fonts && document.fonts.load
-        ? Promise.race([
-            document.fonts.load(`700 100px ${displayFont}`).then(() => {
-              displayFont = getDisplayFontFamily(wd);
-            }),
-            new Promise<void>((resolve) => setTimeout(resolve, 800)),
-          ])
-        : Promise.resolve();
-
-    fontLoadPromise.then(() => {
-      if (!cancelled) {
-        displayFont = getDisplayFontFamily(wd);
-        run();
-      }
-    });
+    // Start immediately at 0ms on mount without waiting on network font timeout
+    run();
 
     return () => {
       cancelled = true;
@@ -509,13 +512,29 @@ export function PageLoader({
       aria-label="Loading Riot Brewing Co."
       className="fixed inset-0 z-[100] w-full h-[100dvh] bg-paper-white text-ink-black font-mono overflow-hidden select-none"
     >
+      {/* Pre-hydration SSR RIOT wordmark so mobile never flashes a blank white screen before canvas frame 0 */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+        style={{ paddingBottom: '8dvh' }}
+      >
+        <span
+          className="font-display font-bold uppercase text-ink-black leading-none"
+          style={{
+            fontSize: 'min(36vw, 50dvh)',
+            fontFamily: 'var(--font-clash), "Clash Display", "Space Grotesk", sans-serif',
+          }}
+        >
+          RIOT
+        </span>
+      </div>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full block"
+        className="absolute inset-0 w-full h-full block z-[1]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-[2]"
         style={{
           mixBlendMode: 'multiply',
           opacity: 0.35,
@@ -524,7 +543,7 @@ export function PageLoader({
       />
       <div
         ref={labelRef}
-        className="absolute bg-paper-white border border-ink-black"
+        className="absolute bg-paper-white border border-ink-black z-[3]"
         style={{
           left: 'calc(16px + env(safe-area-inset-left, 0px))',
           bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
